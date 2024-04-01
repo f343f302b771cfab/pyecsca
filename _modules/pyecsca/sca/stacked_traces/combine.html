@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pyecsca.sca.stacked_traces.combine &#8212; pyecsca 0.2.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d10597a4" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css?v=1ca41fbe" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx_paramlinks.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=c1177449" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphik.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <script src="../../../../_static/documentation_options.js?v=938c9ccc"></script>
+    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="icon" href="../../../../_static/logo_black.png"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../../index.html">
+    <img class="logo" src="../../../../_static/logo_black.png" alt="Logo" />
+    
+    <h1 class="logo logo-name">pyecsca</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/configuration_space.html">Configuration space</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/codegen.html">Code generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/emulator.html">Emulation and leakage simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/measurement.html">Measurement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/visualization.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/smartcards.html">Smartcards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/formulas.html">Exploration of formulas in open-source ECC libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/rpa.html">RPA-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/zvp.html">ZVP-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/epa.html">EPA-based reverse engineering</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.ec.html">pyecsca.ec package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.misc.html">pyecsca.misc package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.sca.html">pyecsca.sca package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.codegen.html">pyecsca.codegen package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../libraries.html">ECC in Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../references.html">References</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pyecsca.sca.stacked_traces.combine</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">cuda</span>
+<span class="kn">from</span> <span class="nn">numba.cuda</span> <span class="kn">import</span> <span class="n">devicearray</span>
+<span class="kn">from</span> <span class="nn">numba.cuda.cudadrv.devicearray</span> <span class="kn">import</span> <span class="n">DeviceNDArray</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy.typing</span> <span class="k">as</span> <span class="nn">npt</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
+
+<span class="kn">from</span> <span class="nn">public</span> <span class="kn">import</span> <span class="n">public</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">cast</span><span class="p">,</span> <span class="n">List</span>
+
+<span class="kn">from</span> <span class="nn">...sca.trace.trace</span> <span class="kn">import</span> <span class="n">CombinedTrace</span>
+<span class="kn">from</span> <span class="nn">...sca.stacked_traces</span> <span class="kn">import</span> <span class="n">StackedTraces</span>
+
+<span class="n">TPB</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]]</span>
+<span class="n">CudaCTX</span> <span class="o">=</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">devicearray</span><span class="o">.</span><span class="n">DeviceNDArray</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="BaseTraceManager">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.BaseTraceManager">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">class</span> <span class="nc">BaseTraceManager</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for trace managers&quot;&quot;&quot;</span>
+
+    <span class="n">_traces</span><span class="p">:</span> <span class="n">StackedTraces</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">traces</span><span class="p">:</span> <span class="n">StackedTraces</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_traces</span> <span class="o">=</span> <span class="n">traces</span>
+
+<div class="viewcode-block" id="BaseTraceManager.average">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.BaseTraceManager.average">[docs]</a>
+    <span class="k">def</span> <span class="nf">average</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CombinedTrace</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Average :paramref:`~.average.traces`, sample-wise.</span>
+
+<span class="sd">        :param traces:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+<div class="viewcode-block" id="BaseTraceManager.conditional_average">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.BaseTraceManager.conditional_average">[docs]</a>
+    <span class="k">def</span> <span class="nf">conditional_average</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                            <span class="n">cond</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">]],</span> <span class="nb">bool</span><span class="p">])</span> \
+            <span class="o">-&gt;</span> <span class="n">CombinedTrace</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Average :paramref:`~.conditional_average.traces` for which the</span>
+<span class="sd">        :paramref:`~.conditional_average.condition` is ``True``, sample-wise.</span>
+
+<span class="sd">        :param traces:</span>
+<span class="sd">        :param condition:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+<div class="viewcode-block" id="BaseTraceManager.standard_deviation">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.BaseTraceManager.standard_deviation">[docs]</a>
+    <span class="k">def</span> <span class="nf">standard_deviation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CombinedTrace</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the sample standard-deviation of the</span>
+<span class="sd">        :paramref:`~.standard_deviation.traces`, sample-wise.</span>
+
+<span class="sd">        :param traces:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+<div class="viewcode-block" id="BaseTraceManager.variance">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.BaseTraceManager.variance">[docs]</a>
+    <span class="k">def</span> <span class="nf">variance</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CombinedTrace</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the sample variance of the</span>
+<span class="sd">        :paramref:`~.variance.traces`, sample-wise.</span>
+
+<span class="sd">        :param traces:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+<div class="viewcode-block" id="BaseTraceManager.average_and_variance">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.BaseTraceManager.average_and_variance">[docs]</a>
+    <span class="k">def</span> <span class="nf">average_and_variance</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">CombinedTrace</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the sample average and variance of the</span>
+<span class="sd">        :paramref:`~.average_and_variance.traces`, sample-wise.</span>
+
+<span class="sd">        :param traces:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+<div class="viewcode-block" id="BaseTraceManager.add">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.BaseTraceManager.add">[docs]</a>
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CombinedTrace</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add :paramref:`~.add.traces`, sample-wise.</span>
+
+<span class="sd">        :param traces:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+</div>
+
+
+
+<span class="n">InputType</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">],</span> <span class="n">npt</span><span class="o">.</span><span class="n">ArrayLike</span><span class="p">]</span>
+
+
+<span class="n">CHUNK_MEMORY_RATIO</span> <span class="o">=</span> <span class="mf">0.4</span>
+<span class="n">STREAM_COUNT</span> <span class="o">=</span> <span class="mi">4</span>
+
+
+<div class="viewcode-block" id="GPUTraceManager">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.GPUTraceManager">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">class</span> <span class="nc">GPUTraceManager</span><span class="p">(</span><span class="n">BaseTraceManager</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Manager for operations with stacked traces on GPU&quot;&quot;&quot;</span>
+
+    <span class="n">_tpb</span><span class="p">:</span> <span class="n">TPB</span>
+    <span class="n">_chunk_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="n">_stream_count</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">traces</span><span class="p">:</span> <span class="n">StackedTraces</span><span class="p">,</span>
+                 <span class="n">tpb</span><span class="p">:</span> <span class="n">TPB</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
+                 <span class="n">chunk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">chunk_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">chunk_memory_ratio</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">stream_count</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param traces: Stacked traces on which to operate.</span>
+<span class="sd">        :param tpb: Threads per block to use for GPU operations.</span>
+<span class="sd">        :param chunk: Whether to chunk the traces.</span>
+<span class="sd">        :param chunk_size: Number of samples to use for chunking.</span>
+<span class="sd">                           Chunks will be `chunk_size` x `trace_count`.</span>
+<span class="sd">        :param chunk_memory_ratio: Part of available memory to use for chunking.</span>
+<span class="sd">        :param stream_count: Number of streams to use for chunking.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_init_args</span><span class="p">(</span><span class="n">chunk_size</span><span class="p">,</span>
+                              <span class="n">chunk_memory_ratio</span><span class="p">,</span>
+                              <span class="n">tpb</span><span class="p">)</span>
+
+        <span class="n">chunk</span> <span class="o">=</span> <span class="p">(</span><span class="n">chunk</span>
+                 <span class="ow">or</span> <span class="n">stream_count</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                 <span class="ow">or</span> <span class="n">chunk_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                 <span class="ow">or</span> <span class="n">chunk_memory_ratio</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">traces</span><span class="p">)</span>
+        <span class="c1"># If chunking is used, the samples are stored in Fortran order</span>
+        <span class="c1"># for contiguous memory access</span>
+        <span class="k">if</span> <span class="n">chunk</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_traces</span><span class="o">.</span><span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asfortranarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_traces</span><span class="o">.</span><span class="n">samples</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tpb</span> <span class="o">=</span> <span class="n">tpb</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">chunk</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_combine_func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gpu_combine1D_all</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_chunk_size</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stream_count</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_combine_func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gpu_combine1D_chunked</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stream_count</span> <span class="o">=</span> <span class="p">(</span><span class="n">stream_count</span>
+                                  <span class="k">if</span> <span class="n">stream_count</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                                  <span class="k">else</span> <span class="n">STREAM_COUNT</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">chunk_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_chunk_size</span> <span class="o">=</span> <span class="n">chunk_size</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_chunk_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chunk_size_from_ratio</span><span class="p">(</span>
+                    <span class="n">chunk_memory_ratio</span>
+                    <span class="k">if</span> <span class="n">chunk_memory_ratio</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                    <span class="k">else</span> <span class="n">CHUNK_MEMORY_RATIO</span><span class="p">,</span>
+                    <span class="n">item_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_traces</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">itemsize</span><span class="p">,</span>
+                    <span class="n">chunk_item_count</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_traces</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_check_tpb</span><span class="p">(</span><span class="n">tpb</span><span class="p">:</span> <span class="n">TPB</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">dev</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">get_current_device</span><span class="p">()</span>
+        <span class="n">warp_size</span> <span class="o">=</span> <span class="n">dev</span><span class="o">.</span><span class="n">WARP_SIZE</span>
+        <span class="n">max_tpb</span> <span class="o">=</span> <span class="n">dev</span><span class="o">.</span><span class="n">MAX_THREADS_PER_BLOCK</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tpb</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">tpb</span> <span class="o">%</span> <span class="n">warp_size</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s1">&#39;TPB should be a multiple of WARP_SIZE (</span><span class="si">{</span><span class="n">warp_size</span><span class="si">}</span><span class="s1">)&#39;</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="n">tpb</span> <span class="o">&gt;</span> <span class="n">max_tpb</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;TPB should be smaller than &#39;</span>
+                    <span class="s1">&#39;MAX_THREADS_PER_BLOCK (</span><span class="si">{max_tpb}</span><span class="s1">)&#39;</span>
+                <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tpb</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span>
+            <span class="n">t</span> <span class="o">&gt;</span> <span class="n">max_tpb</span> <span class="ow">or</span> <span class="n">t</span> <span class="o">%</span> <span class="n">warp_size</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tpb</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;TPB should be a multiple of WARP_SIZE (</span><span class="si">{</span><span class="n">warp_size</span><span class="si">}</span><span class="s1">) &#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;and smaller than MAX_THREADS_PER_BLOCK (</span><span class="si">{</span><span class="n">max_tpb</span><span class="si">}</span><span class="s1">)&#39;</span>
+                <span class="s1">&#39;in each dimension&#39;</span>
+            <span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_check_chunk_sizing</span><span class="p">(</span><span class="n">chunk_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+                            <span class="n">chunk_memory_ratio</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">chunk_size</span> <span class="ow">and</span> <span class="n">chunk_memory_ratio</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only one of chunk_size and chunk_memory_ratio &quot;</span>
+                             <span class="s2">&quot;can be specified&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">chunk_memory_ratio</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> \
+           <span class="ow">and</span> <span class="p">(</span><span class="n">chunk_memory_ratio</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">chunk_memory_ratio</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Chunk memory ratio should be in (0, 0.5], &quot;</span>
+                             <span class="s2">&quot;because two chunks are stored in memory &quot;</span>
+                             <span class="s2">&quot;at once&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">chunk_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">chunk_size</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Chunk size should be positive&quot;</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_check_init_args</span><span class="p">(</span><span class="n">chunk_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+                         <span class="n">chunk_memory_ratio</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+                         <span class="n">tpb</span><span class="p">:</span> <span class="n">TPB</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;CUDA is not available, &quot;</span>
+                               <span class="s2">&quot;use CPUTraceManager instead&quot;</span><span class="p">)</span>
+
+        <span class="n">GPUTraceManager</span><span class="o">.</span><span class="n">_check_chunk_sizing</span><span class="p">(</span><span class="n">chunk_size</span><span class="p">,</span> <span class="n">chunk_memory_ratio</span><span class="p">)</span>
+        <span class="n">GPUTraceManager</span><span class="o">.</span><span class="n">_check_tpb</span><span class="p">(</span><span class="n">tpb</span><span class="p">)</span>
+
+<div class="viewcode-block" id="GPUTraceManager.chunk_size_from_ratio">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.GPUTraceManager.chunk_size_from_ratio">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">chunk_size_from_ratio</span><span class="p">(</span><span class="n">chunk_memory_ratio</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                              <span class="n">element_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                              <span class="n">item_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                              <span class="n">chunk_item_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">((</span><span class="n">element_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="o">==</span> <span class="p">(</span><span class="n">item_size</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">chunk_item_count</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Either element_size or item_size and chunk_item_count &quot;</span>
+                <span class="s2">&quot;should be specified&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">element_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">item_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">assert</span> <span class="n">chunk_item_count</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="n">element_size</span> <span class="o">=</span> <span class="n">item_size</span> <span class="o">*</span> <span class="n">chunk_item_count</span>
+
+        <span class="n">mem_size</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">current_context</span><span class="p">()</span><span class="o">.</span><span class="n">get_memory_info</span><span class="p">()</span><span class="o">.</span><span class="n">free</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span>
+            <span class="n">chunk_memory_ratio</span> <span class="o">*</span> <span class="n">mem_size</span> <span class="o">/</span> <span class="n">element_size</span><span class="p">)</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">traces_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traces</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="k">def</span> <span class="nf">_gpu_combine1D</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                       <span class="n">func</span><span class="p">,</span>
+                       <span class="n">inputs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">InputType</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                       <span class="n">output_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> \
+            <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">CombinedTrace</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">CombinedTrace</span><span class="p">]]:</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">inputs</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">inputs</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_combine_func</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">output_count</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">output_count</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">CombinedTrace</span><span class="p">(</span>
+                <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_traces</span><span class="o">.</span><span class="n">meta</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">CombinedTrace</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traces</span><span class="o">.</span><span class="n">meta</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">result</span>
+            <span class="ow">in</span> <span class="n">results</span>
+        <span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_gpu_combine1D_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                           <span class="n">func</span><span class="p">,</span>
+                           <span class="n">inputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">InputType</span><span class="p">],</span>
+                           <span class="n">output_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> \
+            <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Runs a combination function on the samples column-wise.</span>
+
+<span class="sd">        All samples are processed at once.</span>
+<span class="sd">        :param func: Function to run.</span>
+<span class="sd">        :param output_count: Number of outputs expected from the GPU function.</span>
+<span class="sd">        :return: Combined trace output from the GPU function</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tpb</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Something went wrong. &quot;</span>
+                             <span class="s2">&quot;TPB should be an int&quot;</span><span class="p">)</span>
+
+        <span class="n">samples_input</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_traces</span><span class="o">.</span><span class="n">samples</span><span class="p">)</span>
+        <span class="n">device_inputs</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+            <span class="k">for</span> <span class="n">inp</span> <span class="ow">in</span> <span class="n">inputs</span>
+        <span class="p">]</span>
+        <span class="n">device_outputs</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">cuda</span><span class="o">.</span><span class="n">device_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_traces</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">output_count</span><span class="p">)</span>
+        <span class="p">]</span>
+
+        <span class="n">bpg</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_traces</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tpb</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tpb</span>
+        <span class="n">func</span><span class="p">[</span><span class="n">bpg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tpb</span><span class="p">](</span><span class="n">samples_input</span><span class="p">,</span>
+                             <span class="o">*</span><span class="n">device_inputs</span><span class="p">,</span>
+                             <span class="o">*</span><span class="n">device_outputs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">device_output</span><span class="o">.</span><span class="n">copy_to_host</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">device_output</span> <span class="ow">in</span> <span class="n">device_outputs</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_gpu_combine1D_chunked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                               <span class="n">func</span><span class="p">,</span>
+                               <span class="n">inputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">InputType</span><span class="p">],</span>
+                               <span class="n">output_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> \
+            <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">]]:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chunk_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Something went wrong. &quot;</span>
+                             <span class="s2">&quot;Chunk size should be specified&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_count</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Something went wrong. &quot;</span>
+                             <span class="s2">&quot;Stream count should be specified&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tpb</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Something went wrong. &quot;</span>
+                             <span class="s2">&quot;TPB should be an int&quot;</span><span class="p">)</span>
+
+        <span class="n">chunk_count</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_traces</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chunk_size</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="p">)</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chunk_size</span>
+        <span class="n">streams</span> <span class="o">=</span> <span class="p">[</span><span class="n">cuda</span><span class="o">.</span><span class="n">stream</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_count</span><span class="p">)]</span>
+        <span class="n">events</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">cuda</span><span class="o">.</span><span class="n">Event</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_count</span><span class="p">)]</span>
+
+        <span class="c1"># Pre-allocate pinned memory for each stream</span>
+        <span class="n">pinned_input_buffers</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">cuda</span><span class="o">.</span><span class="n">pinned_array</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_traces</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="n">_chunk_size</span><span class="p">),</span>
+                              <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_traces</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+                              <span class="n">order</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream_count</span><span class="p">)</span>
+        <span class="p">]</span>
+
+        <span class="n">device_inputs</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+            <span class="k">for</span> <span class="n">inp</span> <span class="ow">in</span> <span class="n">inputs</span>
+        <span class="p">]</span>
+
+        <span class="n">chunk_results</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">output_count</span><span class="p">)]</span>
+
+        <span class="k">with</span> <span class="n">cuda</span><span class="o">.</span><span class="n">defer_cleanup</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">chunk_count</span><span class="p">):</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="n">chunk</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chunk_size</span>
+                <span class="n">end</span> <span class="o">=</span> <span class="nb">min</span><span class="p">((</span><span class="n">chunk</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chunk_size</span><span class="p">,</span>
+                          <span class="bp">self</span><span class="o">.</span><span class="n">_traces</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">stream</span> <span class="o">=</span> <span class="n">streams</span><span class="p">[</span><span class="n">chunk</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_count</span><span class="p">]</span>
+                <span class="n">event</span> <span class="o">=</span> <span class="n">events</span><span class="p">[</span><span class="n">chunk</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_count</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">event</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">event</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">stream</span><span class="p">)</span>
+
+                <span class="n">pinned_input</span> <span class="o">=</span> <span class="n">pinned_input_buffers</span><span class="p">[</span><span class="n">chunk</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_count</span><span class="p">]</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">copyto</span><span class="p">(</span><span class="n">pinned_input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traces</span><span class="o">.</span><span class="n">samples</span><span class="p">[:,</span> <span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">])</span>
+
+                <span class="n">device_input</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span>
+                    <span class="n">pinned_input</span><span class="p">[:,</span> <span class="p">:</span><span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">],</span> <span class="n">stream</span><span class="o">=</span><span class="n">stream</span><span class="p">)</span>
+                <span class="n">device_outputs</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">cuda</span><span class="o">.</span><span class="n">device_array</span><span class="p">(</span>
+                        <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">,),</span>
+                        <span class="n">dtype</span><span class="o">=</span><span class="n">pinned_input</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+                        <span class="n">stream</span><span class="o">=</span><span class="n">stream</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">output_count</span><span class="p">)</span>
+                <span class="p">]</span>
+
+                <span class="n">bpg</span> <span class="o">=</span> <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tpb</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tpb</span>
+                <span class="n">func</span><span class="p">[</span><span class="n">bpg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tpb</span><span class="p">,</span> <span class="n">stream</span><span class="p">](</span><span class="n">device_input</span><span class="p">,</span>
+                                             <span class="o">*</span><span class="n">device_inputs</span><span class="p">,</span>
+                                             <span class="o">*</span><span class="n">device_outputs</span><span class="p">)</span>
+                <span class="n">event</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">event</span><span class="p">()</span>
+                <span class="n">event</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">stream</span><span class="p">)</span>
+                <span class="n">events</span><span class="p">[</span><span class="n">chunk</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_count</span><span class="p">]</span> <span class="o">=</span> <span class="n">event</span>
+
+                <span class="k">for</span> <span class="n">output_i</span><span class="p">,</span> <span class="n">device_output</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">device_outputs</span><span class="p">):</span>
+                    <span class="c1"># Allocating pinned memory for results</span>
+                    <span class="n">host_output</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">pinned_array</span><span class="p">(</span>
+                        <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">pinned_input</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+                    <span class="n">device_output</span><span class="o">.</span><span class="n">copy_to_host</span><span class="p">(</span><span class="n">host_output</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="n">stream</span><span class="p">)</span>
+                    <span class="n">chunk_results</span><span class="p">[</span><span class="n">output_i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">host_output</span><span class="p">)</span>
+
+            <span class="n">cuda</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">chunk_result</span><span class="p">)</span> <span class="k">for</span> <span class="n">chunk_result</span> <span class="ow">in</span> <span class="n">chunk_results</span><span class="p">]</span>
+
+<div class="viewcode-block" id="GPUTraceManager.average">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.GPUTraceManager.average">[docs]</a>
+    <span class="k">def</span> <span class="nf">average</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CombinedTrace</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">CombinedTrace</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gpu_combine1D</span><span class="p">(</span><span class="n">gpu_average</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="GPUTraceManager.conditional_average">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.GPUTraceManager.conditional_average">[docs]</a>
+    <span class="k">def</span> <span class="nf">conditional_average</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                            <span class="n">cond</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">]],</span> <span class="nb">bool</span><span class="p">])</span> \
+            <span class="o">-&gt;</span> <span class="n">CombinedTrace</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="GPUTraceManager.standard_deviation">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.GPUTraceManager.standard_deviation">[docs]</a>
+    <span class="k">def</span> <span class="nf">standard_deviation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CombinedTrace</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">CombinedTrace</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gpu_combine1D</span><span class="p">(</span><span class="n">gpu_std_dev</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="GPUTraceManager.variance">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.GPUTraceManager.variance">[docs]</a>
+    <span class="k">def</span> <span class="nf">variance</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CombinedTrace</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">CombinedTrace</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gpu_combine1D</span><span class="p">(</span><span class="n">gpu_variance</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="GPUTraceManager.average_and_variance">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.GPUTraceManager.average_and_variance">[docs]</a>
+    <span class="k">def</span> <span class="nf">average_and_variance</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">CombinedTrace</span><span class="p">]:</span>
+        <span class="n">averages</span><span class="p">,</span> <span class="n">variances</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gpu_combine1D</span><span class="p">(</span><span class="n">gpu_avg_var</span><span class="p">,</span> <span class="n">output_count</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">averages</span><span class="p">,</span> <span class="n">variances</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="GPUTraceManager.add">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.GPUTraceManager.add">[docs]</a>
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CombinedTrace</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">CombinedTrace</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gpu_combine1D</span><span class="p">(</span><span class="n">gpu_add</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="GPUTraceManager.pearson_corr">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.GPUTraceManager.pearson_corr">[docs]</a>
+    <span class="k">def</span> <span class="nf">pearson_corr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                     <span class="n">intermediate_values</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">])</span> \
+            <span class="o">-&gt;</span> <span class="n">CombinedTrace</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">intermediate_values</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span>
+                <span class="ow">or</span> <span class="p">(</span><span class="n">intermediate_values</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traces_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Intermediate values have to be a vector &quot;</span>
+                             <span class="s2">&quot;as long as trace_count&quot;</span><span class="p">)</span>
+
+        <span class="n">intermed_sum</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">intermediate_values</span><span class="p">)</span>
+        <span class="n">intermed_sq_sum</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">intermediate_values</span><span class="p">))</span>
+        <span class="n">inputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">InputType</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">intermediate_values</span><span class="p">,</span>
+                                   <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">intermed_sum</span><span class="p">]),</span>
+                                   <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">intermed_sq_sum</span><span class="p">])]</span>
+
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">CombinedTrace</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gpu_combine1D</span><span class="p">(</span><span class="n">gpu_pearson_corr</span><span class="p">,</span>
+                                                       <span class="n">inputs</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="GPUTraceManager.run">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.GPUTraceManager.run">[docs]</a>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+            <span class="n">inputs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">InputType</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">output_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> \
+            <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">CombinedTrace</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">CombinedTrace</span><span class="p">]]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gpu_combine1D</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">output_count</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_gpu_average</span><span class="p">(</span><span class="n">col</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">samples</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">],</span>
+                 <span class="n">result</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Cuda device thread function computing the average of a sample of stacked traces.</span>
+
+<span class="sd">    :param col: Index of the sample.</span>
+<span class="sd">    :param samples: Shared array of the samples of stacked traces.</span>
+<span class="sd">    :param result: Result output array.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">acc</span> <span class="o">+=</span> <span class="n">samples</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span>
+    <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">acc</span> <span class="o">/</span> <span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">gpu_average</span><span class="p">(</span><span class="n">samples</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">],</span>
+                <span class="n">result</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sample average of stacked traces, sample-wise.</span>
+
+<span class="sd">    :param samples: Stacked traces&#39; samples.</span>
+<span class="sd">    :param result: Result output array.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">col</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+
+    <span class="k">if</span> <span class="n">col</span> <span class="o">&gt;=</span> <span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">return</span>
+
+    <span class="n">_gpu_average</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+
+<span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_gpu_var_from_avg</span><span class="p">(</span><span class="n">col</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                      <span class="n">samples</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">],</span>
+                      <span class="n">averages</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">],</span>
+                      <span class="n">result</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Cuda device thread function computing the variance from the average of a sample of stacked traces.</span>
+
+<span class="sd">    :param col: Index of the sample.</span>
+<span class="sd">    :param samples: Shared array of the samples of stacked traces.</span>
+<span class="sd">    :param averages: Array of averages of samples.</span>
+<span class="sd">    :param result: Result output array.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span> <span class="o">-</span> <span class="n">averages</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
+        <span class="n">var</span> <span class="o">+=</span> <span class="n">current</span> <span class="o">*</span> <span class="n">current</span>
+    <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">var</span> <span class="o">/</span> <span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_gpu_variance</span><span class="p">(</span><span class="n">col</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">samples</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">],</span>
+                  <span class="n">result</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Cuda device thread function computing the variance of a sample of stacked traces.</span>
+
+<span class="sd">    :param col: Index of the sample.</span>
+<span class="sd">    :param samples: Shared array of the samples of stacked traces.</span>
+<span class="sd">    :param result: Result output array.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_gpu_average</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+    <span class="n">_gpu_var_from_avg</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+
+<span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">gpu_std_dev</span><span class="p">(</span><span class="n">samples</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">],</span>
+                <span class="n">result</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sample standard deviation of stacked traces, sample-wise.</span>
+
+<span class="sd">    :param samples: Stacked traces&#39; samples.</span>
+<span class="sd">    :param result: Result output array.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">col</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+
+    <span class="k">if</span> <span class="n">col</span> <span class="o">&gt;=</span> <span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">return</span>
+
+    <span class="n">_gpu_variance</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+    <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+
+
+<span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">gpu_variance</span><span class="p">(</span><span class="n">samples</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">],</span>
+                 <span class="n">result</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sample variance of stacked traces, sample-wise.</span>
+
+<span class="sd">    :param samples: Stacked traces&#39; samples.</span>
+<span class="sd">    :param result: Result output array.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">col</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+
+    <span class="k">if</span> <span class="n">col</span> <span class="o">&gt;=</span> <span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">return</span>
+
+    <span class="n">_gpu_variance</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+
+<span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">gpu_avg_var</span><span class="p">(</span><span class="n">samples</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">],</span>
+                <span class="n">result_avg</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">],</span>
+                <span class="n">result_var</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sample average and variance of stacked traces, sample-wise.</span>
+
+<span class="sd">    :param samples: Stacked traces&#39; samples.</span>
+<span class="sd">    :param result_avg: Result average output array.</span>
+<span class="sd">    :param result_var: Result variance output array.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">col</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+
+    <span class="k">if</span> <span class="n">col</span> <span class="o">&gt;=</span> <span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">return</span>
+
+    <span class="n">_gpu_average</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">result_avg</span><span class="p">)</span>
+    <span class="n">_gpu_var_from_avg</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">result_avg</span><span class="p">,</span> <span class="n">result_var</span><span class="p">)</span>
+
+
+<span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">gpu_add</span><span class="p">(</span><span class="n">samples</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">],</span>
+            <span class="n">result</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add samples of stacked traces, sample-wise.</span>
+
+<span class="sd">    :param samples: Stacked traces&#39; samples.</span>
+<span class="sd">    :param result: Result output array.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">col</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+
+    <span class="k">if</span> <span class="n">col</span> <span class="o">&gt;=</span> <span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">return</span>
+
+    <span class="n">res</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="n">samples</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span>
+    <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span>
+
+
+<span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">gpu_pearson_corr</span><span class="p">(</span><span class="n">samples</span><span class="p">:</span> <span class="n">DeviceNDArray</span><span class="p">,</span>
+                     <span class="n">intermediate_values</span><span class="p">:</span> <span class="n">DeviceNDArray</span><span class="p">,</span>
+                     <span class="n">intermed_sum</span><span class="p">:</span> <span class="n">DeviceNDArray</span><span class="p">,</span>
+                     <span class="n">intermed_sq_sum</span><span class="p">:</span> <span class="n">DeviceNDArray</span><span class="p">,</span>
+                     <span class="n">result</span><span class="p">:</span> <span class="n">DeviceNDArray</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the Pearson correlation coefficient between the given samples and intermediate values using GPU acceleration.</span>
+
+<span class="sd">    :param samples: A 2D array of shape (n, m) containing the samples.</span>
+<span class="sd">    :type samples: npt.NDArray[np.number]</span>
+<span class="sd">    :param intermediate_values: A 1D array of shape (n,) containing the intermediate values.</span>
+<span class="sd">    :type intermediate_values: npt.NDArray[np.number]</span>
+<span class="sd">    :param intermed_sum: A 1D array of shape (1,) containing the precomputed sum of the intermediate values.</span>
+<span class="sd">    :type intermed_sum: npt.NDArray[np.number]</span>
+<span class="sd">    :param intermed_sq_sum: A 1D array of shape (1,) containing the precomputed sum of the squares of the intermediate values.</span>
+<span class="sd">    :param result: A 1D array of shape (m,) to store the resulting correlation coefficients.</span>
+<span class="sd">    :type result: cuda.devicearray.DeviceNDArray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">col</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+
+    <span class="k">if</span> <span class="n">col</span> <span class="o">&gt;=</span> <span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>  <span class="c1"># type: ignore</span>
+        <span class="k">return</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">samples_sum</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="n">samples_sq_sum</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="n">product_sum</span> <span class="o">=</span> <span class="mf">0.</span>
+
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">samples_sum</span> <span class="o">+=</span> <span class="n">samples</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span>
+        <span class="n">samples_sq_sum</span> <span class="o">+=</span> <span class="n">samples</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">product_sum</span> <span class="o">+=</span> <span class="n">samples</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span> <span class="o">*</span> <span class="n">intermediate_values</span><span class="p">[</span><span class="n">row</span><span class="p">]</span>
+
+    <span class="n">numerator</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">product_sum</span> <span class="o">-</span> <span class="n">samples_sum</span> <span class="o">*</span> <span class="n">intermed_sum</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">denom_samp</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">samples_sq_sum</span> <span class="o">-</span> <span class="n">samples_sum</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">denom_int</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">intermed_sq_sum</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">intermed_sum</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">denominator</span> <span class="o">=</span> <span class="n">denom_samp</span> <span class="o">*</span> <span class="n">denom_int</span>
+
+    <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">numerator</span> <span class="o">/</span> <span class="n">denominator</span>
+
+
+<div class="viewcode-block" id="CPUTraceManager">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.CPUTraceManager">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">class</span> <span class="nc">CPUTraceManager</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Manager for operations on stacked traces on CPU.&quot;&quot;&quot;</span>
+
+    <span class="n">traces</span><span class="p">:</span> <span class="n">StackedTraces</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">traces</span><span class="p">:</span> <span class="n">StackedTraces</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">traces</span> <span class="o">=</span> <span class="n">traces</span>
+
+<div class="viewcode-block" id="CPUTraceManager.average">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.CPUTraceManager.average">[docs]</a>
+    <span class="k">def</span> <span class="nf">average</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CombinedTrace</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the average of the :paramref:`~.average.traces`, sample-wise.</span>
+
+<span class="sd">        :param traces:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">CombinedTrace</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">traces</span><span class="o">.</span><span class="n">samples</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">traces</span><span class="o">.</span><span class="n">meta</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CPUTraceManager.conditional_average">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.CPUTraceManager.conditional_average">[docs]</a>
+    <span class="k">def</span> <span class="nf">conditional_average</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                            <span class="n">condition</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">]],</span>
+                                                <span class="nb">bool</span><span class="p">])</span> \
+            <span class="o">-&gt;</span> <span class="n">CombinedTrace</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the conditional average of the :paramref:`~.conditional_average.traces`, sample-wise.</span>
+
+<span class="sd">        :param traces:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO: Consider other ways to implement this</span>
+        <span class="k">return</span> <span class="n">CombinedTrace</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">traces</span><span class="o">.</span><span class="n">samples</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span>
+                <span class="n">condition</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">traces</span><span class="o">.</span><span class="n">samples</span><span class="p">)],</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">traces</span><span class="o">.</span><span class="n">meta</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CPUTraceManager.standard_deviation">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.CPUTraceManager.standard_deviation">[docs]</a>
+    <span class="k">def</span> <span class="nf">standard_deviation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CombinedTrace</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the sample standard-deviation of the :paramref:`~.standard_deviation.traces`, sample-wise.</span>
+
+<span class="sd">        :param traces:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">CombinedTrace</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">traces</span><span class="o">.</span><span class="n">samples</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">traces</span><span class="o">.</span><span class="n">meta</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CPUTraceManager.variance">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.CPUTraceManager.variance">[docs]</a>
+    <span class="k">def</span> <span class="nf">variance</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CombinedTrace</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the sample variance of the :paramref:`~.variance.traces`, sample-wise.</span>
+
+<span class="sd">        :param traces:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">CombinedTrace</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">traces</span><span class="o">.</span><span class="n">samples</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">traces</span><span class="o">.</span><span class="n">meta</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CPUTraceManager.average_and_variance">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.CPUTraceManager.average_and_variance">[docs]</a>
+    <span class="k">def</span> <span class="nf">average_and_variance</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">CombinedTrace</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the average and sample variance of the :paramref:`~.average_and_variance.traces`, sample-wise.</span>
+
+<span class="sd">        :param traces:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">average</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">variance</span><span class="p">()</span>
+        <span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="CPUTraceManager.add">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.CPUTraceManager.add">[docs]</a>
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CombinedTrace</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add :paramref:`~.add.traces`, sample-wise.</span>
+
+<span class="sd">        :param traces:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">CombinedTrace</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">traces</span><span class="o">.</span><span class="n">samples</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">traces</span><span class="o">.</span><span class="n">meta</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CPUTraceManager.pearson_corr">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.stacked_traces.combine.html#pyecsca.sca.stacked_traces.combine.CPUTraceManager.pearson_corr">[docs]</a>
+    <span class="k">def</span> <span class="nf">pearson_corr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                     <span class="n">intermediate_values</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">])</span> \
+            <span class="o">-&gt;</span> <span class="n">CombinedTrace</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the Pearson correlation coefficient between the given samples and intermediate values sample-wise.</span>
+
+<span class="sd">        The result is equivalent to:</span>
+
+<span class="sd">        &gt;&gt;&gt; np.corrcoef(self.traces.samples,</span>
+<span class="sd">                        intermediate_values,</span>
+<span class="sd">                        rowvar=False)[-1, :-1]</span>
+
+<span class="sd">        but a different implementation is used for better time-efficiency,</span>
+<span class="sd">        which doesn&#39;t compute the whole correlation matrix.</span>
+
+<span class="sd">        :param intermediate_values: A 1D array of shape (n,) containing the intermediate values.</span>
+<span class="sd">        :type intermediate_values: npt.NDArray[np.number]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traces</span><span class="o">.</span><span class="n">samples</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">intermediate_values</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="n">n</span><span class="p">,):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid shape of intermediate_values, &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;expected (</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">,), &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="n">intermediate_values</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">sam_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">sam_sq_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">samples</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">iv_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">intermediate_values</span><span class="p">)</span>
+        <span class="n">iv_sq_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">intermediate_values</span><span class="p">))</span>
+
+        <span class="n">prod_sum</span> <span class="o">=</span> <span class="n">intermediate_values</span> <span class="o">@</span> <span class="n">samples</span>
+
+        <span class="n">numerator</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="n">prod_sum</span> <span class="o">-</span> <span class="n">sam_sum</span> <span class="o">*</span> <span class="n">iv_sum</span>
+        <span class="n">denom_samp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">sam_sq_sum</span> <span class="o">-</span> <span class="n">sam_sum</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">denom_int</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">iv_sq_sum</span> <span class="o">-</span> <span class="n">iv_sum</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">denominator</span> <span class="o">=</span> <span class="n">denom_samp</span> <span class="o">*</span> <span class="n">denom_int</span>
+        <span class="k">return</span> <span class="n">numerator</span> <span class="o">/</span> <span class="n">denominator</span></div>
+</div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2018-2023, .
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

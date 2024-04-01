@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>pyecsca.sca.target.PCSC module &#8212; pyecsca 0.2.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d10597a4" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=1ca41fbe" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_paramlinks.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c1177449" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphik.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="icon" href="../_static/logo_black.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pyecsca.sca.target.base module" href="pyecsca.sca.target.base.html" />
+    <link rel="prev" title="pyecsca.sca.target.ISO7816 module" href="pyecsca.sca.target.ISO7816.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo_black.png" alt="Logo" />
+    
+    <h1 class="logo logo-name">pyecsca</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/configuration_space.html">Configuration space</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/codegen.html">Code generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/emulator.html">Emulation and leakage simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/measurement.html">Measurement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/visualization.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/smartcards.html">Smartcards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/re/formulas.html">Exploration of formulas in open-source ECC libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/re/rpa.html">RPA-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/re/zvp.html">ZVP-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/re/epa.html">EPA-based reverse engineering</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="pyecsca.ec.html">pyecsca.ec package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyecsca.misc.html">pyecsca.misc package</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="pyecsca.sca.html">pyecsca.sca package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pyecsca.sca.attack.html">pyecsca.sca.attack package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyecsca.sca.re.html">pyecsca.sca.re package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyecsca.sca.scope.html">pyecsca.sca.scope package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyecsca.sca.stacked_traces.html">pyecsca.sca.stacked_traces package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="pyecsca.sca.target.html">pyecsca.sca.target package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="pyecsca.sca.target.ISO7816.html">pyecsca.sca.target.ISO7816 module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">pyecsca.sca.target.PCSC module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyecsca.sca.target.base.html">pyecsca.sca.target.base module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyecsca.sca.target.binary.html">pyecsca.sca.target.binary module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyecsca.sca.target.chipwhisperer.html">pyecsca.sca.target.chipwhisperer module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyecsca.sca.target.ectester.html">pyecsca.sca.target.ectester module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyecsca.sca.target.flash.html">pyecsca.sca.target.flash module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyecsca.sca.target.leakage.html">pyecsca.sca.target.leakage module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyecsca.sca.target.leia.html">pyecsca.sca.target.leia module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyecsca.sca.target.serial.html">pyecsca.sca.target.serial module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyecsca.sca.target.simpleserial.html">pyecsca.sca.target.simpleserial module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyecsca.sca.trace.html">pyecsca.sca.trace package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyecsca.sca.trace_set.html">pyecsca.sca.trace_set package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyecsca.codegen.html">pyecsca.codegen package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries.html">ECC in Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="pyecsca.sca.html">pyecsca.sca package</a><ul>
+  <li><a href="pyecsca.sca.target.html">pyecsca.sca.target package</a><ul>
+      <li>Previous: <a href="pyecsca.sca.target.ISO7816.html" title="previous chapter">pyecsca.sca.target.ISO7816 module</a></li>
+      <li>Next: <a href="pyecsca.sca.target.base.html" title="next chapter">pyecsca.sca.target.base module</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-pyecsca.sca.target.PCSC">
+<span id="pyecsca-sca-target-pcsc-module"></span><h1>pyecsca.sca.target.PCSC module<a class="headerlink" href="#module-pyecsca.sca.target.PCSC" title="Link to this heading">¶</a></h1>
+<p>Provides a smartcard target communicating via PC/SC (Personal Computer/Smart Card).</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyecsca.sca.target.PCSC.PCSCTarget">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyecsca.sca.target.PCSC.</span></span><span class="sig-name descname"><span class="pre">PCSCTarget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyecsca/sca/target/PCSC.html#PCSCTarget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyecsca.sca.target.PCSC.PCSCTarget" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyecsca.sca.target.ISO7816.html#pyecsca.sca.target.ISO7816.ISO7816Target" title="pyecsca.sca.target.ISO7816.ISO7816Target"><code class="xref py py-class docutils literal notranslate"><span class="pre">ISO7816Target</span></code></a></p>
+<p>Smartcard target communicating via PCSC.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyecsca.sca.target.PCSC.PCSCTarget.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">protocol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyecsca/sca/target/PCSC.html#PCSCTarget.connect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyecsca.sca.target.PCSC.PCSCTarget.connect" title="Link to this definition">¶</a></dt>
+<dd><p>Connect to the card.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="target" id="pyecsca.sca.target.PCSC.PCSCTarget.connect.params.protocol"></span><strong>protocol</strong><a class="paramlink headerlink reference internal" href="#pyecsca.sca.target.PCSC.PCSCTarget.connect.params.protocol">¶</a> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="pyecsca.sca.target.ISO7816.html#pyecsca.sca.target.ISO7816.CardProtocol" title="pyecsca.sca.target.ISO7816.CardProtocol"><code class="xref py py-class docutils literal notranslate"><span class="pre">CardProtocol</span></code></a>]</span>) – CardProtocol to use.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyecsca.sca.target.PCSC.PCSCTarget.atr">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">atr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bytes</span></em><a class="headerlink" href="#pyecsca.sca.target.PCSC.PCSCTarget.atr" title="Link to this definition">¶</a></dt>
+<dd><p>Return the ATR (Answer To Reset) of the target.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyecsca.sca.target.PCSC.PCSCTarget.select">
+<span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">aid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyecsca/sca/target/PCSC.html#PCSCTarget.select"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyecsca.sca.target.PCSC.PCSCTarget.select" title="Link to this definition">¶</a></dt>
+<dd><p>Select an applet with <a class="reference internal" href="#pyecsca.sca.target.PCSC.PCSCTarget.select.params.aid" title="pyecsca.sca.target.PCSC.PCSCTarget.select"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">aid</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="target" id="pyecsca.sca.target.PCSC.PCSCTarget.select.params.aid"></span><strong>aid</strong><a class="paramlink headerlink reference internal" href="#pyecsca.sca.target.PCSC.PCSCTarget.select.params.aid">¶</a> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></span>) – The AID of the applet to select.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Whether the selection was successful.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyecsca.sca.target.PCSC.PCSCTarget.send_apdu">
+<span class="sig-name descname"><span class="pre">send_apdu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">apdu</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyecsca/sca/target/PCSC.html#PCSCTarget.send_apdu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyecsca.sca.target.PCSC.PCSCTarget.send_apdu" title="Link to this definition">¶</a></dt>
+<dd><p>Send an APDU to the selected applet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="target" id="pyecsca.sca.target.PCSC.PCSCTarget.send_apdu.params.apdu"></span><strong>apdu</strong><a class="paramlink headerlink reference internal" href="#pyecsca.sca.target.PCSC.PCSCTarget.send_apdu.params.apdu">¶</a> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="pyecsca.sca.target.ISO7816.html#pyecsca.sca.target.ISO7816.CommandAPDU" title="pyecsca.sca.target.ISO7816.CommandAPDU"><code class="xref py py-class docutils literal notranslate"><span class="pre">CommandAPDU</span></code></a></span>) – The APDU to send.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="pyecsca.sca.target.ISO7816.html#pyecsca.sca.target.ISO7816.ResponseAPDU" title="pyecsca.sca.target.ISO7816.ResponseAPDU"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResponseAPDU</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The response.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyecsca.sca.target.PCSC.PCSCTarget.disconnect">
+<span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyecsca/sca/target/PCSC.html#PCSCTarget.disconnect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyecsca.sca.target.PCSC.PCSCTarget.disconnect" title="Link to this definition">¶</a></dt>
+<dd><p>Disconnect from the target device.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2018-2023, .
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/api/pyecsca.sca.target.PCSC.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

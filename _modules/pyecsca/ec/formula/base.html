@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pyecsca.ec.formula.base &#8212; pyecsca 0.2.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d10597a4" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css?v=1ca41fbe" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx_paramlinks.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=c1177449" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphik.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <script src="../../../../_static/documentation_options.js?v=938c9ccc"></script>
+    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="icon" href="../../../../_static/logo_black.png"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../../index.html">
+    <img class="logo" src="../../../../_static/logo_black.png" alt="Logo" />
+    
+    <h1 class="logo logo-name">pyecsca</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/configuration_space.html">Configuration space</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/codegen.html">Code generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/emulator.html">Emulation and leakage simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/measurement.html">Measurement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/visualization.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/smartcards.html">Smartcards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/formulas.html">Exploration of formulas in open-source ECC libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/rpa.html">RPA-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/zvp.html">ZVP-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/epa.html">EPA-based reverse engineering</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.ec.html">pyecsca.ec package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.misc.html">pyecsca.misc package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.sca.html">pyecsca.sca package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.codegen.html">pyecsca.codegen package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../libraries.html">ECC in Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../references.html">References</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pyecsca.ec.formula.base</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Provides an abstract base class of a formula.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span>
+<span class="kn">from</span> <span class="nn">ast</span> <span class="kn">import</span> <span class="n">Expression</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span>
+
+<span class="kn">from</span> <span class="nn">astunparse</span> <span class="kn">import</span> <span class="n">unparse</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">ClassVar</span><span class="p">,</span> <span class="n">MutableMapping</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Dict</span>
+
+<span class="kn">from</span> <span class="nn">public</span> <span class="kn">import</span> <span class="n">public</span>
+<span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">FF</span><span class="p">,</span> <span class="n">symbols</span><span class="p">,</span> <span class="n">Poly</span><span class="p">,</span> <span class="n">Rational</span>
+
+<span class="kn">from</span> <span class="nn">..context</span> <span class="kn">import</span> <span class="n">ResultAction</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">context</span>
+<span class="kn">from</span> <span class="nn">..error</span> <span class="kn">import</span> <span class="n">UnsatisfiedAssumptionError</span><span class="p">,</span> <span class="n">raise_unsatisified_assumption</span>
+<span class="kn">from</span> <span class="nn">..mod</span> <span class="kn">import</span> <span class="n">Mod</span><span class="p">,</span> <span class="n">SymbolicMod</span>
+<span class="kn">from</span> <span class="nn">..op</span> <span class="kn">import</span> <span class="n">CodeOp</span><span class="p">,</span> <span class="n">OpType</span>
+<span class="kn">from</span> <span class="nn">...misc.cfg</span> <span class="kn">import</span> <span class="n">getconfig</span>
+<span class="kn">from</span> <span class="nn">...misc.cache</span> <span class="kn">import</span> <span class="n">sympify</span><span class="p">,</span> <span class="n">simplify</span>
+
+
+<div class="viewcode-block" id="OpResult">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.base.html#pyecsca.ec.formula.base.OpResult">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">class</span> <span class="nc">OpResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Result of an operation.&quot;&quot;&quot;</span>
+
+    <span class="n">parents</span><span class="p">:</span> <span class="n">Tuple</span>
+    <span class="n">op</span><span class="p">:</span> <span class="n">OpType</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">value</span><span class="p">:</span> <span class="n">Mod</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Mod</span><span class="p">,</span> <span class="n">op</span><span class="p">:</span> <span class="n">OpType</span><span class="p">,</span> <span class="o">*</span><span class="n">parents</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parents</span><span class="p">)</span> <span class="o">!=</span> <span class="n">op</span><span class="o">.</span><span class="n">num_inputs</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Wrong number of parents (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">parents</span><span class="p">)</span><span class="si">}</span><span class="s2">) to OpResult: </span><span class="si">{</span><span class="n">op</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">op</span><span class="o">.</span><span class="n">num_inputs</span><span class="si">}</span><span class="s2">).&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parents</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">parents</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">op</span> <span class="o">=</span> <span class="n">op</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">char</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">op_str</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="n">OpType</span><span class="o">.</span><span class="n">Inv</span><span class="p">:</span>
+            <span class="n">parents</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span> <span class="o">+</span> <span class="n">char</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="n">OpType</span><span class="o">.</span><span class="n">Neg</span><span class="p">:</span>
+            <span class="n">parents</span> <span class="o">=</span> <span class="n">char</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">parents</span> <span class="o">=</span> <span class="n">char</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span> <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parents</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">parents</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="FormulaAction">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.base.html#pyecsca.ec.formula.base.FormulaAction">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">class</span> <span class="nc">FormulaAction</span><span class="p">(</span><span class="n">ResultAction</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Execution of a formula, on some input points and parameters, with some outputs.&quot;&quot;&quot;</span>
+
+    <span class="n">formula</span><span class="p">:</span> <span class="s2">&quot;Formula&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The formula that was executed.&quot;&quot;&quot;</span>
+    <span class="n">inputs</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Mod</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The input variables (point coordinates and parameters).&quot;&quot;&quot;</span>
+    <span class="n">input_points</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The input points.&quot;&quot;&quot;</span>
+    <span class="n">intermediates</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">OpResult</span><span class="p">]]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Intermediates computed during execution.&quot;&quot;&quot;</span>
+    <span class="n">op_results</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">OpResult</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The intermediates but ordered as they were computed.&quot;&quot;&quot;</span>
+    <span class="n">outputs</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">OpResult</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The output variables.&quot;&quot;&quot;</span>
+    <span class="n">output_points</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The output points.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">formula</span><span class="p">:</span> <span class="s2">&quot;Formula&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">points</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">inputs</span><span class="p">:</span> <span class="n">Mod</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">formula</span> <span class="o">=</span> <span class="n">formula</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="n">inputs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">intermediates</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">op_results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_points</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_points</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="FormulaAction.add_operation">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.base.html#pyecsca.ec.formula.base.FormulaAction.add_operation">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_operation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">op</span><span class="p">:</span> <span class="n">CodeOp</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Mod</span><span class="p">):</span>
+        <span class="n">parents</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Mod</span><span class="p">,</span> <span class="n">OpResult</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">op</span><span class="o">.</span><span class="n">parents</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">parent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">intermediates</span><span class="p">:</span>
+                    <span class="n">parents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intermediates</span><span class="p">[</span><span class="n">parent</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">elif</span> <span class="n">parent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
+                    <span class="n">parents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="n">parent</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">parents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">OpResult</span><span class="p">(</span><span class="n">op</span><span class="o">.</span><span class="n">result</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">op</span><span class="o">.</span><span class="n">operator</span><span class="p">,</span> <span class="o">*</span><span class="n">parents</span><span class="p">)</span>
+        <span class="n">li</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">intermediates</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">op</span><span class="o">.</span><span class="n">result</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">li</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">op_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="FormulaAction.add_result">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.base.html#pyecsca.ec.formula.base.FormulaAction.add_result">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">outputs</span><span class="p">:</span> <span class="n">Mod</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">intermediates</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">formula</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">formula</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">input_points</span><span class="si">}</span><span class="s2">) = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">output_points</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="Formula">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.base.html#pyecsca.ec.formula.base.Formula">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">class</span> <span class="nc">Formula</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Formula operating on points.&quot;&quot;&quot;</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Name of the formula.&quot;&quot;&quot;</span>
+    <span class="n">shortname</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A shortname for the type of the formula.&quot;&quot;&quot;</span>
+    <span class="n">coordinate_model</span><span class="p">:</span> <span class="n">Any</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Coordinate model of the formula.&quot;&quot;&quot;</span>
+    <span class="n">meta</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Meta information about the formula, such as its source.&quot;&quot;&quot;</span>
+    <span class="n">parameters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Formula parameters (i.e. new parameters introduced by the formula, like `half = 1/2`).&quot;&quot;&quot;</span>
+    <span class="n">assumptions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Expression</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Assumptions of the formula (e.g. `Z1 == 1` or `2*half == 1`).&quot;&quot;&quot;</span>
+    <span class="n">code</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CodeOp</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The collection of ops that constitute the code of the formula.&quot;&quot;&quot;</span>
+    <span class="n">num_inputs</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Number of inputs (points) of the formula.&quot;&quot;&quot;</span>
+    <span class="n">num_outputs</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Number of outputs (points) of the formula.&quot;&quot;&quot;</span>
+    <span class="n">unified</span><span class="p">:</span> <span class="nb">bool</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Whether the formula specifies that it is unified.&quot;&quot;&quot;</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">assumptions_str</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">unparse</span><span class="p">(</span><span class="n">assumption</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">assumption</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">assumptions</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__validate_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Mod</span><span class="p">)</span> <span class="ow">or</span> <span class="n">value</span><span class="o">.</span><span class="n">n</span> <span class="o">!=</span> <span class="n">field</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Wrong param input </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__validate_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="c1"># Validate number of inputs.</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_inputs</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Wrong number of inputs for </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="c1"># Validate input points and unroll them into input params.</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">point</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">points</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">point</span><span class="o">.</span><span class="n">coordinate_model</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinate_model</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Wrong coordinate model of point </span><span class="si">{</span><span class="n">point</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">coord</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">point</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Mod</span><span class="p">)</span> <span class="ow">or</span> <span class="n">value</span><span class="o">.</span><span class="n">n</span> <span class="o">!=</span> <span class="n">field</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Wrong coordinate input </span><span class="si">{</span><span class="n">coord</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> of point </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">.&quot;</span>
+                    <span class="p">)</span>
+                <span class="n">params</span><span class="p">[</span><span class="n">coord</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">__validate_assumptions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="c1"># Validate assumptions and compute formula parameters.</span>
+        <span class="c1"># TODO: Should this also validate coordinate assumptions and compute their parameters?</span>
+        <span class="n">is_symbolic</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">SymbolicMod</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">assumption</span><span class="p">,</span> <span class="n">assumption_string</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assumptions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">assumptions_str</span>
+        <span class="p">):</span>
+            <span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span> <span class="o">=</span> <span class="n">assumption_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; == &quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">lhs</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+                <span class="c1"># Handle an assumption check on value of input points.</span>
+                <span class="n">alocals</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">Mod</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">params</span><span class="p">}</span>
+                <span class="n">compiled</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="n">assumption</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;eval&quot;</span><span class="p">)</span>
+                <span class="n">holds</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">compiled</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">alocals</span><span class="p">)</span>  <span class="c1"># eval is OK here, skipcq: PYL-W0123</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">holds</span><span class="p">:</span>
+                    <span class="c1"># The assumption doesn&#39;t hold, see what is the current configured action and do it.</span>
+                    <span class="n">raise_unsatisified_assumption</span><span class="p">(</span>
+                        <span class="n">getconfig</span><span class="p">()</span><span class="o">.</span><span class="n">ec</span><span class="o">.</span><span class="n">unsatisfied_formula_assumption_action</span><span class="p">,</span>
+                        <span class="sa">f</span><span class="s2">&quot;Unsatisfied assumption in the formula (</span><span class="si">{</span><span class="n">assumption_string</span><span class="si">}</span><span class="s2">).&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">lhs</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="ow">and</span> <span class="n">is_symbolic</span><span class="p">:</span>
+                <span class="c1"># Handle a symbolic assignment to a new parameter.</span>
+                <span class="n">k</span> <span class="o">=</span> <span class="n">FF</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+                <span class="n">expr</span> <span class="o">=</span> <span class="n">sympify</span><span class="p">(</span><span class="n">rhs</span><span class="p">,</span> <span class="n">evaluate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">curve_param</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">SymbolicMod</span><span class="p">):</span>
+                        <span class="n">expr</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">curve_param</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">expr</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">curve_param</span><span class="p">,</span> <span class="n">k</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+                <span class="n">params</span><span class="p">[</span><span class="n">lhs</span><span class="p">]</span> <span class="o">=</span> <span class="n">SymbolicMod</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">field</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">k</span> <span class="o">=</span> <span class="n">FF</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+                <span class="n">expr</span> <span class="o">=</span> <span class="n">sympify</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">rhs</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">lhs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">evaluate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">curve_param</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">SymbolicMod</span><span class="p">):</span>
+                        <span class="n">expr</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">curve_param</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">expr</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">curve_param</span><span class="p">,</span> <span class="n">k</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="nb">len</span><span class="p">(</span><span class="n">expr</span><span class="o">.</span><span class="n">free_symbols</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>
+                    <span class="ow">or</span> <span class="p">(</span><span class="n">param</span> <span class="o">:=</span> <span class="nb">str</span><span class="p">(</span><span class="n">expr</span><span class="o">.</span><span class="n">free_symbols</span><span class="o">.</span><span class="n">pop</span><span class="p">()))</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span>
+                <span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;This formula couldn&#39;t be executed due to an unsupported assumption (</span><span class="si">{</span><span class="n">assumption_string</span><span class="si">}</span><span class="s2">).&quot;</span>
+                    <span class="p">)</span>
+
+                <span class="k">def</span> <span class="nf">resolve</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">expression</span><span class="o">.</span><span class="n">args</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="n">expression</span>
+                    <span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">expression</span><span class="o">.</span><span class="n">args</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">Rational</span><span class="p">):</span>
+                            <span class="n">a</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">p</span>
+                            <span class="n">b</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">q</span>
+                            <span class="n">res</span> <span class="o">=</span> <span class="n">k</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="n">k</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">res</span> <span class="o">=</span> <span class="n">resolve</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+                        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">expression</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+                <span class="n">expr</span> <span class="o">=</span> <span class="n">resolve</span><span class="p">(</span><span class="n">simplify</span><span class="p">(</span><span class="n">expr</span><span class="p">),</span> <span class="n">k</span><span class="p">)</span>
+                <span class="n">poly</span> <span class="o">=</span> <span class="n">Poly</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">symbols</span><span class="p">(</span><span class="n">param</span><span class="p">),</span> <span class="n">domain</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+                <span class="n">roots</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">ground_roots</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">root</span> <span class="ow">in</span> <span class="n">roots</span><span class="p">:</span>
+                    <span class="n">params</span><span class="p">[</span><span class="n">param</span><span class="p">]</span> <span class="o">=</span> <span class="n">Mod</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">root</span><span class="p">),</span> <span class="n">field</span><span class="p">)</span>
+                    <span class="k">break</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">UnsatisfiedAssumptionError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Unsatisfied assumption in the formula (</span><span class="si">{</span><span class="n">assumption_string</span><span class="si">}</span><span class="s2">).</span><span class="se">\n</span><span class="s2">&quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">expr</span><span class="si">}</span><span class="s2">&#39; has no roots in the base field </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">.&quot;</span>
+                    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="n">points</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">:</span> <span class="n">Mod</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Execute a formula.</span>
+
+<span class="sd">        :param field: The field over which the computation is performed.</span>
+<span class="sd">        :param points: Points to pass into the formula.</span>
+<span class="sd">        :param params: Parameters of the curve.</span>
+<span class="sd">        :return: The resulting point(s).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">..point</span> <span class="kn">import</span> <span class="n">Point</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__validate_params</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__validate_points</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">assumptions</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__validate_assumptions</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="c1"># Execute the actual formula.</span>
+        <span class="k">with</span> <span class="n">FormulaAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">points</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span> <span class="k">as</span> <span class="n">action</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">:</span>
+                <span class="n">op_result</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+                <span class="c1"># This check and cast fixes the issue when the op is `Z3 = 1`.</span>
+                <span class="c1"># TODO: This is not general enough, if for example the op is `t = 1/2`, it will be float.</span>
+                <span class="c1">#       Temporarily, add an assertion that this does not happen so we do not give bad results.</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">op_result</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Bad stuff happened in op </span><span class="si">{</span><span class="n">op</span><span class="si">}</span><span class="s2">, floats will pollute the results.&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">op_result</span><span class="p">,</span> <span class="n">Mod</span><span class="p">):</span>
+                    <span class="n">op_result</span> <span class="o">=</span> <span class="n">Mod</span><span class="p">(</span><span class="n">op_result</span><span class="p">,</span> <span class="n">field</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">current</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">action</span><span class="o">.</span><span class="n">add_operation</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">op_result</span><span class="p">)</span>
+                <span class="n">params</span><span class="p">[</span><span class="n">op</span><span class="o">.</span><span class="n">result</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_result</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="c1"># Go over the outputs and construct the resulting points.</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_outputs</span><span class="p">):</span>
+                <span class="n">ind</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_index</span><span class="p">)</span>
+                <span class="n">resulting</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">full_resulting</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="k">for</span> <span class="n">variable</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinate_model</span><span class="o">.</span><span class="n">variables</span><span class="p">:</span>
+                    <span class="n">full_variable</span> <span class="o">=</span> <span class="n">variable</span> <span class="o">+</span> <span class="n">ind</span>
+                    <span class="n">resulting</span><span class="p">[</span><span class="n">variable</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="n">full_variable</span><span class="p">]</span>
+                    <span class="n">full_resulting</span><span class="p">[</span><span class="n">full_variable</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="n">full_variable</span><span class="p">]</span>
+                <span class="n">point</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate_model</span><span class="p">,</span> <span class="o">**</span><span class="n">resulting</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">current</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">action</span><span class="o">.</span><span class="n">add_result</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="o">**</span><span class="n">full_resulting</span><span class="p">)</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">action</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Formula</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Cannot compare.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate_model</span><span class="si">!s}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate_model</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">input_index</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the starting index where this formula reads its inputs.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">output_index</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the starting index where this formula stores its outputs.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_inputs</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the input variables of the formula.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="n">var</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">var</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">product</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">coordinate_model</span><span class="o">.</span><span class="n">variables</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_inputs</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">}</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the output variables of the formula.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="n">var</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">var</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">product</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">coordinate_model</span><span class="o">.</span><span class="n">variables</span><span class="p">,</span>
+                <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_index</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_outputs</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">}</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">num_operations</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the number of operations.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">op</span><span class="p">:</span> <span class="n">op</span><span class="o">.</span><span class="n">operator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">)))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">num_multiplications</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the number of multiplications.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">op</span><span class="p">:</span> <span class="n">op</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="n">OpType</span><span class="o">.</span><span class="n">Mult</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">)))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">num_divisions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the number of divisions.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">op</span><span class="p">:</span> <span class="n">op</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="n">OpType</span><span class="o">.</span><span class="n">Div</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">)))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">num_inversions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the number of inversions.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">op</span><span class="p">:</span> <span class="n">op</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="n">OpType</span><span class="o">.</span><span class="n">Inv</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">)))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">num_powers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the number of powers.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">op</span><span class="p">:</span> <span class="n">op</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="n">OpType</span><span class="o">.</span><span class="n">Pow</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">)))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">num_squarings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the number of squarings.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">op</span><span class="p">:</span> <span class="n">op</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="n">OpType</span><span class="o">.</span><span class="n">Sqr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">)))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">num_addsubs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the number of additions and subtractions.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">op</span><span class="p">:</span> <span class="n">op</span><span class="o">.</span><span class="n">operator</span> <span class="ow">in</span> <span class="p">(</span><span class="n">OpType</span><span class="o">.</span><span class="n">Add</span><span class="p">,</span> <span class="n">OpType</span><span class="o">.</span><span class="n">Sub</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">))</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="AdditionFormula">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.base.html#pyecsca.ec.formula.base.AdditionFormula">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">class</span> <span class="nc">AdditionFormula</span><span class="p">(</span><span class="n">Formula</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Formula that adds two points.&quot;&quot;&quot;</span>
+
+    <span class="n">shortname</span> <span class="o">=</span> <span class="s2">&quot;add&quot;</span>
+    <span class="n">num_inputs</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">num_outputs</span> <span class="o">=</span> <span class="mi">1</span></div>
+
+
+
+<div class="viewcode-block" id="DoublingFormula">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.base.html#pyecsca.ec.formula.base.DoublingFormula">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">class</span> <span class="nc">DoublingFormula</span><span class="p">(</span><span class="n">Formula</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Formula that doubles a point.&quot;&quot;&quot;</span>
+
+    <span class="n">shortname</span> <span class="o">=</span> <span class="s2">&quot;dbl&quot;</span>
+    <span class="n">num_inputs</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">num_outputs</span> <span class="o">=</span> <span class="mi">1</span></div>
+
+
+
+<div class="viewcode-block" id="TriplingFormula">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.base.html#pyecsca.ec.formula.base.TriplingFormula">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">class</span> <span class="nc">TriplingFormula</span><span class="p">(</span><span class="n">Formula</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Formula that triples a point.&quot;&quot;&quot;</span>
+
+    <span class="n">shortname</span> <span class="o">=</span> <span class="s2">&quot;tpl&quot;</span>
+    <span class="n">num_inputs</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">num_outputs</span> <span class="o">=</span> <span class="mi">1</span></div>
+
+
+
+<div class="viewcode-block" id="NegationFormula">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.base.html#pyecsca.ec.formula.base.NegationFormula">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">class</span> <span class="nc">NegationFormula</span><span class="p">(</span><span class="n">Formula</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Formula that negates a point.&quot;&quot;&quot;</span>
+
+    <span class="n">shortname</span> <span class="o">=</span> <span class="s2">&quot;neg&quot;</span>
+    <span class="n">num_inputs</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">num_outputs</span> <span class="o">=</span> <span class="mi">1</span></div>
+
+
+
+<div class="viewcode-block" id="ScalingFormula">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.base.html#pyecsca.ec.formula.base.ScalingFormula">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">class</span> <span class="nc">ScalingFormula</span><span class="p">(</span><span class="n">Formula</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Formula that somehow scales the point (to a given representative of a projective class).&quot;&quot;&quot;</span>
+
+    <span class="n">shortname</span> <span class="o">=</span> <span class="s2">&quot;scl&quot;</span>
+    <span class="n">num_inputs</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">num_outputs</span> <span class="o">=</span> <span class="mi">1</span></div>
+
+
+
+<div class="viewcode-block" id="DifferentialAdditionFormula">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.base.html#pyecsca.ec.formula.base.DifferentialAdditionFormula">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">class</span> <span class="nc">DifferentialAdditionFormula</span><span class="p">(</span><span class="n">Formula</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Differential addition formula that adds two points with a known difference.</span>
+
+<span class="sd">    The first input point is the difference of the third input and the second input (`P[0] = P[2] - P[1]`).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">shortname</span> <span class="o">=</span> <span class="s2">&quot;dadd&quot;</span>
+    <span class="n">num_inputs</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">num_outputs</span> <span class="o">=</span> <span class="mi">1</span></div>
+
+
+
+<div class="viewcode-block" id="LadderFormula">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.base.html#pyecsca.ec.formula.base.LadderFormula">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">class</span> <span class="nc">LadderFormula</span><span class="p">(</span><span class="n">Formula</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Ladder formula for simultaneous addition of two points and doubling of the one of them, with a known difference.</span>
+
+<span class="sd">    The first input point is the difference of the third input and the second input (`P[0] = P[2] - P[1]`).</span>
+<span class="sd">    The first output point is the doubling of the second input point (`O[0] = 2 * P[1]`).</span>
+<span class="sd">    The second output point is the addition of the second and third input points (`O[1] = P[1] + P[2]`).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">shortname</span> <span class="o">=</span> <span class="s2">&quot;ladd&quot;</span>
+    <span class="n">num_inputs</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">num_outputs</span> <span class="o">=</span> <span class="mi">2</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2018-2023, .
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

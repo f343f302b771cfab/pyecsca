@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pyecsca.ec.formula.fliparoo &#8212; pyecsca 0.2.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d10597a4" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css?v=1ca41fbe" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx_paramlinks.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=c1177449" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphik.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <script src="../../../../_static/documentation_options.js?v=938c9ccc"></script>
+    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="icon" href="../../../../_static/logo_black.png"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../../index.html">
+    <img class="logo" src="../../../../_static/logo_black.png" alt="Logo" />
+    
+    <h1 class="logo logo-name">pyecsca</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/configuration_space.html">Configuration space</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/codegen.html">Code generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/emulator.html">Emulation and leakage simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/measurement.html">Measurement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/visualization.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/smartcards.html">Smartcards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/formulas.html">Exploration of formulas in open-source ECC libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/rpa.html">RPA-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/zvp.html">ZVP-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/epa.html">EPA-based reverse engineering</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.ec.html">pyecsca.ec package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.misc.html">pyecsca.misc package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.sca.html">pyecsca.sca package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.codegen.html">pyecsca.codegen package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../libraries.html">ECC in Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../references.html">References</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pyecsca.ec.formula.fliparoo</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">ast</span> <span class="kn">import</span> <span class="n">parse</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Set</span>
+<span class="kn">from</span> <span class="nn">..op</span> <span class="kn">import</span> <span class="n">OpType</span>
+<span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">Formula</span>
+<span class="kn">from</span> <span class="nn">.graph</span> <span class="kn">import</span> <span class="n">FormulaGraph</span><span class="p">,</span> <span class="n">Node</span><span class="p">,</span> <span class="n">CodeOpNode</span><span class="p">,</span> <span class="n">CodeOp</span><span class="p">,</span> <span class="n">CodeFormula</span>
+
+
+<div class="viewcode-block" id="Fliparoo">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.Fliparoo">[docs]</a>
+<span class="k">class</span> <span class="nc">Fliparoo</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fliparoo is a chain of nodes N1-&gt;N2-&gt;...-&gt;Nk in FormulaGraph for k&gt;=2 such that:</span>
+<span class="sd">        - All Ni are * or All Ni are +/-</span>
+<span class="sd">        - For every Ni, except for Nk, the only outgoing node is Ni+1</span>
+<span class="sd">        - Neither of N1,...,Nk-1 is an output node</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">nodes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CodeOpNode</span><span class="p">]</span>
+    <span class="n">graph</span><span class="p">:</span> <span class="n">FormulaGraph</span>
+    <span class="n">operator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">OpType</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chain</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CodeOpNode</span><span class="p">],</span> <span class="n">graph</span><span class="p">:</span> <span class="n">FormulaGraph</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verify_chain</span><span class="p">(</span><span class="n">chain</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span> <span class="o">=</span> <span class="n">chain</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">graph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">operator</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Fliparoo.verify_chain">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.Fliparoo.verify_chain">[docs]</a>
+    <span class="k">def</span> <span class="nf">verify_chain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CodeOpNode</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nodes</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">outgoing_nodes</span> <span class="o">!=</span> <span class="p">[</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]]:</span>
+                <span class="k">raise</span> <span class="n">BadFliparoo</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">output_node</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">BadFliparoo</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">first</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">last</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;-&gt;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">))</span>
+
+<div class="viewcode-block" id="Fliparoo.previous">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.Fliparoo.previous">[docs]</a>
+    <span class="k">def</span> <span class="nf">previous</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">CodeOpNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">CodeOpNode</span><span class="p">]:</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">graph</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">nodes</span>
+
+    <span class="c1"># unhashable at the moment</span>
+    <span class="fm">__hash__</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># type: ignore</span>
+
+<div class="viewcode-block" id="Fliparoo.deepcopy">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.Fliparoo.deepcopy">[docs]</a>
+    <span class="k">def</span> <span class="nf">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ngraph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">()</span>
+        <span class="n">nchain</span> <span class="o">=</span> <span class="p">[</span><span class="n">mirror_node</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">,</span> <span class="n">ngraph</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="n">nchain</span><span class="p">,</span> <span class="n">ngraph</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Fliparoo.input_nodes">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.Fliparoo.input_nodes">[docs]</a>
+    <span class="k">def</span> <span class="nf">input_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Node</span><span class="p">]:</span>
+        <span class="n">input_nodes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Node</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">input_nodes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">incoming_nodes</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">input_nodes</span></div>
+
+
+<div class="viewcode-block" id="Fliparoo.slice">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.Fliparoo.slice">[docs]</a>
+    <span class="k">def</span> <span class="nf">slice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="MulFliparoo">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.MulFliparoo">[docs]</a>
+<span class="k">class</span> <span class="nc">MulFliparoo</span><span class="p">(</span><span class="n">Fliparoo</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chain</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CodeOpNode</span><span class="p">],</span> <span class="n">graph</span><span class="p">:</span> <span class="n">FormulaGraph</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">chain</span><span class="p">,</span> <span class="n">graph</span><span class="p">)</span>
+        <span class="n">operations</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">operator</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">}</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">operations</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="nb">list</span><span class="p">(</span><span class="n">operations</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">OpType</span><span class="o">.</span><span class="n">Mult</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">BadFliparoo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">operator</span> <span class="o">=</span> <span class="n">OpType</span><span class="o">.</span><span class="n">Mult</span></div>
+
+
+
+<div class="viewcode-block" id="AddSubFliparoo">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.AddSubFliparoo">[docs]</a>
+<span class="k">class</span> <span class="nc">AddSubFliparoo</span><span class="p">(</span><span class="n">Fliparoo</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chain</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CodeOpNode</span><span class="p">],</span> <span class="n">graph</span><span class="p">:</span> <span class="n">FormulaGraph</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">chain</span><span class="p">,</span> <span class="n">graph</span><span class="p">)</span>
+        <span class="n">operations</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">operator</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">}</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">operations</span><span class="o">.</span><span class="n">issubset</span><span class="p">([</span><span class="n">OpType</span><span class="o">.</span><span class="n">Add</span><span class="p">,</span> <span class="n">OpType</span><span class="o">.</span><span class="n">Sub</span><span class="p">]):</span>
+            <span class="k">raise</span> <span class="n">BadFliparoo</span></div>
+
+
+
+<div class="viewcode-block" id="AddFliparoo">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.AddFliparoo">[docs]</a>
+<span class="k">class</span> <span class="nc">AddFliparoo</span><span class="p">(</span><span class="n">Fliparoo</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chain</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CodeOpNode</span><span class="p">],</span> <span class="n">graph</span><span class="p">:</span> <span class="n">FormulaGraph</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">chain</span><span class="p">,</span> <span class="n">graph</span><span class="p">)</span>
+        <span class="n">operations</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">operator</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">}</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">operations</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="nb">list</span><span class="p">(</span><span class="n">operations</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">OpType</span><span class="o">.</span><span class="n">Add</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">BadFliparoo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">operator</span> <span class="o">=</span> <span class="n">OpType</span><span class="o">.</span><span class="n">Add</span></div>
+
+
+
+<div class="viewcode-block" id="BadFliparoo">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.BadFliparoo">[docs]</a>
+<span class="k">class</span> <span class="nc">BadFliparoo</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="find_fliparoos">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.find_fliparoos">[docs]</a>
+<span class="k">def</span> <span class="nf">find_fliparoos</span><span class="p">(</span>
+    <span class="n">graph</span><span class="p">:</span> <span class="n">FormulaGraph</span><span class="p">,</span> <span class="n">fliparoo_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Fliparoo</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Fliparoo</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Finds a list of Fliparoos in a graph&quot;&quot;&quot;</span>
+    <span class="n">fliparoos</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Fliparoo</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">ilong_path</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">find_all_paths</span><span class="p">():</span>
+        <span class="n">long_path</span> <span class="o">=</span> <span class="n">ilong_path</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1"># get rid of the input variables</span>
+        <span class="n">fliparoo</span> <span class="o">=</span> <span class="n">largest_fliparoo</span><span class="p">(</span><span class="n">long_path</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">fliparoo_type</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="k">if</span> <span class="n">fliparoo</span> <span class="ow">and</span> <span class="n">fliparoo</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fliparoos</span><span class="p">:</span>
+            <span class="n">fliparoos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fliparoo</span><span class="p">)</span>
+
+    <span class="c1"># remove duplicities and fliparoos in inclusion</span>
+    <span class="n">fliparoos</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">fliparoos</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">longest_fliparoos</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Fliparoo</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">fliparoo</span> <span class="ow">in</span> <span class="n">fliparoos</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_subfliparoo</span><span class="p">(</span><span class="n">fliparoo</span><span class="p">,</span> <span class="n">longest_fliparoos</span><span class="p">):</span>
+            <span class="n">longest_fliparoos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fliparoo</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">longest_fliparoos</span></div>
+
+
+
+<div class="viewcode-block" id="is_subfliparoo">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.is_subfliparoo">[docs]</a>
+<span class="k">def</span> <span class="nf">is_subfliparoo</span><span class="p">(</span><span class="n">fliparoo</span><span class="p">:</span> <span class="n">Fliparoo</span><span class="p">,</span> <span class="n">longest_fliparoos</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Fliparoo</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns true if fliparoo is a part of any fliparoo in longest_fliparoos&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">other_fliparoo</span> <span class="ow">in</span> <span class="n">longest_fliparoos</span><span class="p">:</span>
+        <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fliparoo</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">other_fliparoo</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l2</span> <span class="o">-</span> <span class="n">l1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">other_fliparoo</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="n">l1</span><span class="p">)</span> <span class="o">==</span> <span class="n">fliparoo</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+
+<div class="viewcode-block" id="largest_fliparoo">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.largest_fliparoo">[docs]</a>
+<span class="k">def</span> <span class="nf">largest_fliparoo</span><span class="p">(</span>
+    <span class="n">chain</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CodeOpNode</span><span class="p">],</span>
+    <span class="n">graph</span><span class="p">:</span> <span class="n">FormulaGraph</span><span class="p">,</span>
+    <span class="n">fliparoo_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Fliparoo</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Fliparoo</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Finds the largest fliparoo in a list of Nodes&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chain</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chain</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">subchain</span> <span class="o">=</span> <span class="n">chain</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">fliparoo_type</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">fliparoo_type</span><span class="p">(</span><span class="n">subchain</span><span class="p">,</span> <span class="n">graph</span><span class="p">)</span>
+                <span class="k">except</span> <span class="n">BadFliparoo</span><span class="p">:</span>
+                    <span class="k">continue</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">MulFliparoo</span><span class="p">(</span><span class="n">subchain</span><span class="p">,</span> <span class="n">graph</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">BadFliparoo</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">AddSubFliparoo</span><span class="p">(</span><span class="n">subchain</span><span class="p">,</span> <span class="n">graph</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">BadFliparoo</span><span class="p">:</span>
+                <span class="k">pass</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="SignedNode">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.SignedNode">[docs]</a>
+<span class="k">class</span> <span class="nc">SignedNode</span><span class="p">:</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a summand in an expression X1-X2+X3+X4-X5...</span>
+<span class="sd">    Used for creating +/- Fliparoos</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">node</span><span class="p">:</span> <span class="n">CodeOpNode</span>
+    <span class="n">sign</span><span class="p">:</span> <span class="nb">int</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">CodeOpNode</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">node</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sign</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;-&quot;</span><span class="p">}[</span><span class="bp">self</span><span class="o">.</span><span class="n">sign</span><span class="p">]</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">s</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="SignedSubGraph">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.SignedSubGraph">[docs]</a>
+<span class="k">class</span> <span class="nc">SignedSubGraph</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Subgraph of an EFDFormula graph with signed nodes&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SignedNode</span><span class="p">],</span> <span class="n">graph</span><span class="p">:</span> <span class="n">FormulaGraph</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span> <span class="o">=</span> <span class="n">nodes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">supergraph</span> <span class="o">=</span> <span class="n">graph</span>
+
+<div class="viewcode-block" id="SignedSubGraph.add_node">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.SignedSubGraph.add_node">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">SignedNode</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SignedSubGraph.remove_node">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.SignedSubGraph.remove_node">[docs]</a>
+    <span class="k">def</span> <span class="nf">remove_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">SignedNode</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">node</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SignedSubGraph.change_signs">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.SignedSubGraph.change_signs">[docs]</a>
+    <span class="k">def</span> <span class="nf">change_signs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">sign</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SignedSubGraph.deepcopy">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.SignedSubGraph.deepcopy">[docs]</a>
+    <span class="k">def</span> <span class="nf">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sgraph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">supergraph</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">SignedSubGraph</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">mirror_node</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">supergraph</span><span class="p">,</span> <span class="n">sgraph</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">],</span> <span class="n">sgraph</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="mirror_node">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.mirror_node">[docs]</a>
+<span class="k">def</span> <span class="nf">mirror_node</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">graph_copy</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Finds the corresponding node in a copy of the graph&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">SignedNode</span><span class="p">):</span>
+        <span class="n">ns</span> <span class="o">=</span> <span class="n">SignedNode</span><span class="p">(</span><span class="n">graph_copy</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">graph</span><span class="o">.</span><span class="n">node_index</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">node</span><span class="p">)])</span>
+        <span class="n">ns</span><span class="o">.</span><span class="n">sign</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">sign</span>
+        <span class="k">return</span> <span class="n">ns</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">Node</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">graph_copy</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">graph</span><span class="o">.</span><span class="n">node_index</span><span class="p">(</span><span class="n">node</span><span class="p">)]</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+
+<div class="viewcode-block" id="DummyNode">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.DummyNode">[docs]</a>
+<span class="k">class</span> <span class="nc">DummyNode</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Dummy node&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="generate_fliparood_formulas">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.generate_fliparood_formulas">[docs]</a>
+<span class="k">def</span> <span class="nf">generate_fliparood_formulas</span><span class="p">(</span>
+    <span class="n">formula</span><span class="p">:</span> <span class="n">Formula</span><span class="p">,</span> <span class="n">rename</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">CodeFormula</span><span class="p">]:</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">FormulaGraph</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">rename</span><span class="p">)</span>
+    <span class="n">fliparoos</span> <span class="o">=</span> <span class="n">find_fliparoos</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">fliparoo</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">fliparoos</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">flip_graph</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">generate_fliparood_graphs</span><span class="p">(</span><span class="n">fliparoo</span><span class="p">)):</span>
+            <span class="k">yield</span> <span class="n">flip_graph</span><span class="o">.</span><span class="n">to_formula</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;fliparoo[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="generate_fliparood_graphs">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.generate_fliparood_graphs">[docs]</a>
+<span class="k">def</span> <span class="nf">generate_fliparood_graphs</span><span class="p">(</span><span class="n">fliparoo</span><span class="p">:</span> <span class="n">Fliparoo</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">FormulaGraph</span><span class="p">]:</span>
+    <span class="n">fliparoo</span> <span class="o">=</span> <span class="n">fliparoo</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">()</span>
+    <span class="n">last_str</span> <span class="o">=</span> <span class="n">fliparoo</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">result</span>
+    <span class="n">disconnect_fliparoo_outputs</span><span class="p">(</span><span class="n">fliparoo</span><span class="p">)</span>
+
+    <span class="n">signed_subgraph</span> <span class="o">=</span> <span class="n">extract_fliparoo_signed_inputs</span><span class="p">(</span><span class="n">fliparoo</span><span class="p">)</span>
+
+    <span class="c1"># Starting with a single list of unconnected signed nodes</span>
+    <span class="n">signed_subgraphs</span> <span class="o">=</span> <span class="p">[</span><span class="n">signed_subgraph</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">signed_subgraph</span><span class="o">.</span><span class="n">components</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">subgraphs_updated</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">signed_subgraph</span> <span class="ow">in</span> <span class="n">signed_subgraphs</span><span class="p">:</span>
+            <span class="n">extended_subgraphs</span> <span class="o">=</span> <span class="n">combine_all_pairs_signed_nodes</span><span class="p">(</span>
+                <span class="n">signed_subgraph</span><span class="p">,</span> <span class="n">fliparoo</span>
+            <span class="p">)</span>
+            <span class="n">subgraphs_updated</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">extended_subgraphs</span><span class="p">)</span>
+        <span class="n">signed_subgraphs</span> <span class="o">=</span> <span class="n">subgraphs_updated</span>
+
+    <span class="k">for</span> <span class="n">signed_subgraph</span> <span class="ow">in</span> <span class="n">signed_subgraphs</span><span class="p">:</span>
+        <span class="n">graph</span> <span class="o">=</span> <span class="n">signed_subgraph</span><span class="o">.</span><span class="n">supergraph</span>
+        <span class="k">if</span> <span class="n">signed_subgraph</span><span class="o">.</span><span class="n">components</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="n">final_signed_node</span> <span class="o">=</span> <span class="n">signed_subgraph</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">final_signed_node</span><span class="o">.</span><span class="n">sign</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">final_node</span><span class="p">:</span> <span class="n">CodeOpNode</span> <span class="o">=</span> <span class="n">final_signed_node</span><span class="o">.</span><span class="n">node</span>
+
+        <span class="n">opstr</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">last_str</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">final_node</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">left</span><span class="si">}{</span><span class="n">final_node</span><span class="o">.</span><span class="n">optype</span><span class="o">.</span><span class="n">op_str</span><span class="si">}{</span><span class="n">final_node</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">right</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">final_node</span><span class="o">.</span><span class="n">op</span> <span class="o">=</span> <span class="n">CodeOp</span><span class="p">(</span><span class="n">parse</span><span class="p">(</span><span class="n">opstr</span><span class="p">))</span>
+        <span class="n">reconnect_fliparoo_outputs</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">final_node</span><span class="p">)</span>
+        <span class="n">graph</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="k">yield</span> <span class="n">graph</span></div>
+
+
+
+<div class="viewcode-block" id="extract_fliparoo_signed_inputs">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.extract_fliparoo_signed_inputs">[docs]</a>
+<span class="k">def</span> <span class="nf">extract_fliparoo_signed_inputs</span><span class="p">(</span><span class="n">fliparoo</span><span class="p">:</span> <span class="n">Fliparoo</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SignedSubGraph</span><span class="p">:</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">fliparoo</span><span class="o">.</span><span class="n">graph</span>
+    <span class="n">signed_inputs</span> <span class="o">=</span> <span class="n">SignedSubGraph</span><span class="p">([],</span> <span class="n">graph</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">fliparoo</span><span class="p">:</span>
+        <span class="n">prev</span> <span class="o">=</span> <span class="n">fliparoo</span><span class="o">.</span><span class="n">previous</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">SignedNode</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">incoming_nodes</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">right</span><span class="o">.</span><span class="n">node</span> <span class="o">!=</span> <span class="n">prev</span><span class="p">:</span>
+            <span class="n">right</span><span class="o">.</span><span class="n">sign</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_sub</span> <span class="k">else</span> <span class="mi">1</span>
+            <span class="n">signed_inputs</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">right</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">left</span><span class="o">.</span><span class="n">node</span> <span class="o">!=</span> <span class="n">prev</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_sub</span> <span class="ow">and</span> <span class="n">right</span><span class="o">.</span><span class="n">node</span> <span class="o">==</span> <span class="n">prev</span><span class="p">:</span>
+                <span class="n">signed_inputs</span><span class="o">.</span><span class="n">change_signs</span><span class="p">()</span>
+            <span class="n">signed_inputs</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">left</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">prev</span><span class="p">:</span>
+            <span class="n">graph</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="n">prev</span><span class="p">)</span>
+    <span class="n">graph</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="n">fliparoo</span><span class="o">.</span><span class="n">last</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">signed_inputs</span></div>
+
+
+
+<div class="viewcode-block" id="disconnect_fliparoo_outputs">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.disconnect_fliparoo_outputs">[docs]</a>
+<span class="k">def</span> <span class="nf">disconnect_fliparoo_outputs</span><span class="p">(</span><span class="n">fliparoo</span><span class="p">:</span> <span class="n">Fliparoo</span><span class="p">):</span>
+    <span class="c1"># remember positions of the last node with a DummyNode placeholder</span>
+    <span class="n">dummy</span> <span class="o">=</span> <span class="n">DummyNode</span><span class="p">()</span>
+    <span class="n">fliparoo</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">dummy</span><span class="p">)</span>
+    <span class="n">fliparoo</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">reconnect_outgoing_nodes</span><span class="p">(</span><span class="n">dummy</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="reconnect_fliparoo_outputs">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.reconnect_fliparoo_outputs">[docs]</a>
+<span class="k">def</span> <span class="nf">reconnect_fliparoo_outputs</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">FormulaGraph</span><span class="p">,</span> <span class="n">last_node</span><span class="p">:</span> <span class="n">Node</span><span class="p">):</span>
+    <span class="n">dummy</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">DummyNode</span><span class="p">),</span> <span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">))</span>
+    <span class="n">dummy</span><span class="o">.</span><span class="n">reconnect_outgoing_nodes</span><span class="p">(</span><span class="n">last_node</span><span class="p">)</span>
+    <span class="n">graph</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="n">dummy</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">DummyNode</span><span class="p">),</span> <span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span></div>
+
+
+
+<div class="viewcode-block" id="combine_all_pairs_signed_nodes">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.combine_all_pairs_signed_nodes">[docs]</a>
+<span class="k">def</span> <span class="nf">combine_all_pairs_signed_nodes</span><span class="p">(</span>
+    <span class="n">signed_subgraph</span><span class="p">:</span> <span class="n">SignedSubGraph</span><span class="p">,</span> <span class="n">fliparoo</span><span class="p">:</span> <span class="n">Fliparoo</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">SignedSubGraph</span><span class="p">]:</span>
+    <span class="n">signed_subgraphs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">n_components</span> <span class="o">=</span> <span class="n">signed_subgraph</span><span class="o">.</span><span class="n">components</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_components</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_components</span><span class="p">):</span>
+            <span class="n">csigned_subgraph</span> <span class="o">=</span> <span class="n">signed_subgraph</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">()</span>
+            <span class="n">v</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">csigned_subgraph</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">csigned_subgraph</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">combine_signed_nodes</span><span class="p">(</span><span class="n">csigned_subgraph</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">fliparoo</span><span class="p">)</span>
+            <span class="n">signed_subgraphs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">csigned_subgraph</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">signed_subgraphs</span></div>
+
+
+
+<div class="viewcode-block" id="combine_signed_nodes">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.combine_signed_nodes">[docs]</a>
+<span class="k">def</span> <span class="nf">combine_signed_nodes</span><span class="p">(</span>
+    <span class="n">subgraph</span><span class="p">:</span> <span class="n">SignedSubGraph</span><span class="p">,</span>
+    <span class="n">left_signed_node</span><span class="p">:</span> <span class="n">SignedNode</span><span class="p">,</span>
+    <span class="n">right_signed_node</span><span class="p">:</span> <span class="n">SignedNode</span><span class="p">,</span>
+    <span class="n">fliparoo</span><span class="p">:</span> <span class="n">Fliparoo</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">left_node</span><span class="p">,</span> <span class="n">right_node</span> <span class="o">=</span> <span class="n">left_signed_node</span><span class="o">.</span><span class="n">node</span><span class="p">,</span> <span class="n">right_signed_node</span><span class="o">.</span><span class="n">node</span>
+    <span class="n">sign</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">operator</span> <span class="o">=</span> <span class="n">OpType</span><span class="o">.</span><span class="n">Mult</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fliparoo</span><span class="p">,</span> <span class="n">AddSubFliparoo</span><span class="p">):</span>
+        <span class="n">s0</span><span class="p">,</span> <span class="n">s1</span> <span class="o">=</span> <span class="n">left_signed_node</span><span class="o">.</span><span class="n">sign</span><span class="p">,</span> <span class="n">right_signed_node</span><span class="o">.</span><span class="n">sign</span>
+        <span class="k">if</span> <span class="n">s0</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">operator</span> <span class="o">=</span> <span class="n">OpType</span><span class="o">.</span><span class="n">Add</span> <span class="k">if</span> <span class="n">s1</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">OpType</span><span class="o">.</span><span class="n">Sub</span>
+
+        <span class="k">if</span> <span class="n">s0</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">s1</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">operator</span> <span class="o">=</span> <span class="n">OpType</span><span class="o">.</span><span class="n">Sub</span>
+            <span class="n">left_node</span><span class="p">,</span> <span class="n">right_node</span> <span class="o">=</span> <span class="n">right_node</span><span class="p">,</span> <span class="n">left_node</span>
+
+        <span class="c1"># propagate the sign</span>
+        <span class="k">if</span> <span class="n">s0</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">s1</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">operator</span> <span class="o">=</span> <span class="n">OpType</span><span class="o">.</span><span class="n">Add</span>
+            <span class="n">sign</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+    <span class="n">new_node</span> <span class="o">=</span> <span class="n">CodeOpNode</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Fliparoo</span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="n">left_node</span><span class="p">)</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="n">operator</span><span class="p">)</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="n">sign</span><span class="p">)</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="n">right_node</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">left_node</span><span class="o">.</span><span class="n">result</span><span class="p">,</span>
+        <span class="n">operator</span><span class="p">,</span>
+        <span class="n">right_node</span><span class="o">.</span><span class="n">result</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">new_node</span><span class="o">.</span><span class="n">incoming_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="n">left_node</span><span class="p">,</span> <span class="n">right_node</span><span class="p">]</span>
+    <span class="n">left_node</span><span class="o">.</span><span class="n">outgoing_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_node</span><span class="p">)</span>
+    <span class="n">right_node</span><span class="o">.</span><span class="n">outgoing_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_node</span><span class="p">)</span>
+    <span class="n">subgraph</span><span class="o">.</span><span class="n">supergraph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">new_node</span><span class="p">)</span>
+    <span class="n">new_node</span> <span class="o">=</span> <span class="n">SignedNode</span><span class="p">(</span><span class="n">new_node</span><span class="p">)</span>
+    <span class="n">new_node</span><span class="o">.</span><span class="n">sign</span> <span class="o">=</span> <span class="n">sign</span>
+    <span class="n">subgraph</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="n">left_signed_node</span><span class="p">)</span>
+    <span class="n">subgraph</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="n">right_signed_node</span><span class="p">)</span>
+    <span class="n">subgraph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">new_node</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="recursive_fliparoo">
+<a class="viewcode-back" href="../../../../api/pyecsca.ec.formula.fliparoo.html#pyecsca.ec.formula.fliparoo.recursive_fliparoo">[docs]</a>
+<span class="k">def</span> <span class="nf">recursive_fliparoo</span><span class="p">(</span><span class="n">formula</span><span class="p">:</span> <span class="n">Formula</span><span class="p">,</span> <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="n">Formula</span><span class="p">]:</span>
+    <span class="n">all_fliparoos</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="p">{</span><span class="n">formula</span><span class="p">}}</span>
+    <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">depth</span> <span class="o">&gt;</span> <span class="n">counter</span><span class="p">:</span>
+        <span class="n">prev_level</span> <span class="o">=</span> <span class="n">all_fliparoos</span><span class="p">[</span><span class="n">counter</span><span class="p">]</span>
+        <span class="n">fliparoo_level</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">Formula</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">flipparood_formula</span> <span class="ow">in</span> <span class="n">prev_level</span><span class="p">:</span>
+            <span class="n">rename</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">counter</span>  <span class="c1"># rename ivs before the first fliparoo</span>
+            <span class="k">for</span> <span class="n">newly_fliparood</span> <span class="ow">in</span> <span class="n">generate_fliparood_formulas</span><span class="p">(</span>
+                <span class="n">flipparood_formula</span><span class="p">,</span> <span class="n">rename</span>
+            <span class="p">):</span>
+                <span class="n">fliparoo_level</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">newly_fliparood</span><span class="p">)</span>
+        <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">all_fliparoos</span><span class="p">[</span><span class="n">counter</span><span class="p">]</span> <span class="o">=</span> <span class="n">fliparoo_level</span>
+
+    <span class="k">return</span> <span class="nb">set</span><span class="p">()</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="o">*</span><span class="n">all_fliparoos</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2018-2023, .
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

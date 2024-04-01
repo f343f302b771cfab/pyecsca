@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pyecsca.sca.scope.base &#8212; pyecsca 0.2.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d10597a4" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css?v=1ca41fbe" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx_paramlinks.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=c1177449" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphik.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <script src="../../../../_static/documentation_options.js?v=938c9ccc"></script>
+    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="icon" href="../../../../_static/logo_black.png"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../../index.html">
+    <img class="logo" src="../../../../_static/logo_black.png" alt="Logo" />
+    
+    <h1 class="logo logo-name">pyecsca</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/configuration_space.html">Configuration space</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/codegen.html">Code generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/emulator.html">Emulation and leakage simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/measurement.html">Measurement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/visualization.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/smartcards.html">Smartcards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/formulas.html">Exploration of formulas in open-source ECC libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/rpa.html">RPA-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/zvp.html">ZVP-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/epa.html">EPA-based reverse engineering</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.ec.html">pyecsca.ec package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.misc.html">pyecsca.misc package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.sca.html">pyecsca.sca package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.codegen.html">pyecsca.codegen package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../libraries.html">ECC in Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../references.html">References</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pyecsca.sca.scope.base</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Provides an abstract base class for oscilloscopes.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">public</span> <span class="kn">import</span> <span class="n">public</span>
+
+<span class="kn">from</span> <span class="nn">..trace</span> <span class="kn">import</span> <span class="n">Trace</span>
+
+
+<div class="viewcode-block" id="SampleType">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.base.html#pyecsca.sca.scope.base.SampleType">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">class</span> <span class="nc">SampleType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The sample unit.&quot;&quot;&quot;</span>
+
+    <span class="n">Raw</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">Volt</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="Scope">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.base.html#pyecsca.sca.scope.base.Scope">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">class</span> <span class="nc">Scope</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An oscilloscope.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Scope.open">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.base.html#pyecsca.sca.scope.base.Scope.open">[docs]</a>
+    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Open the connection to the scope.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">channels</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;A list of channels available on this scope.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+<div class="viewcode-block" id="Scope.setup_frequency">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.base.html#pyecsca.sca.scope.base.Scope.setup_frequency">[docs]</a>
+    <span class="k">def</span> <span class="nf">setup_frequency</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">frequency</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">pretrig</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">posttrig</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Setup the frequency and sample count for the measurement.</span>
+
+<span class="sd">        The scope might not support the requested values and will adjust them to get</span>
+<span class="sd">        the next best frequency and the largest supported number of samples</span>
+<span class="sd">        (or the number of samples requested).</span>
+
+<span class="sd">        :param frequency: The requested frequency in Hz.</span>
+<span class="sd">        :param pretrig: The requested number of samples to measure before the trigger.</span>
+<span class="sd">        :param posttrig: The requested number of samples to measure after the trigger.</span>
+<span class="sd">        :return: A tuple of the actual set frequency and the actual number of samples.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+<div class="viewcode-block" id="Scope.setup_channel">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.base.html#pyecsca.sca.scope.base.Scope.setup_channel">[docs]</a>
+    <span class="k">def</span> <span class="nf">setup_channel</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">coupling</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">range</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">enable</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Setup a channel to use the coupling method and measure the given voltage range.</span>
+
+<span class="sd">        :param channel: The channel to measure.</span>
+<span class="sd">        :param coupling: The coupling method (&quot;AC&quot; or &quot;DC).</span>
+<span class="sd">        :param range: The voltage range to measure.</span>
+<span class="sd">        :param offset: The analog voltage offset added to the input. Not supported on many scopes.</span>
+<span class="sd">        :param enable: Whether to enable or disable the channel.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+<div class="viewcode-block" id="Scope.setup_trigger">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.base.html#pyecsca.sca.scope.base.Scope.setup_trigger">[docs]</a>
+    <span class="k">def</span> <span class="nf">setup_trigger</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">direction</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">delay</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">enable</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Setup a trigger on a particular `channel`, the channel has to be set up and enabled.</span>
+
+<span class="sd">        The trigger will fire based on the `threshold` and `direction`, if enabled,  the trigger</span>
+<span class="sd">        will capture after `delay` ticks pass. If trigger conditions do not hold it will fire</span>
+<span class="sd">        automatically after `timeout` milliseconds.</span>
+
+<span class="sd">        :param channel: The channel to trigger on.</span>
+<span class="sd">        :param threshold: The value to trigger on.</span>
+<span class="sd">        :param direction: The direction to trigger on (&quot;above&quot;, &quot;below&quot;, &quot;rising&quot;, &quot;falling&quot;).</span>
+<span class="sd">        :param delay: The delay for capture after trigger (clock ticks).</span>
+<span class="sd">        :param timeout: The timeout in milliseconds.</span>
+<span class="sd">        :param enable: Whether to enable or disable this trigger.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+<div class="viewcode-block" id="Scope.setup_capture">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.base.html#pyecsca.sca.scope.base.Scope.setup_capture">[docs]</a>
+    <span class="k">def</span> <span class="nf">setup_capture</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">enable</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Setup the capture for a channel.</span>
+
+<span class="sd">        :param channel: The channel to capture.</span>
+<span class="sd">        :param enable: Whether to enable or disable capture.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+<div class="viewcode-block" id="Scope.arm">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.base.html#pyecsca.sca.scope.base.Scope.arm">[docs]</a>
+    <span class="k">def</span> <span class="nf">arm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Arm the scope, it will listen for the trigger after this point.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+<div class="viewcode-block" id="Scope.capture">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.base.html#pyecsca.sca.scope.base.Scope.capture">[docs]</a>
+    <span class="k">def</span> <span class="nf">capture</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wait for the trace to capture, this will block until the scope has a trace.</span>
+
+<span class="sd">        :param timeout: A time in milliseconds to wait for the trace, returns `None` if it runs out.</span>
+<span class="sd">        :return: Whether capture was successful (or it timed out).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+<div class="viewcode-block" id="Scope.retrieve">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.base.html#pyecsca.sca.scope.base.Scope.retrieve">[docs]</a>
+    <span class="k">def</span> <span class="nf">retrieve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">:</span> <span class="n">SampleType</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Trace</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve a captured trace of a channel.</span>
+
+<span class="sd">        :param channel: The channel to retrieve the trace from.</span>
+<span class="sd">        :param type: The type of returned samples.</span>
+<span class="sd">        :param dtype: The data type of the returned samples, should be numpy dtype-like.</span>
+<span class="sd">        :return: The captured trace (if any).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+<div class="viewcode-block" id="Scope.stop">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.base.html#pyecsca.sca.scope.base.Scope.stop">[docs]</a>
+    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Stop the capture, if any.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+<div class="viewcode-block" id="Scope.close">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.base.html#pyecsca.sca.scope.base.Scope.close">[docs]</a>
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Close the connection to the scope.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+</div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2018-2023, .
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

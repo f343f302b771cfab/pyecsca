@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>pyecsca.sca.trace_set.chipwhisperer module &#8212; pyecsca 0.2.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d10597a4" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=1ca41fbe" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_paramlinks.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c1177449" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphik.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="icon" href="../_static/logo_black.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pyecsca.sca.trace_set.hdf5 module" href="pyecsca.sca.trace_set.hdf5.html" />
+    <link rel="prev" title="pyecsca.sca.trace_set.base module" href="pyecsca.sca.trace_set.base.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo_black.png" alt="Logo" />
+    
+    <h1 class="logo logo-name">pyecsca</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/configuration_space.html">Configuration space</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/codegen.html">Code generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/emulator.html">Emulation and leakage simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/measurement.html">Measurement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/visualization.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/smartcards.html">Smartcards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/re/formulas.html">Exploration of formulas in open-source ECC libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/re/rpa.html">RPA-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/re/zvp.html">ZVP-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/re/epa.html">EPA-based reverse engineering</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="pyecsca.ec.html">pyecsca.ec package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyecsca.misc.html">pyecsca.misc package</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="pyecsca.sca.html">pyecsca.sca package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pyecsca.sca.attack.html">pyecsca.sca.attack package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyecsca.sca.re.html">pyecsca.sca.re package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyecsca.sca.scope.html">pyecsca.sca.scope package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyecsca.sca.stacked_traces.html">pyecsca.sca.stacked_traces package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyecsca.sca.target.html">pyecsca.sca.target package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyecsca.sca.trace.html">pyecsca.sca.trace package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="pyecsca.sca.trace_set.html">pyecsca.sca.trace_set package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="pyecsca.sca.trace_set.base.html">pyecsca.sca.trace_set.base module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">pyecsca.sca.trace_set.chipwhisperer module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyecsca.sca.trace_set.hdf5.html">pyecsca.sca.trace_set.hdf5 module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyecsca.sca.trace_set.inspector.html">pyecsca.sca.trace_set.inspector module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyecsca.sca.trace_set.pickle.html">pyecsca.sca.trace_set.pickle module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyecsca.codegen.html">pyecsca.codegen package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries.html">ECC in Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="pyecsca.sca.html">pyecsca.sca package</a><ul>
+  <li><a href="pyecsca.sca.trace_set.html">pyecsca.sca.trace_set package</a><ul>
+      <li>Previous: <a href="pyecsca.sca.trace_set.base.html" title="previous chapter">pyecsca.sca.trace_set.base module</a></li>
+      <li>Next: <a href="pyecsca.sca.trace_set.hdf5.html" title="next chapter">pyecsca.sca.trace_set.hdf5 module</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-pyecsca.sca.trace_set.chipwhisperer">
+<span id="pyecsca-sca-trace-set-chipwhisperer-module"></span><h1>pyecsca.sca.trace_set.chipwhisperer module<a class="headerlink" href="#module-pyecsca.sca.trace_set.chipwhisperer" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyecsca.sca.trace_set.chipwhisperer.ChipWhispererTraceSet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyecsca.sca.trace_set.chipwhisperer.</span></span><span class="sig-name descname"><span class="pre">ChipWhispererTraceSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">traces</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyecsca/sca/trace_set/chipwhisperer.html#ChipWhispererTraceSet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyecsca.sca.trace_set.chipwhisperer.ChipWhispererTraceSet" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyecsca.sca.trace_set.base.html#pyecsca.sca.trace_set.base.TraceSet" title="pyecsca.sca.trace_set.base.TraceSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">TraceSet</span></code></a></p>
+<p>ChipWhisperer trace set (native) format.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyecsca.sca.trace_set.chipwhisperer.ChipWhispererTraceSet.read">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyecsca/sca/trace_set/chipwhisperer.html#ChipWhispererTraceSet.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyecsca.sca.trace_set.chipwhisperer.ChipWhispererTraceSet.read" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#pyecsca.sca.trace_set.chipwhisperer.ChipWhispererTraceSet" title="pyecsca.sca.trace_set.chipwhisperer.ChipWhispererTraceSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChipWhispererTraceSet</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyecsca.sca.trace_set.chipwhisperer.ChipWhispererTraceSet.inplace">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inplace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyecsca/sca/trace_set/chipwhisperer.html#ChipWhispererTraceSet.inplace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyecsca.sca.trace_set.chipwhisperer.ChipWhispererTraceSet.inplace" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#pyecsca.sca.trace_set.chipwhisperer.ChipWhispererTraceSet" title="pyecsca.sca.trace_set.chipwhisperer.ChipWhispererTraceSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChipWhispererTraceSet</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyecsca.sca.trace_set.chipwhisperer.ChipWhispererTraceSet.write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyecsca/sca/trace_set/chipwhisperer.html#ChipWhispererTraceSet.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyecsca.sca.trace_set.chipwhisperer.ChipWhispererTraceSet.write" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2018-2023, .
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/api/pyecsca.sca.trace_set.chipwhisperer.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

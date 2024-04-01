@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pyecsca.sca.re.zvp &#8212; pyecsca 0.2.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d10597a4" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css?v=1ca41fbe" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx_paramlinks.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=c1177449" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphik.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <script src="../../../../_static/documentation_options.js?v=938c9ccc"></script>
+    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="icon" href="../../../../_static/logo_black.png"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../../index.html">
+    <img class="logo" src="../../../../_static/logo_black.png" alt="Logo" />
+    
+    <h1 class="logo logo-name">pyecsca</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/configuration_space.html">Configuration space</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/codegen.html">Code generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/emulator.html">Emulation and leakage simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/measurement.html">Measurement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/visualization.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/smartcards.html">Smartcards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/formulas.html">Exploration of formulas in open-source ECC libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/rpa.html">RPA-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/zvp.html">ZVP-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/epa.html">EPA-based reverse engineering</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.ec.html">pyecsca.ec package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.misc.html">pyecsca.misc package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.sca.html">pyecsca.sca package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.codegen.html">pyecsca.codegen package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../libraries.html">ECC in Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../references.html">References</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pyecsca.sca.re.zvp</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Provides functionality inspired by the Zero-value point attack [ZVP]_.</span>
+
+<span class="sd">Implements ZVP point construction from [FFD]_.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Type</span>
+<span class="kn">from</span> <span class="nn">public</span> <span class="kn">import</span> <span class="n">public</span>
+<span class="kn">from</span> <span class="nn">astunparse</span> <span class="kn">import</span> <span class="n">unparse</span>
+
+<span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">FF</span><span class="p">,</span> <span class="n">Poly</span><span class="p">,</span> <span class="n">Monomial</span><span class="p">,</span> <span class="n">Symbol</span><span class="p">,</span> <span class="n">Expr</span><span class="p">,</span> <span class="n">sympify</span><span class="p">,</span> <span class="n">symbols</span><span class="p">,</span> <span class="n">div</span>
+<span class="kn">from</span> <span class="nn">.rpa</span> <span class="kn">import</span> <span class="n">MultipleContext</span>
+<span class="kn">from</span> <span class="nn">...ec.context</span> <span class="kn">import</span> <span class="n">local</span>
+<span class="kn">from</span> <span class="nn">...ec.curve</span> <span class="kn">import</span> <span class="n">EllipticCurve</span>
+<span class="kn">from</span> <span class="nn">...ec.model</span> <span class="kn">import</span> <span class="n">CurveModel</span>
+<span class="kn">from</span> <span class="nn">...ec.divpoly</span> <span class="kn">import</span> <span class="n">mult_by_n</span>
+<span class="kn">from</span> <span class="nn">...ec.formula</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Formula</span><span class="p">,</span>
+    <span class="n">AdditionFormula</span><span class="p">,</span>
+    <span class="n">DoublingFormula</span><span class="p">,</span>
+    <span class="n">DifferentialAdditionFormula</span><span class="p">,</span>
+    <span class="n">LadderFormula</span><span class="p">,</span>
+    <span class="n">NegationFormula</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">...ec.formula.fake</span> <span class="kn">import</span> <span class="n">FakePoint</span><span class="p">,</span> <span class="n">FakeFormula</span>
+<span class="kn">from</span> <span class="nn">...ec.formula.unroll</span> <span class="kn">import</span> <span class="n">unroll_formula</span>
+<span class="kn">from</span> <span class="nn">...ec.mod</span> <span class="kn">import</span> <span class="n">Mod</span>
+<span class="kn">from</span> <span class="nn">...ec.mult</span> <span class="kn">import</span> <span class="n">ScalarMultiplier</span>
+<span class="kn">from</span> <span class="nn">...ec.params</span> <span class="kn">import</span> <span class="n">DomainParameters</span>
+<span class="kn">from</span> <span class="nn">...ec.point</span> <span class="kn">import</span> <span class="n">Point</span>
+
+
+<span class="n">has_pari</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">cypari2</span>
+
+    <span class="n">has_pari</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">cypari2</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="map_to_affine">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.re.zvp.html#pyecsca.sca.re.zvp.map_to_affine">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">map_to_affine</span><span class="p">(</span>
+    <span class="n">formula</span><span class="p">:</span> <span class="n">Formula</span><span class="p">,</span> <span class="n">polys</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Poly</span><span class="p">]]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Poly</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Map unrolled polynomials of a formula to affine form, using some assumptions along the way (e.g. `Z = 1`).</span>
+
+<span class="sd">    :param formula: The formula the polynomials belong to.</span>
+<span class="sd">    :param polys: The polynomials (intermediate values) to map.</span>
+<span class="sd">    :return: The mapped intermediate values, with associated variable names.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># tosystem_map is the mapping of system variables (without indices) in affine variables (without indices)</span>
+    <span class="n">tosystem_map</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">formula</span><span class="o">.</span><span class="n">coordinate_model</span><span class="o">.</span><span class="n">tosystem</span><span class="p">:</span>
+        <span class="n">un</span> <span class="o">=</span> <span class="n">unparse</span><span class="p">(</span><span class="n">code</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span> <span class="o">=</span> <span class="n">un</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; = &quot;</span><span class="p">)</span>
+        <span class="n">tosystem_map</span><span class="p">[</span><span class="n">lhs</span><span class="p">]</span> <span class="o">=</span> <span class="n">sympify</span><span class="p">(</span><span class="n">rhs</span><span class="p">,</span> <span class="n">evaluate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">subs_map</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># subs_map specializes the tosystem_map by adding appropriate indices</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">formula</span><span class="o">.</span><span class="n">num_inputs</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span> <span class="ow">in</span> <span class="n">tosystem_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">subs_lhs</span> <span class="o">=</span> <span class="n">lhs</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">subs_rhs</span> <span class="o">=</span> <span class="n">rhs</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;x</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;y</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">subs_map</span><span class="p">[</span><span class="n">subs_lhs</span><span class="p">]</span> <span class="o">=</span> <span class="n">subs_rhs</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">result_var</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">polys</span><span class="p">:</span>
+        <span class="n">expr</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">for</span> <span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span> <span class="ow">in</span> <span class="n">subs_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">expr</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">expr</span><span class="o">.</span><span class="n">free_symbols</span><span class="p">:</span>
+            <span class="n">gens</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">expr</span><span class="o">.</span><span class="n">free_symbols</span><span class="p">)</span>
+            <span class="n">gens</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+            <span class="n">poly</span> <span class="o">=</span> <span class="n">Poly</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="o">*</span><span class="n">gens</span><span class="p">)</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">result_var</span><span class="p">,</span> <span class="n">poly</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># TODO: We cannot create a Poly here, because the result does not have free symbols (i.e. it is a constant)</span>
+            <span class="c1">#       Though here we do not care.</span>
+            <span class="k">pass</span>
+    <span class="k">return</span> <span class="n">results</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">filter_out_nonhomogenous_polynomials</span><span class="p">(</span>
+    <span class="n">formula</span><span class="p">:</span> <span class="n">Formula</span><span class="p">,</span> <span class="n">unrolled</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Poly</span><span class="p">]]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Poly</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Remove unrolled polynomials from unrolled formula that are not homogenous.</span>
+
+<span class="sd">    :param formula: The original formula.</span>
+<span class="sd">    :param unrolled: The unrolled formula to filter.</span>
+<span class="sd">    :return: The filtered unrolled formula.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;mmadd&quot;</span> <span class="ow">in</span> <span class="n">formula</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">unrolled</span>
+    <span class="n">homogenity_weights</span> <span class="o">=</span> <span class="n">formula</span><span class="o">.</span><span class="n">coordinate_model</span><span class="o">.</span><span class="n">homogweights</span>
+
+    <span class="c1"># we have to group variables by points and check homogenity for each group</span>
+    <span class="n">input_variables_grouped</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">formula</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
+        <span class="c1"># here we assume that the index of the variable is &lt;10 and on the last position</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="n">input_variables_grouped</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">var</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="p">[])</span>
+        <span class="n">group</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+
+    <span class="c1"># zadd formulas have Z1=Z2 and so we put all variables in the same group</span>
+    <span class="k">if</span> <span class="s2">&quot;zadd&quot;</span> <span class="ow">in</span> <span class="n">formula</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+        <span class="n">input_variables_grouped</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">input_variables_grouped</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="p">[])}</span>
+
+    <span class="n">filtered_unroll</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">polynomial</span> <span class="ow">in</span> <span class="n">unrolled</span><span class="p">:</span>
+        <span class="n">homogenous</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">point_index</span><span class="p">,</span> <span class="n">variables</span> <span class="ow">in</span> <span class="n">input_variables_grouped</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">weighted_variables</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">homogenity_weights</span><span class="p">[</span><span class="n">var</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">variables</span>
+            <span class="p">]</span>
+
+            <span class="c1"># we dont check homogenity for the second point in madd formulas (which is affine)</span>
+            <span class="k">if</span> <span class="s2">&quot;madd&quot;</span> <span class="ow">in</span> <span class="n">formula</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="n">point_index</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">homogenous</span> <span class="o">&amp;=</span> <span class="n">is_homogeneous</span><span class="p">(</span><span class="n">Poly</span><span class="p">(</span><span class="n">polynomial</span><span class="p">),</span> <span class="n">weighted_variables</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">homogenous</span><span class="p">:</span>
+            <span class="n">filtered_unroll</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">name</span><span class="p">,</span> <span class="n">polynomial</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">filtered_unroll</span>
+
+
+<span class="k">def</span> <span class="nf">is_homogeneous</span><span class="p">(</span><span class="n">polynomial</span><span class="p">:</span> <span class="n">Poly</span><span class="p">,</span> <span class="n">weighted_variables</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Determines whether the polynomial is homogenous with respect to the variables and their weights.</span>
+
+<span class="sd">    :param polynomial: The polynomial.</span>
+<span class="sd">    :param weighted_variables: The variables and their weights.</span>
+<span class="sd">    :return: True if the polynomial is homogenous, otherwise False.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">hom</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;hom&quot;</span><span class="p">)</span>
+    <span class="n">new_gens</span> <span class="o">=</span> <span class="n">polynomial</span><span class="o">.</span><span class="n">gens</span> <span class="o">+</span> <span class="p">(</span><span class="n">hom</span><span class="p">,)</span>  <span class="c1"># type: ignore[attr-defined]</span>
+    <span class="n">univariate_poly</span> <span class="o">=</span> <span class="n">polynomial</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span>
+        <span class="p">{</span><span class="n">var</span><span class="p">:</span> <span class="n">hom</span><span class="o">**</span><span class="n">weight</span> <span class="k">for</span> <span class="n">var</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">weighted_variables</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">univariate_poly</span> <span class="o">=</span> <span class="n">Poly</span><span class="p">(</span><span class="n">univariate_poly</span><span class="p">,</span> <span class="o">*</span><span class="n">new_gens</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">polynomial</span><span class="o">.</span><span class="n">domain</span><span class="p">)</span>
+    <span class="n">hom_index</span> <span class="o">=</span> <span class="n">univariate_poly</span><span class="o">.</span><span class="n">gens</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">hom</span><span class="p">)</span>
+    <span class="n">degrees</span> <span class="o">=</span> <span class="p">{</span><span class="n">monom</span><span class="p">[</span><span class="n">hom_index</span><span class="p">]</span> <span class="k">for</span> <span class="n">monom</span> <span class="ow">in</span> <span class="n">univariate_poly</span><span class="o">.</span><span class="n">monoms</span><span class="p">()}</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">degrees</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span>
+
+
+<div class="viewcode-block" id="compute_factor_set">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.re.zvp.html#pyecsca.sca.re.zvp.compute_factor_set">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">compute_factor_set</span><span class="p">(</span>
+    <span class="n">formula</span><span class="p">:</span> <span class="n">Formula</span><span class="p">,</span>
+    <span class="n">affine</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">filter_nonhomo</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">xonly</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="n">Poly</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute a set of factors present in the :paramref:`~.compute_factor_set.formula`.</span>
+
+<span class="sd">    :param formula: Formula to compute the factor set of.</span>
+<span class="sd">    :param affine: Whether to transform the polynomials into affine form.</span>
+<span class="sd">    :param filter_nonhomo: Whether to filter out non-homogenous polynomials.</span>
+<span class="sd">    :param xonly: Whether to make the factor set &quot;x&quot;-only by eliminating y-coords using the curve equation.</span>
+<span class="sd">    :return: The set of factors present in the formula.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">unrolled</span> <span class="o">=</span> <span class="n">unroll_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">filter_nonhomo</span><span class="p">:</span>
+        <span class="n">unrolled</span> <span class="o">=</span> <span class="n">filter_out_nonhomogenous_polynomials</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">unrolled</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">affine</span><span class="p">:</span>
+        <span class="n">unrolled</span> <span class="o">=</span> <span class="n">map_to_affine</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">unrolled</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">xonly</span><span class="p">:</span>
+        <span class="n">unrolled</span> <span class="o">=</span> <span class="nb">list</span><span class="p">({(</span><span class="n">name</span><span class="p">,</span> <span class="n">eliminate_y</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">formula</span><span class="o">.</span><span class="n">coordinate_model</span><span class="o">.</span><span class="n">curve_model</span><span class="p">))</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">poly</span> <span class="ow">in</span> <span class="n">unrolled</span><span class="p">})</span>
+
+    <span class="n">curve_params</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">formula</span><span class="o">.</span><span class="n">coordinate_model</span><span class="o">.</span><span class="n">curve_model</span><span class="o">.</span><span class="n">parameter_names</span><span class="p">)</span>
+
+    <span class="n">factors</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="c1"># Go over all the unrolled intermediates</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">poly</span> <span class="ow">in</span> <span class="n">unrolled</span><span class="p">:</span>
+        <span class="c1"># Factor the intermediate, don&#39;t worry about the coeff</span>
+        <span class="n">coeff</span><span class="p">,</span> <span class="n">factor_list</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">factor_list</span><span class="p">()</span>
+        <span class="c1"># Go over all the factors of the intermediate, forget the power</span>
+        <span class="k">for</span> <span class="n">factor</span><span class="p">,</span> <span class="n">power</span> <span class="ow">in</span> <span class="n">factor_list</span><span class="p">:</span>
+            <span class="c1"># Remove unnecessary variables from the Poly</span>
+            <span class="n">reduced</span> <span class="o">=</span> <span class="n">factor</span><span class="o">.</span><span class="n">exclude</span><span class="p">()</span>
+            <span class="c1"># If there are only curve parameters, we do not care about the polynomial</span>
+            <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">reduced</span><span class="o">.</span><span class="n">gens</span><span class="p">)</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">curve_params</span><span class="p">):</span>  <span class="c1"># type: ignore[attr-defined]</span>
+                <span class="k">continue</span>
+            <span class="c1"># Divide out the GCD of the coefficients from the poly</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">reduced</span> <span class="o">=</span> <span class="n">reduced</span><span class="o">.</span><span class="n">primitive</span><span class="p">()</span>
+            <span class="c1"># Make sure the poly has canonical gens order</span>
+            <span class="n">canonical</span> <span class="o">=</span> <span class="n">reduced</span><span class="o">.</span><span class="n">reorder</span><span class="p">()</span>
+            <span class="n">factors</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">canonical</span><span class="p">)</span>
+
+    <span class="n">factors</span> <span class="o">=</span> <span class="n">filter_out_rpa_polynomials</span><span class="p">(</span><span class="n">factors</span><span class="p">,</span> <span class="n">formula</span><span class="p">,</span> <span class="n">unrolled</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">factors</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">filter_out_rpa_polynomials</span><span class="p">(</span>
+    <span class="n">factor_set</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">Poly</span><span class="p">],</span> <span class="n">formula</span><span class="p">:</span> <span class="n">Formula</span><span class="p">,</span> <span class="n">unrolled</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Poly</span><span class="p">]]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="n">Poly</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Remove polynomials from factorset that imply RPA points (on input or output).</span>
+
+<span class="sd">    :param factor_set: The factor set to filter.</span>
+<span class="sd">    :param formula: The formula that the factor set belongs to.</span>
+<span class="sd">    :param unrolled: The unrolled formula.</span>
+<span class="sd">    :return: The filtered factor set.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Find polynomials that define the output variables</span>
+    <span class="c1"># We save the latest occurrence of output variable in the list of ops</span>
+    <span class="n">output_polynomials</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">polynomial</span> <span class="ow">in</span> <span class="n">unrolled</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">formula</span><span class="o">.</span><span class="n">outputs</span><span class="p">:</span>
+            <span class="n">output_polynomials</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">polynomial</span>
+
+    <span class="n">filtered_factorset</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">poly</span> <span class="ow">in</span> <span class="n">factor_set</span><span class="p">:</span>
+        <span class="c1"># ignore poly = constant*input_variable</span>
+        <span class="k">if</span> <span class="n">poly</span><span class="o">.</span><span class="n">is_monomial</span> <span class="ow">and</span> <span class="n">poly</span><span class="o">.</span><span class="n">is_linear</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">divisible</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">output_poly</span> <span class="ow">in</span> <span class="n">output_polynomials</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">div</span><span class="p">(</span><span class="n">output_poly</span><span class="p">,</span> <span class="n">poly</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">divisible</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">divisible</span><span class="p">:</span>
+            <span class="n">filtered_factorset</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">poly</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">filtered_factorset</span>
+
+
+<span class="k">def</span> <span class="nf">symbolic_curve_equation</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Symbol</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">CurveModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the &quot;ysquared&quot; curve polynomial in :paramref:`~.x` for the :paramref:`~.curve`,</span>
+<span class="sd">    symbolically.</span>
+
+<span class="sd">    :param x: The sympy symbol to use in place of x.</span>
+<span class="sd">    :param model: The curve model to use.</span>
+<span class="sd">    :return: The sympy expression of the &quot;ysquared&quot; curve polynomial.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">name</span><span class="p">:</span> <span class="n">symbols</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">parameter_names</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">eval</span><span class="p">(</span><span class="nb">compile</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">ysquared</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;eval&quot;</span><span class="p">),</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">})</span>  <span class="c1"># eval is OK here, skipcq: PYL-W0123</span>
+
+
+<span class="k">def</span> <span class="nf">curve_equation</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Symbol</span><span class="p">,</span> <span class="n">curve</span><span class="p">:</span> <span class="n">EllipticCurve</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the &quot;ysquared&quot; curve polynomial in :paramref:`~.x` for the :paramref:`~.curve`,</span>
+<span class="sd">    with concrete parameter values.</span>
+
+<span class="sd">    :param x: The sympy symbol to use in place of x.</span>
+<span class="sd">    :param curve: The elliptic curve to use.</span>
+<span class="sd">    :return: The sympy expression of the &quot;ysquared&quot; curve polynomial.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">eval</span><span class="p">(</span><span class="nb">compile</span><span class="p">(</span><span class="n">curve</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">ysquared</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;eval&quot;</span><span class="p">),</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">curve</span><span class="o">.</span><span class="n">parameters</span><span class="p">})</span>  <span class="c1"># eval is OK here, skipcq: PYL-W0123</span>
+
+
+<span class="k">def</span> <span class="nf">subs_curve_equation</span><span class="p">(</span><span class="n">poly</span><span class="p">:</span> <span class="n">Poly</span><span class="p">,</span> <span class="n">curve</span><span class="p">:</span> <span class="n">EllipticCurve</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Poly</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Substitute in the curve equation &quot;ysquared&quot; for `y{1,2}` repeatedly to</span>
+<span class="sd">    eliminate all but singular powers of y.</span>
+
+<span class="sd">    :param poly: The sympy polynomial to substitute in.</span>
+<span class="sd">    :param curve: The elliptic curve to use.</span>
+<span class="sd">    :return: A polynomial with eliminated all but singular powers of y.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">poly</span> <span class="o">=</span> <span class="n">Poly</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">FF</span><span class="p">(</span><span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">))</span>
+    <span class="n">gens</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">gens</span>  <span class="c1"># type: ignore[attr-defined]</span>
+    <span class="n">terms</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">poly</span><span class="o">.</span><span class="n">terms</span><span class="p">():</span>
+        <span class="n">sub</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">new_term</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">power</span><span class="p">,</span> <span class="n">gen</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">term</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">gens</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">):</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">gen</span><span class="p">)[</span><span class="mi">1</span><span class="p">:])</span>
+                <span class="n">ysquared</span> <span class="o">=</span> <span class="n">symbolic_curve_equation</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">curve</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+                <span class="n">sub</span> <span class="o">*=</span> <span class="n">ysquared</span> <span class="o">**</span> <span class="p">(</span><span class="n">power</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="n">power</span> <span class="o">%=</span> <span class="mi">2</span>
+            <span class="n">new_term</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">power</span><span class="p">)</span>
+        <span class="n">expr</span> <span class="o">=</span> <span class="n">Monomial</span><span class="p">(</span><span class="n">new_term</span><span class="p">,</span> <span class="n">gens</span><span class="p">)</span><span class="o">.</span><span class="n">as_expr</span><span class="p">()</span> <span class="o">*</span> <span class="n">sub</span> <span class="o">*</span> <span class="n">term</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Poly</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">terms</span><span class="p">),</span> <span class="n">domain</span><span class="o">=</span><span class="n">poly</span><span class="o">.</span><span class="n">domain</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">subs_curve_params</span><span class="p">(</span><span class="n">poly</span><span class="p">:</span> <span class="n">Poly</span><span class="p">,</span> <span class="n">curve</span><span class="p">:</span> <span class="n">EllipticCurve</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Poly</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Substitute in the concrete curve parameters.</span>
+
+<span class="sd">    :param poly: The sympy polynomial to substitute in.</span>
+<span class="sd">    :param curve: The elliptic curve to use.</span>
+<span class="sd">    :return: A polynomial with substituted in concrete curve parameters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">poly</span> <span class="o">=</span> <span class="n">Poly</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">FF</span><span class="p">(</span><span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">curve</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">symbol</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">poly</span><span class="o">.</span><span class="n">gens</span><span class="p">:</span>  <span class="c1"># type: ignore[attr-defined]</span>
+            <span class="n">poly</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">poly</span>
+
+
+<span class="k">def</span> <span class="nf">subs_dlog</span><span class="p">(</span><span class="n">poly</span><span class="p">:</span> <span class="n">Poly</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">curve</span><span class="p">:</span> <span class="n">EllipticCurve</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Substitute in the multiplication-by-k-map(x1) in place of x2.</span>
+
+<span class="sd">    :param poly: The sympy polynomial to substitute in.</span>
+<span class="sd">    :param k: The dlog between the points.</span>
+<span class="sd">    :param curve: The elliptic curve to use.</span>
+<span class="sd">    :return: A polynomial with the map substituted (with only x1 coords remaining).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">poly</span> <span class="o">=</span> <span class="n">Poly</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">FF</span><span class="p">(</span><span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">))</span>
+    <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;x1,x2&quot;</span><span class="p">)</span>
+    <span class="n">gens</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">gens</span>  <span class="c1"># type: ignore[attr-defined]</span>
+    <span class="k">if</span> <span class="n">x2</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">gens</span> <span class="ow">or</span> <span class="n">x1</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">gens</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">poly</span>
+    <span class="n">max_degree</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">degree</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
+    <span class="n">x2i</span> <span class="o">=</span> <span class="n">gens</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
+    <span class="n">new_gens</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">gens</span><span class="p">)</span>
+    <span class="n">new_gens</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
+
+    <span class="n">mx</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">mult_by_n</span><span class="p">(</span><span class="n">curve</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">x_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">mx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">x1</span><span class="p">),</span> <span class="n">mx</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">x1</span><span class="p">)</span>
+
+    <span class="c1"># The polynomials are quite dense, hence it makes sense</span>
+    <span class="c1"># to compute all of the u and v powers in advance and</span>
+    <span class="c1"># just use them, because they will likely all be needed.</span>
+    <span class="c1"># Note, this has a memory cost...</span>
+    <span class="n">u_powers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">v_powers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_degree</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">u_powers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u_powers</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">u</span><span class="p">)</span>
+        <span class="n">v_powers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v_powers</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">v</span><span class="p">)</span>
+
+    <span class="n">uv_factors</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">poly</span><span class="o">.</span><span class="n">terms</span><span class="p">():</span>
+        <span class="n">u_power</span> <span class="o">=</span> <span class="n">term</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">x2i</span><span class="p">]</span>
+        <span class="n">v_power</span> <span class="o">=</span> <span class="n">max_degree</span> <span class="o">-</span> <span class="n">u_power</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">u_power</span><span class="p">,</span> <span class="n">v_power</span><span class="p">)</span> <span class="ow">in</span> <span class="n">uv_factors</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">uv_factors</span><span class="p">[(</span><span class="n">u_power</span><span class="p">,</span> <span class="n">v_power</span><span class="p">)]</span> <span class="o">=</span> <span class="n">u_powers</span><span class="p">[</span><span class="n">u_power</span><span class="p">]</span> <span class="o">*</span> <span class="n">v_powers</span><span class="p">[</span><span class="n">v_power</span><span class="p">]</span>
+
+    <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">poly</span><span class="o">.</span><span class="n">terms</span><span class="p">():</span>
+        <span class="n">powers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">term</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">u_power</span> <span class="o">=</span> <span class="n">powers</span><span class="p">[</span><span class="n">x2i</span><span class="p">]</span>
+        <span class="n">v_power</span> <span class="o">=</span> <span class="n">max_degree</span> <span class="o">-</span> <span class="n">u_power</span>
+        <span class="n">powers</span><span class="p">[</span><span class="n">x2i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">monom</span> <span class="o">=</span> <span class="n">Monomial</span><span class="p">(</span><span class="n">powers</span><span class="p">,</span> <span class="n">gens</span><span class="p">)</span><span class="o">.</span><span class="n">as_expr</span><span class="p">()</span> <span class="o">*</span> <span class="n">term</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="p">(</span>
+            <span class="n">Poly</span><span class="p">(</span><span class="n">monom</span><span class="p">,</span> <span class="o">*</span><span class="n">new_gens</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">poly</span><span class="o">.</span><span class="n">domain</span><span class="p">)</span> <span class="o">*</span> <span class="n">uv_factors</span><span class="p">[(</span><span class="n">u_power</span><span class="p">,</span> <span class="n">v_power</span><span class="p">)]</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">Poly</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">poly</span><span class="o">.</span><span class="n">domain</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">remove_z</span><span class="p">(</span><span class="n">poly</span><span class="p">:</span> <span class="n">Poly</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Poly</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Substitute in 1 for all Zs (because we can do that ;).</span>
+
+<span class="sd">    :param poly: The sympy polynomial to substitute in.</span>
+<span class="sd">    :return: A polynomial with Zs eliminated.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">gen</span> <span class="ow">in</span> <span class="n">poly</span><span class="o">.</span><span class="n">gens</span><span class="p">:</span>  <span class="c1"># type: ignore[attr-defined]</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;Z&quot;</span><span class="p">):</span>
+            <span class="n">poly</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">gen</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">poly</span>
+
+
+<span class="k">def</span> <span class="nf">eliminate_y</span><span class="p">(</span><span class="n">poly</span><span class="p">:</span> <span class="n">Poly</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">CurveModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Poly</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Eliminate the remaining ys (only power 1).</span>
+
+<span class="sd">    See [FFD]_ page 11.</span>
+
+<span class="sd">    :param poly: The sympy polynomial to eliminate in.</span>
+<span class="sd">    :param model: The elliptic curve to use.</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;x1,x2,y1,y2&quot;</span><span class="p">)</span>
+    <span class="n">gens</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">gens</span>  <span class="c1"># type: ignore[attr-defined]</span>
+    <span class="n">y1i</span> <span class="o">=</span> <span class="n">gens</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">y1</span><span class="p">)</span> <span class="k">if</span> <span class="n">y1</span> <span class="ow">in</span> <span class="n">gens</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="n">y2i</span> <span class="o">=</span> <span class="n">gens</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">y2</span><span class="p">)</span> <span class="k">if</span> <span class="n">y2</span> <span class="ow">in</span> <span class="n">gens</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">y1i</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">y2i</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Already y-only.</span>
+        <span class="k">return</span> <span class="n">poly</span>
+    <span class="n">f0</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">f1</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">f2</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">f12</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">poly</span><span class="o">.</span><span class="n">terms</span><span class="p">():</span>
+        <span class="n">monom</span> <span class="o">=</span> <span class="n">term</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">monom_expr</span> <span class="o">=</span> <span class="n">Monomial</span><span class="p">(</span><span class="n">term</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">gens</span><span class="p">)</span><span class="o">.</span><span class="n">as_expr</span><span class="p">()</span> <span class="o">*</span> <span class="n">term</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">y1_present</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span><span class="n">y1i</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">monom</span><span class="p">[</span><span class="n">y1i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">y2_present</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span><span class="n">y2i</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">monom</span><span class="p">[</span><span class="n">y2i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">y1_present</span> <span class="ow">and</span> <span class="n">y2_present</span><span class="p">:</span>
+            <span class="n">f12</span> <span class="o">+=</span> <span class="n">monom_expr</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">y1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">y2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">y1_present</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">y2_present</span><span class="p">:</span>
+            <span class="n">f1</span> <span class="o">+=</span> <span class="n">monom_expr</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">y1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">y1_present</span> <span class="ow">and</span> <span class="n">y2_present</span><span class="p">:</span>
+            <span class="n">f2</span> <span class="o">+=</span> <span class="n">monom_expr</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">y2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">y1_present</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">y2_present</span><span class="p">:</span>
+            <span class="n">f0</span> <span class="o">+=</span> <span class="n">monom_expr</span>
+    <span class="n">fe_x1</span> <span class="o">=</span> <span class="n">symbolic_curve_equation</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+    <span class="n">fe_x2</span> <span class="o">=</span> <span class="n">symbolic_curve_equation</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+
+    <span class="c1"># [FFD] page 11</span>
+    <span class="n">f_prime</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">fe_x2</span> <span class="o">*</span> <span class="p">(</span><span class="n">fe_x1</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">f1</span> <span class="o">*</span> <span class="n">f12</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">f0</span> <span class="o">*</span> <span class="n">f2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="o">-</span> <span class="p">(</span><span class="n">f0</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">f2</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">fe_x2</span> <span class="o">-</span> <span class="n">fe_x1</span> <span class="o">*</span> <span class="p">(</span><span class="n">f1</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">f12</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">fe_x2</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">Poly</span><span class="p">(</span><span class="n">f_prime</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">poly</span><span class="o">.</span><span class="n">domain</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="zvp_points">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.re.zvp.html#pyecsca.sca.re.zvp.zvp_points">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">zvp_points</span><span class="p">(</span><span class="n">poly</span><span class="p">:</span> <span class="n">Poly</span><span class="p">,</span> <span class="n">curve</span><span class="p">:</span> <span class="n">EllipticCurve</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="n">Point</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Find a set of (affine) ZVP points for a given intermediate value and dlog relationship.</span>
+
+<span class="sd">    :param poly: The polynomial to zero out, obtained as a result of :py:meth:`.unroll_formula` (or its factor).</span>
+<span class="sd">    :param curve: The curve to compute over.</span>
+<span class="sd">    :param k: The discrete-log relationship between the two points, i.e. (x2, x2) = [k](x1, x1)</span>
+<span class="sd">    :param n: The curve order.</span>
+<span class="sd">    :return: The set of points (x1, y1).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># If input poly is trivial (only in params), abort early</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;x1,x2,y1,y2&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">poly</span><span class="o">.</span><span class="n">gens</span><span class="p">):</span>  <span class="c1"># type: ignore[attr-defined]</span>
+        <span class="k">return</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">poly</span> <span class="o">=</span> <span class="n">Poly</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">FF</span><span class="p">(</span><span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">))</span>
+    <span class="n">only_1</span> <span class="o">=</span> <span class="nb">all</span><span class="p">((</span><span class="ow">not</span> <span class="nb">str</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">))</span> <span class="k">for</span> <span class="n">gen</span> <span class="ow">in</span> <span class="n">poly</span><span class="o">.</span><span class="n">gens</span><span class="p">)</span>  <span class="c1"># type: ignore[attr-defined]</span>
+    <span class="n">only_2</span> <span class="o">=</span> <span class="nb">all</span><span class="p">((</span><span class="ow">not</span> <span class="nb">str</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">))</span> <span class="k">for</span> <span class="n">gen</span> <span class="ow">in</span> <span class="n">poly</span><span class="o">.</span><span class="n">gens</span><span class="p">)</span>  <span class="c1"># type: ignore[attr-defined]</span>
+    <span class="c1"># Start with removing all squares of Y1, Y2</span>
+    <span class="n">subbed</span> <span class="o">=</span> <span class="n">subs_curve_equation</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">curve</span><span class="p">)</span>
+    <span class="c1"># Remove the Zs by setting them to 1</span>
+    <span class="n">removed</span> <span class="o">=</span> <span class="n">remove_z</span><span class="p">(</span><span class="n">subbed</span><span class="p">)</span>
+    <span class="c1"># Now remove the rest of the Ys by clever curve equation use, the poly is x-only now</span>
+    <span class="n">eliminated</span> <span class="o">=</span> <span class="n">eliminate_y</span><span class="p">(</span><span class="n">removed</span><span class="p">,</span> <span class="n">curve</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="c1"># Now decide on the special case:</span>
+    <span class="k">if</span> <span class="n">only_1</span><span class="p">:</span>
+        <span class="c1"># if only_1, dlog sub is not necessary, also computing the other point is not necessary</span>
+        <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">solve_easy_dcp</span><span class="p">(</span><span class="n">eliminated</span><span class="p">,</span> <span class="n">curve</span><span class="p">):</span>
+            <span class="n">inputs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x1&quot;</span><span class="p">:</span> <span class="n">point</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;y1&quot;</span><span class="p">:</span> <span class="n">point</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">curve</span><span class="o">.</span><span class="n">parameters</span><span class="p">}</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">eval</span><span class="p">([</span><span class="n">inputs</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">gen</span><span class="p">)]</span> <span class="k">for</span> <span class="n">gen</span> <span class="ow">in</span> <span class="n">poly</span><span class="o">.</span><span class="n">gens</span><span class="p">])</span>  <span class="c1"># type: ignore[attr-defined]</span>
+            <span class="k">if</span> <span class="n">res</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">points</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">only_2</span><span class="p">:</span>
+        <span class="c1"># if only_2, dlog sub is not necessary, then multiply with k_inverse to obtain target point</span>
+        <span class="n">k_inv</span> <span class="o">=</span> <span class="n">Mod</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">inverse</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">solve_easy_dcp</span><span class="p">(</span><span class="n">eliminated</span><span class="p">,</span> <span class="n">curve</span><span class="p">):</span>
+            <span class="n">inputs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x2&quot;</span><span class="p">:</span> <span class="n">point</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;y2&quot;</span><span class="p">:</span> <span class="n">point</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">curve</span><span class="o">.</span><span class="n">parameters</span><span class="p">}</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">eval</span><span class="p">([</span><span class="n">inputs</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">gen</span><span class="p">)]</span> <span class="k">for</span> <span class="n">gen</span> <span class="ow">in</span> <span class="n">poly</span><span class="o">.</span><span class="n">gens</span><span class="p">])</span>  <span class="c1"># type: ignore[attr-defined]</span>
+            <span class="k">if</span> <span class="n">res</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">one</span> <span class="o">=</span> <span class="n">curve</span><span class="o">.</span><span class="n">affine_multiply</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">k_inv</span><span class="p">))</span>
+                <span class="n">points</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">one</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># otherwise we need to sub in the dlog and solve the general case</span>
+        <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">solve_hard_dcp</span><span class="p">(</span><span class="n">eliminated</span><span class="p">,</span> <span class="n">curve</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+            <span class="c1"># Check that the points zero out the original polynomial to filter out erroneous candidates</span>
+            <span class="n">other</span> <span class="o">=</span> <span class="n">curve</span><span class="o">.</span><span class="n">affine_multiply</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+            <span class="n">inputs</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;x1&quot;</span><span class="p">:</span> <span class="n">point</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
+                <span class="s2">&quot;y1&quot;</span><span class="p">:</span> <span class="n">point</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
+                <span class="s2">&quot;x2&quot;</span><span class="p">:</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
+                <span class="s2">&quot;y2&quot;</span><span class="p">:</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
+                <span class="o">**</span><span class="n">curve</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">eval</span><span class="p">([</span><span class="n">inputs</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">gen</span><span class="p">)]</span> <span class="k">for</span> <span class="n">gen</span> <span class="ow">in</span> <span class="n">poly</span><span class="o">.</span><span class="n">gens</span><span class="p">])</span>  <span class="c1"># type: ignore[attr-defined]</span>
+            <span class="k">if</span> <span class="n">res</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">points</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">points</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">_deterministic_point_x</span><span class="p">(</span><span class="n">curve</span><span class="p">:</span> <span class="n">EllipticCurve</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">Mod</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">points</span> <span class="o">=</span> <span class="n">curve</span><span class="o">.</span><span class="n">affine_lift_x</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">points</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+
+
+<span class="k">def</span> <span class="nf">solve_easy_dcp</span><span class="p">(</span><span class="n">xonly_polynomial</span><span class="p">:</span> <span class="n">Poly</span><span class="p">,</span> <span class="n">curve</span><span class="p">:</span> <span class="n">EllipticCurve</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="n">Point</span><span class="p">]:</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">final</span> <span class="o">=</span> <span class="n">subs_curve_params</span><span class="p">(</span><span class="n">xonly_polynomial</span><span class="p">,</span> <span class="n">curve</span><span class="p">)</span>
+    <span class="c1"># Solve either via pari or if not available sympy.</span>
+    <span class="k">if</span> <span class="n">final</span><span class="o">.</span><span class="n">is_zero</span><span class="p">:</span>
+        <span class="n">roots</span> <span class="o">=</span> <span class="p">{</span><span class="n">_deterministic_point_x</span><span class="p">(</span><span class="n">curve</span><span class="p">)}</span>
+    <span class="k">elif</span> <span class="n">final</span><span class="o">.</span><span class="n">total_degree</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">roots</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">has_pari</span><span class="p">:</span>
+        <span class="n">pari</span> <span class="o">=</span> <span class="n">cypari2</span><span class="o">.</span><span class="n">Pari</span><span class="p">()</span>
+        <span class="n">polynomial</span> <span class="o">=</span> <span class="n">pari</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">final</span><span class="o">.</span><span class="n">expr</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;**&quot;</span><span class="p">,</span> <span class="s2">&quot;^&quot;</span><span class="p">))</span>
+        <span class="n">roots</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">pari</span><span class="o">.</span><span class="n">polrootsmod</span><span class="p">(</span><span class="n">polynomial</span><span class="p">,</span> <span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">)))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">roots</span> <span class="o">=</span> <span class="n">final</span><span class="o">.</span><span class="n">ground_roots</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">root</span> <span class="ow">in</span> <span class="n">roots</span><span class="p">:</span>
+        <span class="n">points</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">curve</span><span class="o">.</span><span class="n">affine_lift_x</span><span class="p">(</span><span class="n">Mod</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">root</span><span class="p">),</span> <span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">points</span>
+
+
+<span class="k">def</span> <span class="nf">solve_hard_dcp</span><span class="p">(</span><span class="n">xonly_polynomial</span><span class="p">:</span> <span class="n">Poly</span><span class="p">,</span> <span class="n">curve</span><span class="p">:</span> <span class="n">EllipticCurve</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="n">Point</span><span class="p">]:</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="c1"># Solve either via pari or if not available sympy.</span>
+    <span class="k">if</span> <span class="n">has_pari</span><span class="p">:</span>
+        <span class="n">roots</span> <span class="o">=</span> <span class="n">solve_hard_dcp_cypari</span><span class="p">(</span><span class="n">xonly_polynomial</span><span class="p">,</span> <span class="n">curve</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Substitute in the mult-by-k map</span>
+        <span class="n">dlog</span> <span class="o">=</span> <span class="n">subs_dlog</span><span class="p">(</span><span class="n">xonly_polynomial</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">curve</span><span class="p">)</span>
+        <span class="c1"># Put in concrete curve parameters</span>
+        <span class="n">final</span> <span class="o">=</span> <span class="n">subs_curve_params</span><span class="p">(</span><span class="n">dlog</span><span class="p">,</span> <span class="n">curve</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">final</span><span class="o">.</span><span class="n">is_zero</span><span class="p">:</span>
+            <span class="n">roots</span> <span class="o">=</span> <span class="p">{</span><span class="n">_deterministic_point_x</span><span class="p">(</span><span class="n">curve</span><span class="p">)}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Find the roots (X1)</span>
+            <span class="n">roots</span> <span class="o">=</span> <span class="n">final</span><span class="o">.</span><span class="n">ground_roots</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+    <span class="c1"># Finally lift the roots to find the points (if any)</span>
+    <span class="k">for</span> <span class="n">root</span> <span class="ow">in</span> <span class="n">roots</span><span class="p">:</span>
+        <span class="n">points</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">curve</span><span class="o">.</span><span class="n">affine_lift_x</span><span class="p">(</span><span class="n">Mod</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">root</span><span class="p">),</span> <span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">points</span>
+
+
+<span class="k">def</span> <span class="nf">solve_hard_dcp_cypari</span><span class="p">(</span>
+    <span class="n">xonly_polynomial</span><span class="p">:</span> <span class="n">Poly</span><span class="p">,</span> <span class="n">curve</span><span class="p">:</span> <span class="n">EllipticCurve</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">curve</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">curve</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;b&quot;</span><span class="p">])</span>
+        <span class="n">xonly_polynomial</span> <span class="o">=</span> <span class="n">subs_curve_params</span><span class="p">(</span><span class="n">xonly_polynomial</span><span class="p">,</span> <span class="n">curve</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">xonly_polynomial</span><span class="o">.</span><span class="n">is_zero</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="n">_deterministic_point_x</span><span class="p">(</span><span class="n">curve</span><span class="p">)}</span>
+
+        <span class="c1"># k^2 * degree</span>
+        <span class="c1"># k=25, deg=6, 128bit -&gt; 3765, a 20MB</span>
+        <span class="c1"># k=32, deg=6, 128bit -&gt; 6150, a 32MB</span>
+        <span class="c1"># k=10, deg=6, 128bit -&gt; 606, a 4MB</span>
+        <span class="n">outdegree</span> <span class="o">=</span> <span class="n">k</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">xonly_polynomial</span><span class="o">.</span><span class="n">total_degree</span><span class="p">()</span>
+        <span class="c1"># Magic heuristic, plus some constant term for very small polys</span>
+        <span class="n">stacksize</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">outdegree</span> <span class="o">*</span> <span class="p">(</span><span class="mi">40</span> <span class="o">*</span> <span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="o">.</span><span class="n">bit_length</span><span class="p">()))</span> <span class="o">+</span> <span class="mi">1000000</span>
+        <span class="n">stacksizemax</span> <span class="o">=</span> <span class="mi">15</span> <span class="o">*</span> <span class="n">stacksize</span>
+
+        <span class="n">pari</span> <span class="o">=</span> <span class="n">cypari2</span><span class="o">.</span><span class="n">Pari</span><span class="p">()</span>
+        <span class="n">pari</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s2">&quot;debugmem&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># silence stack warnings</span>
+        <span class="n">pari</span><span class="o">.</span><span class="n">allocatemem</span><span class="p">(</span><span class="n">stacksize</span><span class="p">,</span> <span class="n">stacksizemax</span><span class="p">,</span> <span class="n">silent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="n">pari</span><span class="o">.</span><span class="n">ellinit</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">)</span>
+        <span class="n">mul</span> <span class="o">=</span> <span class="n">pari</span><span class="o">.</span><span class="n">ellxn</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+        <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">pari</span><span class="p">(</span><span class="s2">&quot;x1&quot;</span><span class="p">),</span> <span class="n">pari</span><span class="p">(</span><span class="s2">&quot;x2&quot;</span><span class="p">)</span>
+        <span class="n">polynomial</span> <span class="o">=</span> <span class="n">pari</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">xonly_polynomial</span><span class="o">.</span><span class="n">expr</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;**&quot;</span><span class="p">,</span> <span class="s2">&quot;^&quot;</span><span class="p">))</span>
+
+        <span class="n">polydeg</span> <span class="o">=</span> <span class="n">pari</span><span class="o">.</span><span class="n">poldegree</span><span class="p">(</span><span class="n">polynomial</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+        <span class="n">subspoly</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">pari</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+        <span class="n">num</span><span class="p">,</span> <span class="n">den</span> <span class="o">=</span> <span class="n">pari</span><span class="o">.</span><span class="n">subst</span><span class="p">(</span><span class="n">mul</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">,</span> <span class="n">x1</span><span class="p">),</span> <span class="n">pari</span><span class="o">.</span><span class="n">subst</span><span class="p">(</span><span class="n">mul</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">,</span> <span class="n">x1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">deg</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">polydeg</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">monomial</span> <span class="o">=</span> <span class="n">pari</span><span class="o">.</span><span class="n">polcoef</span><span class="p">(</span><span class="n">polynomial</span><span class="p">,</span> <span class="n">deg</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+            <span class="n">monomial</span> <span class="o">*=</span> <span class="n">num</span><span class="o">**</span><span class="n">deg</span>
+            <span class="n">monomial</span> <span class="o">*=</span> <span class="n">den</span><span class="o">**</span><span class="p">(</span><span class="n">polydeg</span> <span class="o">-</span> <span class="n">deg</span><span class="p">)</span>
+            <span class="n">subspoly</span> <span class="o">+=</span> <span class="n">monomial</span>
+        <span class="k">if</span> <span class="n">subspoly</span> <span class="o">==</span> <span class="n">pari</span><span class="o">.</span><span class="n">zero</span><span class="p">():</span>
+            <span class="k">return</span> <span class="p">{</span><span class="n">_deterministic_point_x</span><span class="p">(</span><span class="n">curve</span><span class="p">)}</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">pari</span><span class="o">.</span><span class="n">polrootsmod</span><span class="p">(</span><span class="n">subspoly</span><span class="p">,</span> <span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">)))</span>
+    <span class="k">except</span> <span class="n">cypari2</span><span class="o">.</span><span class="n">PariError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;PariError &quot;</span> <span class="o">+</span> <span class="n">err</span><span class="o">.</span><span class="n">errtext</span><span class="p">())</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+
+<span class="k">def</span> <span class="nf">addition_chain</span><span class="p">(</span>
+    <span class="n">scalar</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">DomainParameters</span><span class="p">,</span>
+    <span class="n">mult_class</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ScalarMultiplier</span><span class="p">],</span>
+    <span class="n">mult_factory</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the addition chain for a given scalar and multiplier.</span>
+
+<span class="sd">    :param scalar: The scalar to compute for.</span>
+<span class="sd">    :param params: The domain parameters to use.</span>
+<span class="sd">    :param mult_class: The class of the scalar multiplier to use.</span>
+<span class="sd">    :param mult_factory: A callable that takes the formulas and instantiates the multiplier.</span>
+<span class="sd">    :return: A list of tuples, where the first element is the formula shortname (e.g. &quot;add&quot;) and the second is a tuple of the dlog</span>
+<span class="sd">    relationships to the input of the input points to the formula.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">formula_classes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Formula</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+        <span class="nb">filter</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">klass</span><span class="p">:</span> <span class="n">klass</span> <span class="ow">in</span> <span class="n">mult_class</span><span class="o">.</span><span class="n">requires</span><span class="p">,</span>
+            <span class="p">[</span>
+                <span class="n">AdditionFormula</span><span class="p">,</span>
+                <span class="n">DifferentialAdditionFormula</span><span class="p">,</span>
+                <span class="n">DoublingFormula</span><span class="p">,</span>
+                <span class="n">LadderFormula</span><span class="p">,</span>
+                <span class="n">NegationFormula</span><span class="p">,</span>
+            <span class="p">],</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">formulas</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">formula</span> <span class="ow">in</span> <span class="n">formula_classes</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">subclass</span> <span class="ow">in</span> <span class="n">formula</span><span class="o">.</span><span class="n">__subclasses__</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">subclass</span><span class="p">,</span> <span class="n">FakeFormula</span><span class="p">):</span>
+                <span class="n">formulas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subclass</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">coordinate_model</span><span class="p">))</span>
+    <span class="n">mult</span> <span class="o">=</span> <span class="n">mult_factory</span><span class="p">(</span><span class="o">*</span><span class="n">formulas</span><span class="p">)</span>
+    <span class="n">mult</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">FakePoint</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">coordinate_model</span><span class="p">))</span>
+
+    <span class="k">with</span> <span class="n">local</span><span class="p">(</span><span class="n">MultipleContext</span><span class="p">())</span> <span class="k">as</span> <span class="n">mctx</span><span class="p">:</span>
+        <span class="n">mult</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">scalar</span><span class="p">)</span>
+
+    <span class="n">chain</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">point</span><span class="p">,</span> <span class="n">parents</span> <span class="ow">in</span> <span class="n">mctx</span><span class="o">.</span><span class="n">parents</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parents</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">formula_type</span> <span class="o">=</span> <span class="n">mctx</span><span class="o">.</span><span class="n">formulas</span><span class="p">[</span><span class="n">point</span><span class="p">]</span>
+        <span class="n">ks</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">mctx</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">parent</span><span class="p">]</span> <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">parents</span><span class="p">)</span>
+        <span class="n">chain</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">formula_type</span><span class="p">,</span> <span class="n">ks</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">chain</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2018-2023, .
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

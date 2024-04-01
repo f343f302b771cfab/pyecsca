@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pyecsca.sca.scope.picoscope_sdk &#8212; pyecsca 0.2.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d10597a4" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css?v=1ca41fbe" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx_paramlinks.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=c1177449" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphik.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <script src="../../../../_static/documentation_options.js?v=938c9ccc"></script>
+    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="icon" href="../../../../_static/logo_black.png"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../../index.html">
+    <img class="logo" src="../../../../_static/logo_black.png" alt="Logo" />
+    
+    <h1 class="logo logo-name">pyecsca</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/configuration_space.html">Configuration space</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/codegen.html">Code generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/emulator.html">Emulation and leakage simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/measurement.html">Measurement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/visualization.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/smartcards.html">Smartcards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/formulas.html">Exploration of formulas in open-source ECC libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/rpa.html">RPA-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/zvp.html">ZVP-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/epa.html">EPA-based reverse engineering</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.ec.html">pyecsca.ec package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.misc.html">pyecsca.misc package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.sca.html">pyecsca.sca package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.codegen.html">pyecsca.codegen package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../libraries.html">ECC in Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../references.html">References</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pyecsca.sca.scope.picoscope_sdk</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Provides an oscilloscope class for PicoScope branded oscilloscopes using the official `picosdk-python-wrappers &lt;https://github.com/picotech/picosdk-python-wrappers&gt;`_.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">ctypes</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">log2</span><span class="p">,</span> <span class="n">floor</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time_ns</span><span class="p">,</span> <span class="n">sleep</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">cast</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">MutableMapping</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">picosdk.errors</span> <span class="kn">import</span> <span class="n">CannotFindPicoSDKError</span>
+<span class="kn">from</span> <span class="nn">picosdk.functions</span> <span class="kn">import</span> <span class="n">assert_pico_ok</span>
+<span class="kn">from</span> <span class="nn">picosdk.library</span> <span class="kn">import</span> <span class="n">Library</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">picosdk.ps3000</span> <span class="kn">import</span> <span class="n">ps3000</span>
+<span class="k">except</span> <span class="n">CannotFindPicoSDKError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+    <span class="n">ps3000</span> <span class="o">=</span> <span class="n">exc</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">picosdk.ps3000a</span> <span class="kn">import</span> <span class="n">ps3000a</span>
+<span class="k">except</span> <span class="n">CannotFindPicoSDKError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+    <span class="n">ps3000a</span> <span class="o">=</span> <span class="n">exc</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">picosdk.ps4000</span> <span class="kn">import</span> <span class="n">ps4000</span>
+<span class="k">except</span> <span class="n">CannotFindPicoSDKError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+    <span class="n">ps4000</span> <span class="o">=</span> <span class="n">exc</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">picosdk.ps5000</span> <span class="kn">import</span> <span class="n">ps5000</span>
+<span class="k">except</span> <span class="n">CannotFindPicoSDKError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+    <span class="n">ps5000</span> <span class="o">=</span> <span class="n">exc</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">picosdk.ps6000</span> <span class="kn">import</span> <span class="n">ps6000</span>
+<span class="k">except</span> <span class="n">CannotFindPicoSDKError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+    <span class="n">ps6000</span> <span class="o">=</span> <span class="n">exc</span>
+<span class="kn">from</span> <span class="nn">public</span> <span class="kn">import</span> <span class="n">public</span>
+
+<span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">Scope</span><span class="p">,</span> <span class="n">SampleType</span>
+<span class="kn">from</span> <span class="nn">..trace</span> <span class="kn">import</span> <span class="n">Trace</span>
+
+
+<span class="k">def</span> <span class="nf">adc2volt</span><span class="p">(</span>
+        <span class="n">adc</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int16</span><span class="p">],</span>
+        <span class="n">volt_range</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">adc_minmax</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>  <span class="c1"># pragma: no cover</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert raw adc values to volts.</span>
+
+<span class="sd">    :param adc: Either a single value (:py:class:`ctypes.c_int16`) or an array (:py:class:`np.ndarray`) of those to convert.</span>
+<span class="sd">    :param volt_range: The voltage range used for collecting the samples.</span>
+<span class="sd">    :param adc_minmax:</span>
+<span class="sd">    :param dtype: The numpy ``dtype`` of the output.</span>
+<span class="sd">    :return: The converted values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">adc</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int16</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">adc</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="n">adc_minmax</span><span class="p">)</span> <span class="o">*</span> <span class="n">volt_range</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">adc</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">((</span><span class="n">adc</span> <span class="o">/</span> <span class="n">adc_minmax</span><span class="p">)</span> <span class="o">*</span> <span class="n">volt_range</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span>
+
+
+<span class="k">def</span> <span class="nf">volt2adc</span><span class="p">(</span>
+        <span class="n">volt</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">volt_range</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">adc_minmax</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int16</span><span class="p">]:</span>  <span class="c1"># pragma: no cover</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert volt values to raw adc values.</span>
+
+<span class="sd">    :param volt: Either a single value (:py:class:`float`) or an array (:py:class:`np.ndarray`) of those to convert.</span>
+<span class="sd">    :param volt_range: The voltage range used for collecting the samples.</span>
+<span class="sd">    :param adc_minmax:</span>
+<span class="sd">    :param dtype: The numpy ``dtype`` of the output.</span>
+<span class="sd">    :return: The converted values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">volt</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int16</span><span class="p">(</span><span class="nb">int</span><span class="p">((</span><span class="n">volt</span> <span class="o">/</span> <span class="n">volt_range</span><span class="p">)</span> <span class="o">*</span> <span class="n">adc_minmax</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">volt</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">((</span><span class="n">volt</span> <span class="o">/</span> <span class="n">volt_range</span><span class="p">)</span> <span class="o">*</span> <span class="n">adc_minmax</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span>
+
+
+<div class="viewcode-block" id="PicoScopeSdk">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PicoScopeSdk">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">class</span> <span class="nc">PicoScopeSdk</span><span class="p">(</span><span class="n">Scope</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;PicoScope based scope.&quot;&quot;&quot;</span>
+
+    <span class="n">MODULE</span><span class="p">:</span> <span class="n">Library</span>
+    <span class="n">PREFIX</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">CHANNELS</span><span class="p">:</span> <span class="n">Mapping</span>
+    <span class="n">RANGES</span><span class="p">:</span> <span class="n">Mapping</span>
+    <span class="n">MAX_ADC_VALUE</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">MIN_ADC_VALUE</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">COUPLING</span><span class="p">:</span> <span class="n">Mapping</span>
+    <span class="n">TIME_UNITS</span><span class="p">:</span> <span class="n">Mapping</span>
+    <span class="n">TRIGGERS</span><span class="p">:</span> <span class="n">Mapping</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;above&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;below&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;rising&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;falling&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+    <span class="n">_variant</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variant</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">:</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int16</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int16</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pretrig</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">posttrig</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timebase</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buffers</span><span class="p">:</span> <span class="n">MutableMapping</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ranges</span><span class="p">:</span> <span class="n">MutableMapping</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_variant</span> <span class="o">=</span> <span class="n">variant</span>
+
+<div class="viewcode-block" id="PicoScopeSdk.open">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PicoScopeSdk.open">[docs]</a>
+    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">assert_pico_ok</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dispatch_call</span><span class="p">(</span><span class="s2">&quot;OpenUnit&quot;</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)))</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">channels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CHANNELS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<div class="viewcode-block" id="PicoScopeSdk.get_variant">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PicoScopeSdk.get_variant">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_variant</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_variant</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_variant</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int16</span><span class="p">()</span>
+        <span class="n">assert_pico_ok</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dispatch_call</span><span class="p">(</span>
+                <span class="s2">&quot;GetUnitInfo&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int16</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">size</span><span class="p">),</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_uint</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_variant</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">info</span><span class="p">[:</span> <span class="n">size</span><span class="o">.</span><span class="n">value</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># type: ignore</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_variant</span></div>
+
+
+<div class="viewcode-block" id="PicoScopeSdk.setup_frequency">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PicoScopeSdk.setup_frequency">[docs]</a>
+    <span class="k">def</span> <span class="nf">setup_frequency</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">frequency</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">pretrig</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">posttrig</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_frequency</span><span class="p">(</span><span class="n">frequency</span><span class="p">,</span> <span class="n">pretrig</span><span class="p">,</span> <span class="n">posttrig</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PicoScopeSdk.set_channel">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PicoScopeSdk.set_channel">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_channel</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">coupling</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">range</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="p">):</span>
+        <span class="k">if</span> <span class="n">offset</span> <span class="o">!=</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Nonzero offset not supported.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">channel</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">CHANNELS</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Channel </span><span class="si">{</span><span class="n">channel</span><span class="si">}</span><span class="s2"> not in available channels: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">CHANNELS</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">coupling</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">COUPLING</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Coupling </span><span class="si">{</span><span class="n">coupling</span><span class="si">}</span><span class="s2"> not in available couplings: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">COUPLING</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">range</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">RANGES</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Range </span><span class="si">{</span><span class="nb">range</span><span class="si">}</span><span class="s2"> not in available ranges: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">RANGES</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">assert_pico_ok</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dispatch_call</span><span class="p">(</span>
+                <span class="s2">&quot;SetChannel&quot;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CHANNELS</span><span class="p">[</span><span class="n">channel</span><span class="p">],</span>
+                <span class="n">enabled</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">COUPLING</span><span class="p">[</span><span class="n">coupling</span><span class="p">],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">RANGES</span><span class="p">[</span><span class="nb">range</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span> <span class="o">=</span> <span class="nb">range</span></div>
+
+
+<div class="viewcode-block" id="PicoScopeSdk.setup_channel">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PicoScopeSdk.setup_channel">[docs]</a>
+    <span class="k">def</span> <span class="nf">setup_channel</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">coupling</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">range</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">enable</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_channel</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">enable</span><span class="p">,</span> <span class="n">coupling</span><span class="p">,</span> <span class="nb">range</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_set_freq</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">frequency</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="n">pretrig</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="n">posttrig</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="n">period_bound</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+            <span class="n">timebase_bound</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="n">low_freq</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="n">high_freq</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="n">high_subtract</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="n">pretrig</span> <span class="o">+</span> <span class="n">posttrig</span>
+        <span class="n">period</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">frequency</span>
+        <span class="k">if</span> <span class="n">low_freq</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">period</span> <span class="o">&gt;</span> <span class="n">period_bound</span><span class="p">:</span>
+            <span class="n">tb</span> <span class="o">=</span> <span class="n">floor</span><span class="p">(</span><span class="n">high_freq</span> <span class="o">/</span> <span class="n">frequency</span> <span class="o">+</span> <span class="n">high_subtract</span><span class="p">)</span>
+            <span class="n">actual_frequency</span> <span class="o">=</span> <span class="n">high_freq</span> <span class="o">//</span> <span class="p">(</span><span class="n">tb</span> <span class="o">-</span> <span class="n">high_subtract</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tb</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">floor</span><span class="p">(</span><span class="n">log2</span><span class="p">(</span><span class="n">low_freq</span><span class="p">)</span> <span class="o">-</span> <span class="n">log2</span><span class="p">(</span><span class="n">frequency</span><span class="p">)),</span> <span class="n">timebase_bound</span><span class="p">)</span>
+            <span class="n">actual_frequency</span> <span class="o">=</span> <span class="n">low_freq</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">tb</span>
+        <span class="n">max_samples</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+        <span class="n">interval_nanoseconds</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int32</span><span class="p">()</span>
+        <span class="n">assert_pico_ok</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dispatch_call</span><span class="p">(</span>
+                <span class="s2">&quot;GetTimebase&quot;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span>
+                <span class="n">tb</span><span class="p">,</span>
+                <span class="n">samples</span><span class="p">,</span>
+                <span class="n">ctypes</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">interval_nanoseconds</span><span class="p">),</span>
+                <span class="mi">0</span><span class="p">,</span>
+                <span class="n">ctypes</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">max_samples</span><span class="p">),</span>
+                <span class="mi">0</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">max_samples</span><span class="o">.</span><span class="n">value</span> <span class="o">&lt;</span> <span class="n">samples</span><span class="p">:</span>
+            <span class="n">pretrig</span> <span class="o">=</span> <span class="n">max_samples</span><span class="o">.</span><span class="n">value</span> <span class="o">*</span> <span class="p">(</span><span class="n">pretrig</span> <span class="o">//</span> <span class="n">samples</span><span class="p">)</span>
+            <span class="n">posttrig</span> <span class="o">=</span> <span class="n">max_samples</span><span class="o">.</span><span class="n">value</span> <span class="o">-</span> <span class="n">pretrig</span>
+            <span class="n">samples</span> <span class="o">=</span> <span class="n">max_samples</span><span class="o">.</span><span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frequency</span> <span class="o">=</span> <span class="n">actual_frequency</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pretrig</span> <span class="o">=</span> <span class="n">pretrig</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">posttrig</span> <span class="o">=</span> <span class="n">posttrig</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timebase</span> <span class="o">=</span> <span class="n">tb</span>
+        <span class="k">return</span> <span class="n">actual_frequency</span><span class="p">,</span> <span class="n">samples</span>
+
+<div class="viewcode-block" id="PicoScopeSdk.set_frequency">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PicoScopeSdk.set_frequency">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_frequency</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">frequency</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">pretrig</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">posttrig</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+<div class="viewcode-block" id="PicoScopeSdk.setup_trigger">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PicoScopeSdk.setup_trigger">[docs]</a>
+    <span class="k">def</span> <span class="nf">setup_trigger</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+            <span class="n">direction</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">delay</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="n">enable</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_trigger</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">enable</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">delay</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PicoScopeSdk.set_trigger">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PicoScopeSdk.set_trigger">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_trigger</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+            <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+            <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">delay</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">assert_pico_ok</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dispatch_call</span><span class="p">(</span>
+                <span class="s2">&quot;SetSimpleTrigger&quot;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span>
+                <span class="n">enabled</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CHANNELS</span><span class="p">[</span><span class="n">channel</span><span class="p">],</span>
+                <span class="n">volt2adc</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="n">channel</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_ADC_VALUE</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TRIGGERS</span><span class="p">[</span><span class="nb">type</span><span class="p">],</span>
+                <span class="n">delay</span><span class="p">,</span>
+                <span class="n">timeout</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PicoScopeSdk.setup_capture">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PicoScopeSdk.setup_capture">[docs]</a>
+    <span class="k">def</span> <span class="nf">setup_capture</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">enable</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_buffer</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">enable</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PicoScopeSdk.set_buffer">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PicoScopeSdk.set_buffer">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_buffer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">enable</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="k">if</span> <span class="n">enable</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">channel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffers</span><span class="p">:</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffers</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span>
+            <span class="n">buffer</span> <span class="o">=</span> <span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_int16</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">)()</span>
+            <span class="n">assert_pico_ok</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_dispatch_call</span><span class="p">(</span>
+                    <span class="s2">&quot;SetDataBuffer&quot;</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">CHANNELS</span><span class="p">[</span><span class="n">channel</span><span class="p">],</span>
+                    <span class="n">ctypes</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">buffer</span><span class="p">),</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">buffers</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span> <span class="o">=</span> <span class="n">buffer</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">assert_pico_ok</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_dispatch_call</span><span class="p">(</span>
+                    <span class="s2">&quot;SetDataBuffer&quot;</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">CHANNELS</span><span class="p">[</span><span class="n">channel</span><span class="p">],</span>
+                    <span class="kc">None</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffers</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="PicoScopeSdk.arm">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PicoScopeSdk.arm">[docs]</a>
+    <span class="k">def</span> <span class="nf">arm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">timebase</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="n">assert_pico_ok</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dispatch_call</span><span class="p">(</span>
+                <span class="s2">&quot;RunBlock&quot;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pretrig</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">posttrig</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">timebase</span><span class="p">,</span>
+                <span class="mi">0</span><span class="p">,</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="mi">0</span><span class="p">,</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="kc">None</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PicoScopeSdk.capture">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PicoScopeSdk.capture">[docs]</a>
+    <span class="k">def</span> <span class="nf">capture</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time_ns</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="n">ready</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int16</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">check</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int16</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">ready</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">check</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+            <span class="n">sleep</span><span class="p">(</span><span class="mf">0.001</span><span class="p">)</span>
+            <span class="n">assert_pico_ok</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_dispatch_call</span><span class="p">(</span><span class="s2">&quot;IsReady&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">ready</span><span class="p">))</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="n">time_ns</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1e6</span> <span class="o">&gt;=</span> <span class="n">timeout</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="PicoScopeSdk.retrieve">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PicoScopeSdk.retrieve">[docs]</a>
+    <span class="k">def</span> <span class="nf">retrieve</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">:</span> <span class="n">SampleType</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Trace</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="n">actual_samples</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int32</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">)</span>
+        <span class="n">overflow</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int16</span><span class="p">()</span>
+        <span class="n">assert_pico_ok</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dispatch_call</span><span class="p">(</span>
+                <span class="s2">&quot;GetValues&quot;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span>
+                <span class="mi">0</span><span class="p">,</span>
+                <span class="n">ctypes</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">actual_samples</span><span class="p">),</span>
+                <span class="mi">1</span><span class="p">,</span>
+                <span class="mi">0</span><span class="p">,</span>
+                <span class="mi">0</span><span class="p">,</span>
+                <span class="n">ctypes</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">overflow</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buffers</span><span class="p">[</span><span class="n">channel</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="n">SampleType</span><span class="o">.</span><span class="n">Raw</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">arr</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+                <span class="n">adc2volt</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="n">channel</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_ADC_VALUE</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">Trace</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">,</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;sampling_frequency&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="p">,</span>
+                <span class="s2">&quot;channel&quot;</span><span class="p">:</span> <span class="n">channel</span><span class="p">,</span>
+                <span class="s2">&quot;sample_type&quot;</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PicoScopeSdk.stop">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PicoScopeSdk.stop">[docs]</a>
+    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">assert_pico_ok</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dispatch_call</span><span class="p">(</span><span class="s2">&quot;Stop&quot;</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="PicoScopeSdk.close">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PicoScopeSdk.close">[docs]</a>
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">assert_pico_ok</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dispatch_call</span><span class="p">(</span><span class="s2">&quot;CloseUnit&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">))</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_dispatch_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A unit-generic call of a picoscope SDK method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">method</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MODULE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">PREFIX</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ps3000</span><span class="p">,</span> <span class="n">CannotFindPicoSDKError</span><span class="p">):</span>
+
+    <span class="nd">@public</span>
+    <span class="k">class</span> <span class="nc">PS3000Scope</span><span class="p">(</span><span class="n">PicoScopeSdk</span><span class="p">):</span>  <span class="c1"># noqa, pragma: no cover, skipcq</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;PicoScope 3000 series oscilloscope is not available (Install `libps3000`).&quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variant</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">variant</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ps3000</span>
+
+
+<span class="k">else</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+
+<div class="viewcode-block" id="PS3000Scope">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PS3000Scope">[docs]</a>
+    <span class="nd">@public</span>
+    <span class="k">class</span> <span class="nc">PS3000Scope</span><span class="p">(</span><span class="n">PicoScopeSdk</span><span class="p">):</span>  <span class="c1"># type: ignore</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;PicoScope 3000 series oscilloscope.&quot;&quot;&quot;</span>
+
+        <span class="n">MODULE</span> <span class="o">=</span> <span class="n">ps3000</span>
+        <span class="n">PREFIX</span> <span class="o">=</span> <span class="s2">&quot;ps3000&quot;</span>
+        <span class="n">CHANNELS</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="n">ps3000</span><span class="o">.</span><span class="n">PS3000_CHANNEL</span><span class="p">[</span><span class="s2">&quot;PS3000_CHANNEL_A&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="n">ps3000</span><span class="o">.</span><span class="n">PS3000_CHANNEL</span><span class="p">[</span><span class="s2">&quot;PS3000_CHANNEL_B&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="n">ps3000</span><span class="o">.</span><span class="n">PS3000_CHANNEL</span><span class="p">[</span><span class="s2">&quot;PS3000_CHANNEL_C&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="n">ps3000</span><span class="o">.</span><span class="n">PS3000_CHANNEL</span><span class="p">[</span><span class="s2">&quot;PS3000_CHANNEL_D&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+
+        <span class="n">RANGES</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="mf">0.02</span><span class="p">:</span> <span class="n">ps3000</span><span class="o">.</span><span class="n">PS3000_VOLTAGE_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000_20MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.05</span><span class="p">:</span> <span class="n">ps3000</span><span class="o">.</span><span class="n">PS3000_VOLTAGE_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000_50MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.10</span><span class="p">:</span> <span class="n">ps3000</span><span class="o">.</span><span class="n">PS3000_VOLTAGE_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000_100MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.20</span><span class="p">:</span> <span class="n">ps3000</span><span class="o">.</span><span class="n">PS3000_VOLTAGE_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000_200MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.50</span><span class="p">:</span> <span class="n">ps3000</span><span class="o">.</span><span class="n">PS3000_VOLTAGE_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000_500MV&quot;</span><span class="p">],</span>
+            <span class="mf">1.00</span><span class="p">:</span> <span class="n">ps3000</span><span class="o">.</span><span class="n">PS3000_VOLTAGE_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000_1V&quot;</span><span class="p">],</span>
+            <span class="mf">2.00</span><span class="p">:</span> <span class="n">ps3000</span><span class="o">.</span><span class="n">PS3000_VOLTAGE_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000_2V&quot;</span><span class="p">],</span>
+            <span class="mf">5.00</span><span class="p">:</span> <span class="n">ps3000</span><span class="o">.</span><span class="n">PS3000_VOLTAGE_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000_5V&quot;</span><span class="p">],</span>
+            <span class="mf">10.0</span><span class="p">:</span> <span class="n">ps3000</span><span class="o">.</span><span class="n">PS3000_VOLTAGE_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000_10V&quot;</span><span class="p">],</span>
+            <span class="mf">20.0</span><span class="p">:</span> <span class="n">ps3000</span><span class="o">.</span><span class="n">PS3000_VOLTAGE_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000_20V&quot;</span><span class="p">],</span>
+            <span class="mf">50.0</span><span class="p">:</span> <span class="n">ps3000</span><span class="o">.</span><span class="n">PS3000_VOLTAGE_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000_50V&quot;</span><span class="p">],</span>
+            <span class="mf">100.0</span><span class="p">:</span> <span class="n">ps3000</span><span class="o">.</span><span class="n">PS3000_VOLTAGE_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000_100V&quot;</span><span class="p">],</span>
+            <span class="mf">200.0</span><span class="p">:</span> <span class="n">ps3000</span><span class="o">.</span><span class="n">PS3000_VOLTAGE_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000_200V&quot;</span><span class="p">],</span>
+            <span class="mf">400.0</span><span class="p">:</span> <span class="n">ps3000</span><span class="o">.</span><span class="n">PS3000_VOLTAGE_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000_400V&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+
+        <span class="n">MAX_ADC_VALUE</span> <span class="o">=</span> <span class="mi">32767</span>
+        <span class="n">MIN_ADC_VALUE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">32767</span>
+
+        <span class="n">COUPLING</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;AC&quot;</span><span class="p">:</span> <span class="n">ps3000</span><span class="o">.</span><span class="n">PICO_COUPLING</span><span class="p">[</span><span class="s2">&quot;AC&quot;</span><span class="p">],</span> <span class="s2">&quot;DC&quot;</span><span class="p">:</span> <span class="n">ps3000</span><span class="o">.</span><span class="n">PICO_COUPLING</span><span class="p">[</span><span class="s2">&quot;DC&quot;</span><span class="p">]}</span>
+
+<div class="viewcode-block" id="PS3000Scope.open">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PS3000Scope.open">[docs]</a>
+        <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">assert_pico_ok</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dispatch_call</span><span class="p">(</span><span class="s2">&quot;_open_unit&quot;</span><span class="p">))</span>  <span class="c1"># , ctypes.byref(self.handle)</span></div>
+
+
+<div class="viewcode-block" id="PS3000Scope.stop">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PS3000Scope.stop">[docs]</a>
+        <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="n">assert_pico_ok</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dispatch_call</span><span class="p">(</span><span class="s2">&quot;_stop&quot;</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="PS3000Scope.close">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PS3000Scope.close">[docs]</a>
+        <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="n">assert_pico_ok</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dispatch_call</span><span class="p">(</span><span class="s2">&quot;_close_unit&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="PS3000Scope.get_variant">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PS3000Scope.get_variant">[docs]</a>
+        <span class="k">def</span> <span class="nf">get_variant</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_variant</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_variant</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int16</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+            <span class="n">info_variant</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int16</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+            <span class="n">assert_pico_ok</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_dispatch_call</span><span class="p">(</span>
+                    <span class="s2">&quot;_get_unit_info&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">info_variant</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_variant</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">info</span><span class="p">[:</span> <span class="n">size</span><span class="o">.</span><span class="n">value</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># type: ignore</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_variant</span></div>
+
+
+<div class="viewcode-block" id="PS3000Scope.set_frequency">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PS3000Scope.set_frequency">[docs]</a>
+        <span class="k">def</span> <span class="nf">set_frequency</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="n">frequency</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">pretrig</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">posttrig</span><span class="p">:</span> <span class="nb">int</span>
+        <span class="p">):</span>  <span class="c1"># TODO: fix</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+</div>
+
+
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ps3000a</span><span class="p">,</span> <span class="n">CannotFindPicoSDKError</span><span class="p">):</span>
+
+    <span class="nd">@public</span>
+    <span class="k">class</span> <span class="nc">PS3000aScope</span><span class="p">(</span><span class="n">PicoScopeSdk</span><span class="p">):</span>  <span class="c1"># noqa, pragma: no cover, skipcq</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;PicoScope 3000 series (A API) oscilloscope is not available (Install `libps3000a`).&quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variant</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">variant</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ps3000a</span>
+
+
+<span class="k">else</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+
+<div class="viewcode-block" id="PS3000aScope">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PS3000aScope">[docs]</a>
+    <span class="nd">@public</span>
+    <span class="k">class</span> <span class="nc">PS3000aScope</span><span class="p">(</span><span class="n">PicoScopeSdk</span><span class="p">):</span>  <span class="c1"># type: ignore</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;PicoScope 3000 series oscilloscope (A API).&quot;&quot;&quot;</span>
+
+        <span class="n">MODULE</span> <span class="o">=</span> <span class="n">ps3000a</span>
+        <span class="n">PREFIX</span> <span class="o">=</span> <span class="s2">&quot;ps3000a&quot;</span>
+        <span class="n">CHANNELS</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="n">ps3000a</span><span class="o">.</span><span class="n">PS3000A_CHANNEL</span><span class="p">[</span><span class="s2">&quot;PS3000A_CHANNEL_A&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="n">ps3000a</span><span class="o">.</span><span class="n">PS3000A_CHANNEL</span><span class="p">[</span><span class="s2">&quot;PS3000A_CHANNEL_B&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="n">ps3000a</span><span class="o">.</span><span class="n">PS3000A_CHANNEL</span><span class="p">[</span><span class="s2">&quot;PS3000A_CHANNEL_C&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="n">ps3000a</span><span class="o">.</span><span class="n">PS3000A_CHANNEL</span><span class="p">[</span><span class="s2">&quot;PS3000A_CHANNEL_D&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+
+        <span class="n">RANGES</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="mf">0.01</span><span class="p">:</span> <span class="n">ps3000a</span><span class="o">.</span><span class="n">PS3000A_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000A_10MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.02</span><span class="p">:</span> <span class="n">ps3000a</span><span class="o">.</span><span class="n">PS3000A_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000A_20MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.05</span><span class="p">:</span> <span class="n">ps3000a</span><span class="o">.</span><span class="n">PS3000A_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000A_50MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.10</span><span class="p">:</span> <span class="n">ps3000a</span><span class="o">.</span><span class="n">PS3000A_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000A_100MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.20</span><span class="p">:</span> <span class="n">ps3000a</span><span class="o">.</span><span class="n">PS3000A_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000A_200MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.50</span><span class="p">:</span> <span class="n">ps3000a</span><span class="o">.</span><span class="n">PS3000A_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000A_500MV&quot;</span><span class="p">],</span>
+            <span class="mf">1.00</span><span class="p">:</span> <span class="n">ps3000a</span><span class="o">.</span><span class="n">PS3000A_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000A_1V&quot;</span><span class="p">],</span>
+            <span class="mf">2.00</span><span class="p">:</span> <span class="n">ps3000a</span><span class="o">.</span><span class="n">PS3000A_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000A_2V&quot;</span><span class="p">],</span>
+            <span class="mf">5.00</span><span class="p">:</span> <span class="n">ps3000a</span><span class="o">.</span><span class="n">PS3000A_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000A_5V&quot;</span><span class="p">],</span>
+            <span class="mf">10.0</span><span class="p">:</span> <span class="n">ps3000a</span><span class="o">.</span><span class="n">PS3000A_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000A_10V&quot;</span><span class="p">],</span>
+            <span class="mf">20.0</span><span class="p">:</span> <span class="n">ps3000a</span><span class="o">.</span><span class="n">PS3000A_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000A_20V&quot;</span><span class="p">],</span>
+            <span class="mf">50.0</span><span class="p">:</span> <span class="n">ps3000a</span><span class="o">.</span><span class="n">PS3000A_RANGE</span><span class="p">[</span><span class="s2">&quot;PS3000A_50V&quot;</span><span class="p">]</span>
+        <span class="p">}</span>
+
+        <span class="n">MAX_ADC_VALUE</span> <span class="o">=</span> <span class="mi">32767</span>
+        <span class="n">MIN_ADC_VALUE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">32767</span>
+
+        <span class="n">COUPLING</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;AC&quot;</span><span class="p">:</span> <span class="n">ps3000a</span><span class="o">.</span><span class="n">PICO_COUPLING</span><span class="p">[</span><span class="s2">&quot;AC&quot;</span><span class="p">],</span> <span class="s2">&quot;DC&quot;</span><span class="p">:</span> <span class="n">ps3000a</span><span class="o">.</span><span class="n">PICO_COUPLING</span><span class="p">[</span><span class="s2">&quot;DC&quot;</span><span class="p">]}</span>
+
+<div class="viewcode-block" id="PS3000aScope.open">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PS3000aScope.open">[docs]</a>
+        <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">assert_pico_ok</span><span class="p">(</span><span class="n">ps3000a</span><span class="o">.</span><span class="n">ps3000aOpenUnit</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">),</span> <span class="kc">None</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="PS3000aScope.set_channel">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PS3000aScope.set_channel">[docs]</a>
+        <span class="k">def</span> <span class="nf">set_channel</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span>
+                <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+                <span class="n">coupling</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                <span class="nb">range</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                <span class="n">offset</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="n">channel</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">CHANNELS</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Channel </span><span class="si">{</span><span class="n">channel</span><span class="si">}</span><span class="s2"> not in available channels: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">CHANNELS</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">coupling</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">COUPLING</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Coupling </span><span class="si">{</span><span class="n">coupling</span><span class="si">}</span><span class="s2"> not in available couplings: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">COUPLING</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">range</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">RANGES</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Range </span><span class="si">{</span><span class="nb">range</span><span class="si">}</span><span class="s2"> not in available ranges: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">RANGES</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">assert_pico_ok</span><span class="p">(</span>
+                <span class="n">ps3000a</span><span class="o">.</span><span class="n">ps3000aSetChannel</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">CHANNELS</span><span class="p">[</span><span class="n">channel</span><span class="p">],</span>
+                    <span class="n">enabled</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">COUPLING</span><span class="p">[</span><span class="n">coupling</span><span class="p">],</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">RANGES</span><span class="p">[</span><span class="nb">range</span><span class="p">],</span>
+                    <span class="n">offset</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span> <span class="o">=</span> <span class="nb">range</span></div>
+
+
+<div class="viewcode-block" id="PS3000aScope.set_buffer">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PS3000aScope.set_buffer">[docs]</a>
+        <span class="k">def</span> <span class="nf">set_buffer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">enable</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span>
+            <span class="k">if</span> <span class="n">enable</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">channel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffers</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffers</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span>
+                <span class="n">buffer</span> <span class="o">=</span> <span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_int16</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">)()</span>
+                <span class="n">assert_pico_ok</span><span class="p">(</span>
+                    <span class="n">ps3000a</span><span class="o">.</span><span class="n">ps3000aSetDataBuffer</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">CHANNELS</span><span class="p">[</span><span class="n">channel</span><span class="p">],</span>
+                        <span class="n">ctypes</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">buffer</span><span class="p">),</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">,</span>
+                        <span class="mi">0</span><span class="p">,</span>
+                        <span class="n">ps3000a</span><span class="o">.</span><span class="n">PS3000A_RATIO_MODE</span><span class="p">[</span><span class="s2">&quot;PS3000A_RATIO_MODE_NONE&quot;</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">buffers</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span> <span class="o">=</span> <span class="n">buffer</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">assert_pico_ok</span><span class="p">(</span>
+                    <span class="n">ps3000a</span><span class="o">.</span><span class="n">ps3000aSetDataBuffer</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CHANNELS</span><span class="p">[</span><span class="n">channel</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+                        <span class="n">ps3000a</span><span class="o">.</span><span class="n">PS3000A_RATIO_MODE</span><span class="p">[</span><span class="s2">&quot;PS3000A_RATIO_MODE_NONE&quot;</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffers</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="PS3000aScope.set_frequency">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PS3000aScope.set_frequency">[docs]</a>
+        <span class="k">def</span> <span class="nf">set_frequency</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frequency</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">pretrig</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">posttrig</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">variant</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_variant</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">variant</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;3000A&quot;</span><span class="p">,</span> <span class="s2">&quot;3000B&quot;</span><span class="p">):</span>
+                <span class="c1"># This only holds for the 2-channel versions</span>
+                <span class="c1"># 4-channel versions have the settings from branch &quot;D&quot;.</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_freq</span><span class="p">(</span><span class="n">frequency</span><span class="p">,</span> <span class="n">pretrig</span><span class="p">,</span> <span class="n">posttrig</span><span class="p">,</span> <span class="mf">8e-9</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">500_000_000</span><span class="p">,</span> <span class="mi">62_500_000</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">variant</span> <span class="o">==</span> <span class="s2">&quot;3000&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_freq</span><span class="p">(</span><span class="n">frequency</span><span class="p">,</span> <span class="n">pretrig</span><span class="p">,</span> <span class="n">posttrig</span><span class="p">,</span> <span class="mf">4e-9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">500_000_000</span><span class="p">,</span> <span class="mi">125_000_000</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">variant</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;D&quot;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_freq</span><span class="p">(</span><span class="n">frequency</span><span class="p">,</span> <span class="n">pretrig</span><span class="p">,</span> <span class="n">posttrig</span><span class="p">,</span> <span class="mf">4e-9</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1_000_000_000</span><span class="p">,</span> <span class="mi">125_000_000</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span></div>
+</div>
+
+            <span class="c1"># TODO: Needs more per-device settings to be generic.</span>
+
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ps4000</span><span class="p">,</span> <span class="n">CannotFindPicoSDKError</span><span class="p">):</span>
+
+    <span class="nd">@public</span>
+    <span class="k">class</span> <span class="nc">PS4000Scope</span><span class="p">(</span><span class="n">PicoScopeSdk</span><span class="p">):</span>  <span class="c1"># noqa, pragma: no cover, skipcq</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;PicoScope 4000 series oscilloscope is not available (Install `libps4000`).&quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variant</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">variant</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ps4000</span>
+
+
+<span class="k">else</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+
+<div class="viewcode-block" id="PS4000Scope">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PS4000Scope">[docs]</a>
+    <span class="nd">@public</span>
+    <span class="k">class</span> <span class="nc">PS4000Scope</span><span class="p">(</span><span class="n">PicoScopeSdk</span><span class="p">):</span>  <span class="c1"># type: ignore</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;PicoScope 4000 series oscilloscope.&quot;&quot;&quot;</span>
+
+        <span class="n">MODULE</span> <span class="o">=</span> <span class="n">ps4000</span>
+        <span class="n">PREFIX</span> <span class="o">=</span> <span class="s2">&quot;ps4000&quot;</span>
+        <span class="n">CHANNELS</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="n">ps4000</span><span class="o">.</span><span class="n">PS4000_CHANNEL</span><span class="p">[</span><span class="s2">&quot;PS4000_CHANNEL_A&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="n">ps4000</span><span class="o">.</span><span class="n">PS4000_CHANNEL</span><span class="p">[</span><span class="s2">&quot;PS4000_CHANNEL_B&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="n">ps4000</span><span class="o">.</span><span class="n">PS4000_CHANNEL</span><span class="p">[</span><span class="s2">&quot;PS4000_CHANNEL_C&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="n">ps4000</span><span class="o">.</span><span class="n">PS4000_CHANNEL</span><span class="p">[</span><span class="s2">&quot;PS4000_CHANNEL_D&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+
+        <span class="n">RANGES</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="mf">0.01</span><span class="p">:</span> <span class="n">ps4000</span><span class="o">.</span><span class="n">PS4000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS4000_10MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.02</span><span class="p">:</span> <span class="n">ps4000</span><span class="o">.</span><span class="n">PS4000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS4000_20MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.05</span><span class="p">:</span> <span class="n">ps4000</span><span class="o">.</span><span class="n">PS4000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS4000_50MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.10</span><span class="p">:</span> <span class="n">ps4000</span><span class="o">.</span><span class="n">PS4000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS4000_100MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.20</span><span class="p">:</span> <span class="n">ps4000</span><span class="o">.</span><span class="n">PS4000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS4000_200MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.50</span><span class="p">:</span> <span class="n">ps4000</span><span class="o">.</span><span class="n">PS4000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS4000_500MV&quot;</span><span class="p">],</span>
+            <span class="mf">1.00</span><span class="p">:</span> <span class="n">ps4000</span><span class="o">.</span><span class="n">PS4000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS4000_1V&quot;</span><span class="p">],</span>
+            <span class="mf">2.00</span><span class="p">:</span> <span class="n">ps4000</span><span class="o">.</span><span class="n">PS4000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS4000_2V&quot;</span><span class="p">],</span>
+            <span class="mf">5.00</span><span class="p">:</span> <span class="n">ps4000</span><span class="o">.</span><span class="n">PS4000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS4000_5V&quot;</span><span class="p">],</span>
+            <span class="mf">10.0</span><span class="p">:</span> <span class="n">ps4000</span><span class="o">.</span><span class="n">PS4000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS4000_10V&quot;</span><span class="p">],</span>
+            <span class="mf">20.0</span><span class="p">:</span> <span class="n">ps4000</span><span class="o">.</span><span class="n">PS4000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS4000_20V&quot;</span><span class="p">],</span>
+            <span class="mf">50.0</span><span class="p">:</span> <span class="n">ps4000</span><span class="o">.</span><span class="n">PS4000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS4000_50V&quot;</span><span class="p">],</span>
+            <span class="mf">100.0</span><span class="p">:</span> <span class="n">ps4000</span><span class="o">.</span><span class="n">PS4000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS4000_100V&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+
+        <span class="n">MAX_ADC_VALUE</span> <span class="o">=</span> <span class="mi">32764</span>
+        <span class="n">MIN_ADC_VALUE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">32764</span>
+
+        <span class="n">COUPLING</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;AC&quot;</span><span class="p">:</span> <span class="n">ps4000</span><span class="o">.</span><span class="n">PICO_COUPLING</span><span class="p">[</span><span class="s2">&quot;AC&quot;</span><span class="p">],</span> <span class="s2">&quot;DC&quot;</span><span class="p">:</span> <span class="n">ps4000</span><span class="o">.</span><span class="n">PICO_COUPLING</span><span class="p">[</span><span class="s2">&quot;DC&quot;</span><span class="p">]}</span>
+
+<div class="viewcode-block" id="PS4000Scope.set_frequency">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PS4000Scope.set_frequency">[docs]</a>
+        <span class="k">def</span> <span class="nf">set_frequency</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frequency</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">pretrig</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">posttrig</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">variant</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_variant</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">variant</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;4223&quot;</span><span class="p">,</span> <span class="s2">&quot;4224&quot;</span><span class="p">,</span> <span class="s2">&quot;4423&quot;</span><span class="p">,</span> <span class="s2">&quot;4424&quot;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_freq</span><span class="p">(</span>
+                    <span class="n">frequency</span><span class="p">,</span> <span class="n">pretrig</span><span class="p">,</span> <span class="n">posttrig</span><span class="p">,</span> <span class="mf">50e-9</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">80_000_000</span><span class="p">,</span> <span class="mi">20_000_000</span><span class="p">,</span> <span class="mi">1</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">variant</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;4226&quot;</span><span class="p">,</span> <span class="s2">&quot;4227&quot;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_freq</span><span class="p">(</span>
+                    <span class="n">frequency</span><span class="p">,</span> <span class="n">pretrig</span><span class="p">,</span> <span class="n">posttrig</span><span class="p">,</span> <span class="mf">32e-9</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">250_000_000</span><span class="p">,</span> <span class="mi">31_250_000</span><span class="p">,</span> <span class="mi">2</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">variant</span> <span class="o">==</span> <span class="s2">&quot;4262&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_freq</span><span class="p">(</span>
+                    <span class="n">frequency</span><span class="p">,</span> <span class="n">pretrig</span><span class="p">,</span> <span class="n">posttrig</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10_000_000</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown variant: </span><span class="si">{</span><span class="n">variant</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ps5000</span><span class="p">,</span> <span class="n">CannotFindPicoSDKError</span><span class="p">):</span>
+
+    <span class="nd">@public</span>
+    <span class="k">class</span> <span class="nc">PS5000Scope</span><span class="p">(</span><span class="n">PicoScopeSdk</span><span class="p">):</span>  <span class="c1"># noqa, pragma: no cover, skipcq</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;PicoScope 5000 series oscilloscope is not available (Install `libps5000`).&quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variant</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">variant</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ps5000</span>
+
+
+<span class="k">else</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+
+<div class="viewcode-block" id="PS5000Scope">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PS5000Scope">[docs]</a>
+    <span class="nd">@public</span>
+    <span class="k">class</span> <span class="nc">PS5000Scope</span><span class="p">(</span><span class="n">PicoScopeSdk</span><span class="p">):</span>  <span class="c1"># type: ignore</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;PicoScope 5000 series oscilloscope.&quot;&quot;&quot;</span>
+
+        <span class="n">MODULE</span> <span class="o">=</span> <span class="n">ps5000</span>
+        <span class="n">PREFIX</span> <span class="o">=</span> <span class="s2">&quot;ps5000&quot;</span>
+        <span class="n">CHANNELS</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="n">ps5000</span><span class="o">.</span><span class="n">PS5000_CHANNEL</span><span class="p">[</span><span class="s2">&quot;PS5000_CHANNEL_A&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="n">ps5000</span><span class="o">.</span><span class="n">PS5000_CHANNEL</span><span class="p">[</span><span class="s2">&quot;PS5000_CHANNEL_B&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="n">ps5000</span><span class="o">.</span><span class="n">PS5000_CHANNEL</span><span class="p">[</span><span class="s2">&quot;PS5000_CHANNEL_C&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="n">ps5000</span><span class="o">.</span><span class="n">PS5000_CHANNEL</span><span class="p">[</span><span class="s2">&quot;PS5000_CHANNEL_D&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+
+        <span class="n">RANGES</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="mf">0.01</span><span class="p">:</span> <span class="n">ps5000</span><span class="o">.</span><span class="n">PS5000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS5000_10MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.02</span><span class="p">:</span> <span class="n">ps5000</span><span class="o">.</span><span class="n">PS5000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS5000_20MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.05</span><span class="p">:</span> <span class="n">ps5000</span><span class="o">.</span><span class="n">PS5000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS5000_50MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.10</span><span class="p">:</span> <span class="n">ps5000</span><span class="o">.</span><span class="n">PS5000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS5000_100MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.20</span><span class="p">:</span> <span class="n">ps5000</span><span class="o">.</span><span class="n">PS5000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS5000_200MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.50</span><span class="p">:</span> <span class="n">ps5000</span><span class="o">.</span><span class="n">PS5000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS5000_500MV&quot;</span><span class="p">],</span>
+            <span class="mf">1.00</span><span class="p">:</span> <span class="n">ps5000</span><span class="o">.</span><span class="n">PS5000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS5000_1V&quot;</span><span class="p">],</span>
+            <span class="mf">2.00</span><span class="p">:</span> <span class="n">ps5000</span><span class="o">.</span><span class="n">PS5000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS5000_2V&quot;</span><span class="p">],</span>
+            <span class="mf">5.00</span><span class="p">:</span> <span class="n">ps5000</span><span class="o">.</span><span class="n">PS5000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS5000_5V&quot;</span><span class="p">],</span>
+            <span class="mf">10.0</span><span class="p">:</span> <span class="n">ps5000</span><span class="o">.</span><span class="n">PS5000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS5000_10V&quot;</span><span class="p">],</span>
+            <span class="mf">20.0</span><span class="p">:</span> <span class="n">ps5000</span><span class="o">.</span><span class="n">PS5000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS5000_20V&quot;</span><span class="p">],</span>
+            <span class="mf">50.0</span><span class="p">:</span> <span class="n">ps5000</span><span class="o">.</span><span class="n">PS5000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS5000_50V&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+
+        <span class="n">MAX_ADC_VALUE</span> <span class="o">=</span> <span class="mi">32512</span>
+        <span class="n">MIN_ADC_VALUE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">32512</span>
+
+        <span class="n">COUPLING</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;AC&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;DC&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+
+<div class="viewcode-block" id="PS5000Scope.set_frequency">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PS5000Scope.set_frequency">[docs]</a>
+        <span class="k">def</span> <span class="nf">set_frequency</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frequency</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">pretrig</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">posttrig</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_freq</span><span class="p">(</span>
+                <span class="n">frequency</span><span class="p">,</span> <span class="n">pretrig</span><span class="p">,</span> <span class="n">posttrig</span><span class="p">,</span> <span class="mf">4e-9</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1_000_000_000</span><span class="p">,</span> <span class="mi">125_000_000</span><span class="p">,</span> <span class="mi">2</span>
+            <span class="p">)</span></div>
+</div>
+
+
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ps6000</span><span class="p">,</span> <span class="n">CannotFindPicoSDKError</span><span class="p">):</span>
+
+    <span class="nd">@public</span>
+    <span class="k">class</span> <span class="nc">PS6000Scope</span><span class="p">(</span><span class="n">PicoScopeSdk</span><span class="p">):</span>  <span class="c1"># noqa, pragma: no cover, skipcq</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;PicoScope 6000 series oscilloscope is not available (Install `libps6000`).&quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variant</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">variant</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ps6000</span>
+
+
+<span class="k">else</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+
+<div class="viewcode-block" id="PS6000Scope">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PS6000Scope">[docs]</a>
+    <span class="nd">@public</span>
+    <span class="k">class</span> <span class="nc">PS6000Scope</span><span class="p">(</span><span class="n">PicoScopeSdk</span><span class="p">):</span>  <span class="c1"># type: ignore</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;PicoScope 6000 series oscilloscope.&quot;&quot;&quot;</span>
+
+        <span class="n">MODULE</span> <span class="o">=</span> <span class="n">ps6000</span>
+        <span class="n">PREFIX</span> <span class="o">=</span> <span class="s2">&quot;ps6000&quot;</span>
+        <span class="n">CHANNELS</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="n">ps6000</span><span class="o">.</span><span class="n">PS6000_CHANNEL</span><span class="p">[</span><span class="s2">&quot;PS6000_CHANNEL_A&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="n">ps6000</span><span class="o">.</span><span class="n">PS6000_CHANNEL</span><span class="p">[</span><span class="s2">&quot;PS6000_CHANNEL_B&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="n">ps6000</span><span class="o">.</span><span class="n">PS6000_CHANNEL</span><span class="p">[</span><span class="s2">&quot;PS6000_CHANNEL_C&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="n">ps6000</span><span class="o">.</span><span class="n">PS6000_CHANNEL</span><span class="p">[</span><span class="s2">&quot;PS6000_CHANNEL_D&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+
+        <span class="n">RANGES</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="mf">0.01</span><span class="p">:</span> <span class="n">ps6000</span><span class="o">.</span><span class="n">PS6000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS6000A_10MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.02</span><span class="p">:</span> <span class="n">ps6000</span><span class="o">.</span><span class="n">PS6000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS6000_20MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.05</span><span class="p">:</span> <span class="n">ps6000</span><span class="o">.</span><span class="n">PS6000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS6000_50MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.10</span><span class="p">:</span> <span class="n">ps6000</span><span class="o">.</span><span class="n">PS6000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS6000_100MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.20</span><span class="p">:</span> <span class="n">ps6000</span><span class="o">.</span><span class="n">PS6000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS6000_200MV&quot;</span><span class="p">],</span>
+            <span class="mf">0.50</span><span class="p">:</span> <span class="n">ps6000</span><span class="o">.</span><span class="n">PS6000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS6000_500MV&quot;</span><span class="p">],</span>
+            <span class="mf">1.00</span><span class="p">:</span> <span class="n">ps6000</span><span class="o">.</span><span class="n">PS6000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS6000_1V&quot;</span><span class="p">],</span>
+            <span class="mf">2.00</span><span class="p">:</span> <span class="n">ps6000</span><span class="o">.</span><span class="n">PS6000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS6000_2V&quot;</span><span class="p">],</span>
+            <span class="mf">5.00</span><span class="p">:</span> <span class="n">ps6000</span><span class="o">.</span><span class="n">PS6000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS6000_5V&quot;</span><span class="p">],</span>
+            <span class="mf">10.0</span><span class="p">:</span> <span class="n">ps6000</span><span class="o">.</span><span class="n">PS6000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS6000_10V&quot;</span><span class="p">],</span>
+            <span class="mf">20.0</span><span class="p">:</span> <span class="n">ps6000</span><span class="o">.</span><span class="n">PS6000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS6000_20V&quot;</span><span class="p">],</span>
+            <span class="mf">50.0</span><span class="p">:</span> <span class="n">ps6000</span><span class="o">.</span><span class="n">PS6000_RANGE</span><span class="p">[</span><span class="s2">&quot;PS6000_50V&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+
+        <span class="n">MAX_ADC_VALUE</span> <span class="o">=</span> <span class="mi">32512</span>
+        <span class="n">MIN_ADC_VALUE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">32512</span>
+
+        <span class="n">COUPLING</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;AC&quot;</span><span class="p">:</span> <span class="n">ps6000</span><span class="o">.</span><span class="n">PS6000_COUPLING</span><span class="p">[</span><span class="s2">&quot;PS6000_AC&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;DC&quot;</span><span class="p">:</span> <span class="n">ps6000</span><span class="o">.</span><span class="n">PS6000_COUPLING</span><span class="p">[</span><span class="s2">&quot;PS6000_DC_1M&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;DC_50&quot;</span><span class="p">:</span> <span class="n">ps6000</span><span class="o">.</span><span class="n">PS6000_COUPLING</span><span class="p">[</span><span class="s2">&quot;PS6000_DC_50R&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+
+<div class="viewcode-block" id="PS6000Scope.open">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PS6000Scope.open">[docs]</a>
+        <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="n">assert_pico_ok</span><span class="p">(</span><span class="n">ps6000</span><span class="o">.</span><span class="n">ps6000OpenUnit</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">),</span> <span class="kc">None</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="PS6000Scope.set_channel">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PS6000Scope.set_channel">[docs]</a>
+        <span class="k">def</span> <span class="nf">set_channel</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span>
+                <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+                <span class="n">coupling</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                <span class="nb">range</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                <span class="n">offset</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="n">channel</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">CHANNELS</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Channel </span><span class="si">{</span><span class="n">channel</span><span class="si">}</span><span class="s2"> not in available channels: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">CHANNELS</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">coupling</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">COUPLING</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Coupling </span><span class="si">{</span><span class="n">coupling</span><span class="si">}</span><span class="s2"> not in available couplings: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">COUPLING</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">range</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">RANGES</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Range </span><span class="si">{</span><span class="nb">range</span><span class="si">}</span><span class="s2"> not in available ranges: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">RANGES</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">assert_pico_ok</span><span class="p">(</span>
+                <span class="n">ps6000</span><span class="o">.</span><span class="n">ps6000SetChannel</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">CHANNELS</span><span class="p">[</span><span class="n">channel</span><span class="p">],</span>
+                    <span class="n">enabled</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">COUPLING</span><span class="p">[</span><span class="n">coupling</span><span class="p">],</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">RANGES</span><span class="p">[</span><span class="nb">range</span><span class="p">],</span>
+                    <span class="n">offset</span><span class="p">,</span>
+                    <span class="n">ps6000</span><span class="o">.</span><span class="n">PS6000_BANDWIDTH_LIMITER</span><span class="p">[</span><span class="s2">&quot;PS6000_BW_FULL&quot;</span><span class="p">],</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span> <span class="o">=</span> <span class="nb">range</span></div>
+
+
+<div class="viewcode-block" id="PS6000Scope.set_buffer">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PS6000Scope.set_buffer">[docs]</a>
+        <span class="k">def</span> <span class="nf">set_buffer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">enable</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span>
+            <span class="k">if</span> <span class="n">enable</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">channel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffers</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffers</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span>
+                <span class="n">buffer</span> <span class="o">=</span> <span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_int16</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">)()</span>
+                <span class="n">assert_pico_ok</span><span class="p">(</span>
+                    <span class="n">ps6000</span><span class="o">.</span><span class="n">ps6000SetDataBuffer</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">CHANNELS</span><span class="p">[</span><span class="n">channel</span><span class="p">],</span>
+                        <span class="n">ctypes</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">buffer</span><span class="p">),</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">,</span>
+                        <span class="mi">0</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">buffers</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span> <span class="o">=</span> <span class="n">buffer</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">assert_pico_ok</span><span class="p">(</span>
+                    <span class="n">ps6000</span><span class="o">.</span><span class="n">ps6000SetDataBuffer</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CHANNELS</span><span class="p">[</span><span class="n">channel</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">,</span> <span class="mi">0</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffers</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="PS6000Scope.set_frequency">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.scope.picoscope_sdk.html#pyecsca.sca.scope.picoscope_sdk.PS6000Scope.set_frequency">[docs]</a>
+        <span class="k">def</span> <span class="nf">set_frequency</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frequency</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">pretrig</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">posttrig</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_freq</span><span class="p">(</span>
+                <span class="n">frequency</span><span class="p">,</span> <span class="n">pretrig</span><span class="p">,</span> <span class="n">posttrig</span><span class="p">,</span> <span class="mf">3.2e-9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5_000_000_000</span><span class="p">,</span> <span class="mi">156_250_000</span><span class="p">,</span> <span class="mi">4</span>
+            <span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2018-2023, .
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

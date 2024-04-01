@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pyecsca.sca.target.leakage &#8212; pyecsca 0.2.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d10597a4" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css?v=1ca41fbe" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx_paramlinks.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=c1177449" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphik.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <script src="../../../../_static/documentation_options.js?v=938c9ccc"></script>
+    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="icon" href="../../../../_static/logo_black.png"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../../index.html">
+    <img class="logo" src="../../../../_static/logo_black.png" alt="Logo" />
+    
+    <h1 class="logo logo-name">pyecsca</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/configuration_space.html">Configuration space</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/codegen.html">Code generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/emulator.html">Emulation and leakage simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/measurement.html">Measurement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/visualization.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/smartcards.html">Smartcards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/formulas.html">Exploration of formulas in open-source ECC libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/rpa.html">RPA-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/zvp.html">ZVP-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebook/re/epa.html">EPA-based reverse engineering</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.ec.html">pyecsca.ec package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.misc.html">pyecsca.misc package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.sca.html">pyecsca.sca package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/pyecsca.codegen.html">pyecsca.codegen package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../libraries.html">ECC in Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../references.html">References</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pyecsca.sca.target.leakage</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">public</span> <span class="kn">import</span> <span class="n">public</span>
+
+<span class="kn">from</span> <span class="nn">...ec.coordinates</span> <span class="kn">import</span> <span class="n">CoordinateModel</span>
+<span class="kn">from</span> <span class="nn">...ec.mod</span> <span class="kn">import</span> <span class="n">Mod</span>
+<span class="kn">from</span> <span class="nn">...ec.model</span> <span class="kn">import</span> <span class="n">CurveModel</span>
+<span class="kn">from</span> <span class="nn">...ec.params</span> <span class="kn">import</span> <span class="n">DomainParameters</span>
+<span class="kn">from</span> <span class="nn">...ec.point</span> <span class="kn">import</span> <span class="n">Point</span>
+<span class="kn">from</span> <span class="nn">...ec.mult</span> <span class="kn">import</span> <span class="n">ScalarMultiplier</span>
+<span class="kn">from</span> <span class="nn">...ec.key_generation</span> <span class="kn">import</span> <span class="n">KeyGeneration</span>
+<span class="kn">from</span> <span class="nn">...ec.key_agreement</span> <span class="kn">import</span> <span class="n">KeyAgreement</span>
+<span class="kn">from</span> <span class="nn">...ec.signature</span> <span class="kn">import</span> <span class="n">Signature</span><span class="p">,</span> <span class="n">SignatureResult</span>
+<span class="kn">from</span> <span class="nn">...ec.formula</span> <span class="kn">import</span> <span class="n">FormulaAction</span>
+<span class="kn">from</span> <span class="nn">...ec.context</span> <span class="kn">import</span> <span class="n">DefaultContext</span><span class="p">,</span> <span class="n">local</span>
+<span class="kn">from</span> <span class="nn">..attack</span> <span class="kn">import</span> <span class="n">LeakageModel</span>
+<span class="kn">from</span> <span class="nn">..trace</span> <span class="kn">import</span> <span class="n">Trace</span>
+<span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">Target</span>
+
+
+<div class="viewcode-block" id="LeakageTarget">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.target.leakage.html#pyecsca.sca.target.leakage.LeakageTarget">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">class</span> <span class="nc">LeakageTarget</span><span class="p">(</span><span class="n">Target</span><span class="p">):</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">CurveModel</span>
+    <span class="n">coords</span><span class="p">:</span> <span class="n">CoordinateModel</span>
+    <span class="n">mult</span><span class="p">:</span> <span class="n">ScalarMultiplier</span>
+    <span class="n">leakage_model</span><span class="p">:</span> <span class="n">LeakageModel</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DomainParameters</span><span class="p">]</span>
+    <span class="n">privkey</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Mod</span><span class="p">]</span>
+    <span class="n">pubkey</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Point</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">model</span><span class="p">:</span> <span class="n">CurveModel</span><span class="p">,</span>
+        <span class="n">coords</span><span class="p">:</span> <span class="n">CoordinateModel</span><span class="p">,</span>
+        <span class="n">mult</span><span class="p">:</span> <span class="n">ScalarMultiplier</span><span class="p">,</span>
+        <span class="n">leakage_model</span><span class="p">:</span> <span class="n">LeakageModel</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coords</span> <span class="o">=</span> <span class="n">coords</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mult</span> <span class="o">=</span> <span class="n">mult</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">leakage_model</span> <span class="o">=</span> <span class="n">leakage_model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">privkey</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pubkey</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="LeakageTarget.get_trace">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.target.leakage.html#pyecsca.sca.target.leakage.LeakageTarget.get_trace">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_trace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">DefaultContext</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trace</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">action</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">FormulaAction</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">intermediate</span> <span class="ow">in</span> <span class="n">action</span><span class="o">.</span><span class="n">op_results</span><span class="p">:</span>
+                    <span class="n">leak</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">leakage_model</span><span class="p">(</span><span class="n">intermediate</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                    <span class="n">temp_trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">leak</span><span class="p">)</span>
+
+        <span class="n">temp_trace</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Trace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">temp_trace</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="LeakageTarget.simulate_scalar_mult_traces">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.target.leakage.html#pyecsca.sca.target.leakage.LeakageTarget.simulate_scalar_mult_traces">[docs]</a>
+    <span class="k">def</span> <span class="nf">simulate_scalar_mult_traces</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">num_of_traces</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">scalar</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Point</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">Trace</span><span class="p">]]:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing DomainParameters&quot;</span><span class="p">)</span>
+        <span class="n">points</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">affine_random</span><span class="p">()</span><span class="o">.</span><span class="n">to_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">curve</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_of_traces</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="n">traces</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">points</span><span class="p">:</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">trace</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scalar_mult</span><span class="p">(</span><span class="n">scalar</span><span class="p">,</span> <span class="n">point</span><span class="p">)</span>
+            <span class="n">traces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">points</span><span class="p">,</span> <span class="n">traces</span></div>
+
+
+<div class="viewcode-block" id="LeakageTarget.simulate_ecdh_traces">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.target.leakage.html#pyecsca.sca.target.leakage.LeakageTarget.simulate_ecdh_traces">[docs]</a>
+    <span class="k">def</span> <span class="nf">simulate_ecdh_traces</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">num_of_traces</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Point</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">Trace</span><span class="p">]]:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing DomainParameters&quot;</span><span class="p">)</span>
+        <span class="n">other_pubs</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">affine_random</span><span class="p">()</span><span class="o">.</span><span class="n">to_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">curve</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_of_traces</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="n">traces</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">pub</span> <span class="ow">in</span> <span class="n">other_pubs</span><span class="p">:</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">trace</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ecdh</span><span class="p">(</span><span class="n">pub</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">traces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">other_pubs</span><span class="p">,</span> <span class="n">traces</span></div>
+
+
+<div class="viewcode-block" id="LeakageTarget.set_params">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.target.leakage.html#pyecsca.sca.target.leakage.LeakageTarget.set_params">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">DomainParameters</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span></div>
+
+
+<div class="viewcode-block" id="LeakageTarget.set_leakage_model">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.target.leakage.html#pyecsca.sca.target.leakage.LeakageTarget.set_leakage_model">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_leakage_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leakage_model</span><span class="p">:</span> <span class="n">LeakageModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">leakage_model</span> <span class="o">=</span> <span class="n">leakage_model</span></div>
+
+
+<div class="viewcode-block" id="LeakageTarget.scalar_mult">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.target.leakage.html#pyecsca.sca.target.leakage.LeakageTarget.scalar_mult">[docs]</a>
+    <span class="k">def</span> <span class="nf">scalar_mult</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scalar</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="n">Point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Point</span><span class="p">,</span> <span class="n">Trace</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing DomainParameters&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">local</span><span class="p">(</span><span class="n">DefaultContext</span><span class="p">())</span> <span class="k">as</span> <span class="n">ctx</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mult</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="n">point</span><span class="p">)</span>
+            <span class="n">res_point</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mult</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">scalar</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res_point</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_trace</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LeakageTarget.generate">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.target.leakage.html#pyecsca.sca.target.leakage.LeakageTarget.generate">[docs]</a>
+    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Mod</span><span class="p">,</span> <span class="n">Point</span><span class="p">],</span> <span class="n">Trace</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing DomainParameters&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">local</span><span class="p">(</span><span class="n">DefaultContext</span><span class="p">())</span> <span class="k">as</span> <span class="n">ctx</span><span class="p">:</span>
+            <span class="n">keygen</span> <span class="o">=</span> <span class="n">KeyGeneration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mult</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="n">priv</span><span class="p">,</span> <span class="n">pub</span> <span class="o">=</span> <span class="n">keygen</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">priv</span><span class="p">,</span> <span class="n">pub</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_trace</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LeakageTarget.set_privkey">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.target.leakage.html#pyecsca.sca.target.leakage.LeakageTarget.set_privkey">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_privkey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">privkey</span><span class="p">:</span> <span class="n">Mod</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">privkey</span> <span class="o">=</span> <span class="n">privkey</span></div>
+
+
+<div class="viewcode-block" id="LeakageTarget.set_pubkey">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.target.leakage.html#pyecsca.sca.target.leakage.LeakageTarget.set_pubkey">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_pubkey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pubkey</span><span class="p">:</span> <span class="n">Point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pubkey</span> <span class="o">=</span> <span class="n">pubkey</span></div>
+
+
+<div class="viewcode-block" id="LeakageTarget.ecdh">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.target.leakage.html#pyecsca.sca.target.leakage.LeakageTarget.ecdh">[docs]</a>
+    <span class="k">def</span> <span class="nf">ecdh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other_pubkey</span><span class="p">:</span> <span class="n">Point</span><span class="p">,</span> <span class="n">hash_algo</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">Trace</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing DomainParameters&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">privkey</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing privkey&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">local</span><span class="p">(</span><span class="n">DefaultContext</span><span class="p">())</span> <span class="k">as</span> <span class="n">ctx</span><span class="p">:</span>
+            <span class="n">ecdh</span> <span class="o">=</span> <span class="n">KeyAgreement</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mult</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="n">other_pubkey</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">privkey</span><span class="p">,</span> <span class="n">hash_algo</span>
+            <span class="p">)</span>
+            <span class="n">shared_secret</span> <span class="o">=</span> <span class="n">ecdh</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">shared_secret</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_trace</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LeakageTarget.ecdsa_sign">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.target.leakage.html#pyecsca.sca.target.leakage.LeakageTarget.ecdsa_sign">[docs]</a>
+    <span class="k">def</span> <span class="nf">ecdsa_sign</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">hash_algo</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">SignatureResult</span><span class="p">,</span> <span class="n">Trace</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing DomainParameters&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">privkey</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing privkey&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">local</span><span class="p">(</span><span class="n">DefaultContext</span><span class="p">())</span> <span class="k">as</span> <span class="n">ctx</span><span class="p">:</span>
+            <span class="n">ecdsa</span> <span class="o">=</span> <span class="n">Signature</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mult</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mult</span><span class="o">.</span><span class="n">formulas</span><span class="p">[</span><span class="s2">&quot;add&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">pubkey</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">privkey</span><span class="p">,</span> <span class="n">hash_algo</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+            <span class="n">signed_data</span> <span class="o">=</span> <span class="n">ecdsa</span><span class="o">.</span><span class="n">sign_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">signed_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_trace</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LeakageTarget.ecdsa_verify">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.target.leakage.html#pyecsca.sca.target.leakage.LeakageTarget.ecdsa_verify">[docs]</a>
+    <span class="k">def</span> <span class="nf">ecdsa_verify</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">signature</span><span class="p">:</span> <span class="n">SignatureResult</span><span class="p">,</span> <span class="n">hash_algo</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Trace</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pubkey</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing pubkey&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">local</span><span class="p">(</span><span class="n">DefaultContext</span><span class="p">())</span> <span class="k">as</span> <span class="n">ctx</span><span class="p">:</span>
+            <span class="n">ecdsa</span> <span class="o">=</span> <span class="n">Signature</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mult</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mult</span><span class="o">.</span><span class="n">formulas</span><span class="p">[</span><span class="s2">&quot;add&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">pubkey</span><span class="p">,</span> <span class="n">hash_algo</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+            <span class="n">verified</span> <span class="o">=</span> <span class="n">ecdsa</span><span class="o">.</span><span class="n">verify_data</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">verified</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_trace</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LeakageTarget.debug">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.target.leakage.html#pyecsca.sca.target.leakage.LeakageTarget.debug">[docs]</a>
+    <span class="k">def</span> <span class="nf">debug</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">shortname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">name</span></div>
+
+
+<div class="viewcode-block" id="LeakageTarget.connect">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.target.leakage.html#pyecsca.sca.target.leakage.LeakageTarget.connect">[docs]</a>
+    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="LeakageTarget.disconnect">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.target.leakage.html#pyecsca.sca.target.leakage.LeakageTarget.disconnect">[docs]</a>
+    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="LeakageTarget.set_trigger">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.target.leakage.html#pyecsca.sca.target.leakage.LeakageTarget.set_trigger">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="LeakageTarget.quit">
+<a class="viewcode-back" href="../../../../api/pyecsca.sca.target.leakage.html#pyecsca.sca.target.leakage.LeakageTarget.quit">[docs]</a>
+    <span class="k">def</span> <span class="nf">quit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+</div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2018-2023, .
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

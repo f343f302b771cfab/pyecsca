@@ -1,0 +1,7 @@
+pyecsca.ec.mod module
+=====================
+
+.. automodule:: pyecsca.ec.mod
+   :members:
+   :undoc-members:
+   :show-inheritance:

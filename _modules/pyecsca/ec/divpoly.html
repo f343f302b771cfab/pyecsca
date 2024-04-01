@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pyecsca.ec.divpoly &#8212; pyecsca 0.2.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d10597a4" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=1ca41fbe" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx_paramlinks.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=c1177449" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphik.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <script src="../../../_static/documentation_options.js?v=938c9ccc"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="icon" href="../../../_static/logo_black.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/logo_black.png" alt="Logo" />
+    
+    <h1 class="logo logo-name">pyecsca</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/configuration_space.html">Configuration space</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/codegen.html">Code generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/emulator.html">Emulation and leakage simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/measurement.html">Measurement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/visualization.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/smartcards.html">Smartcards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/re/formulas.html">Exploration of formulas in open-source ECC libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/re/rpa.html">RPA-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/re/zvp.html">ZVP-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/re/epa.html">EPA-based reverse engineering</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/pyecsca.ec.html">pyecsca.ec package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/pyecsca.misc.html">pyecsca.misc package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/pyecsca.sca.html">pyecsca.sca package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/pyecsca.codegen.html">pyecsca.codegen package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../libraries.html">ECC in Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pyecsca.ec.divpoly</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Provides functions for computing division polynomials and the multiplication-by-n map on an elliptic curve.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">public</span> <span class="kn">import</span> <span class="n">public</span>
+
+<span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">symbols</span><span class="p">,</span> <span class="n">FF</span><span class="p">,</span> <span class="n">Poly</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+
+<span class="kn">from</span> <span class="nn">.curve</span> <span class="kn">import</span> <span class="n">EllipticCurve</span>
+<span class="kn">from</span> <span class="nn">.mod</span> <span class="kn">import</span> <span class="n">Mod</span>
+<span class="kn">from</span> <span class="nn">.model</span> <span class="kn">import</span> <span class="n">ShortWeierstrassModel</span>
+
+<span class="n">has_pari</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">cypari2</span>
+
+    <span class="n">has_pari</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">cypari2</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<span class="k">def</span> <span class="nf">values</span><span class="p">(</span><span class="o">*</span><span class="n">ns</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]]:</span>
+    <span class="n">done</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">vals</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">todo</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">todo</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">todo</span><span class="p">:</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">todo</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">done</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">new</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">()</span>
+        <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="o">-</span><span class="mi">2</span><span class="p">:</span>
+            <span class="n">new</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,)</span>
+        <span class="k">elif</span> <span class="n">val</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">val</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;bad </span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">val</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">val</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">new</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">val</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">val</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="n">new</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">val</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="k">if</span> <span class="n">m</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">new</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">new</span><span class="p">:</span>
+            <span class="n">todo</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new</span><span class="p">)</span>
+        <span class="n">vals</span><span class="p">[</span><span class="n">val</span><span class="p">]</span> <span class="o">=</span> <span class="n">new</span>
+        <span class="n">done</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">vals</span>
+
+
+<span class="k">def</span> <span class="nf">dep_graph</span><span class="p">(</span><span class="o">*</span><span class="n">ns</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+    <span class="n">vals</span> <span class="o">=</span> <span class="n">values</span><span class="p">(</span><span class="o">*</span><span class="n">ns</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vals</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">v</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">v</span><span class="p">:</span>
+                <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">g</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">g</span><span class="p">,</span> <span class="n">vals</span>
+
+
+<span class="k">def</span> <span class="nf">dep_map</span><span class="p">(</span><span class="o">*</span><span class="n">ns</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="n">g</span><span class="p">,</span> <span class="n">vals</span> <span class="o">=</span> <span class="n">dep_graph</span><span class="p">(</span><span class="o">*</span><span class="n">ns</span><span class="p">)</span>
+    <span class="n">current</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">ls</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">vert</span> <span class="ow">in</span> <span class="n">nx</span><span class="o">.</span><span class="n">lexicographical_topological_sort</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="o">-</span><span class="nb">sum</span><span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())):</span>
+        <span class="k">if</span> <span class="n">vert</span> <span class="ow">in</span> <span class="n">current</span><span class="p">:</span>
+            <span class="n">current</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">vert</span><span class="p">)</span>
+        <span class="n">ls</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">vert</span><span class="p">,</span> <span class="nb">set</span><span class="p">(</span><span class="n">current</span><span class="p">)))</span>
+        <span class="n">current</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">vals</span><span class="p">[</span><span class="n">vert</span><span class="p">])</span>
+    <span class="n">ls</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">ls</span><span class="p">,</span> <span class="n">vals</span>
+
+
+<div class="viewcode-block" id="a_invariants">
+<a class="viewcode-back" href="../../../api/pyecsca.ec.divpoly.html#pyecsca.ec.divpoly.a_invariants">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">a_invariants</span><span class="p">(</span><span class="n">curve</span><span class="p">:</span> <span class="n">EllipticCurve</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Mod</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the a-invariants of the curve.</span>
+
+<span class="sd">    :param curve: The elliptic curve (only ShortWeierstrass model).</span>
+<span class="sd">    :return: A tuple of 5 a-invariants (a1, a2, a3, a4, a6).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">curve</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">ShortWeierstrassModel</span><span class="p">):</span>
+        <span class="n">a1</span> <span class="o">=</span> <span class="n">Mod</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">)</span>
+        <span class="n">a2</span> <span class="o">=</span> <span class="n">Mod</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">)</span>
+        <span class="n">a3</span> <span class="o">=</span> <span class="n">Mod</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">)</span>
+        <span class="n">a4</span> <span class="o">=</span> <span class="n">curve</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">]</span>
+        <span class="n">a6</span> <span class="o">=</span> <span class="n">curve</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;b&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">a4</span><span class="p">,</span> <span class="n">a6</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+
+<div class="viewcode-block" id="b_invariants">
+<a class="viewcode-back" href="../../../api/pyecsca.ec.divpoly.html#pyecsca.ec.divpoly.b_invariants">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">b_invariants</span><span class="p">(</span><span class="n">curve</span><span class="p">:</span> <span class="n">EllipticCurve</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Mod</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the b-invariants of the curve.</span>
+
+<span class="sd">    :param curve: The elliptic curve (only ShortWeierstrass model).</span>
+<span class="sd">    :return: A tuple of 4 b-invariants (b2, b4, b6, b8).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">curve</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">ShortWeierstrassModel</span><span class="p">):</span>
+        <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">a4</span><span class="p">,</span> <span class="n">a6</span> <span class="o">=</span> <span class="n">a_invariants</span><span class="p">(</span><span class="n">curve</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">a1</span> <span class="o">*</span> <span class="n">a1</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">a2</span><span class="p">,</span>
+            <span class="n">a1</span> <span class="o">*</span> <span class="n">a3</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">a4</span><span class="p">,</span>
+            <span class="n">a3</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">a6</span><span class="p">,</span>
+            <span class="n">a1</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a6</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">a2</span> <span class="o">*</span> <span class="n">a6</span> <span class="o">-</span> <span class="n">a1</span> <span class="o">*</span> <span class="n">a3</span> <span class="o">*</span> <span class="n">a4</span> <span class="o">+</span> <span class="n">a2</span> <span class="o">*</span> <span class="n">a3</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">a4</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">divpoly0</span><span class="p">(</span><span class="n">curve</span><span class="p">:</span> <span class="n">EllipticCurve</span><span class="p">,</span> <span class="o">*</span><span class="n">ns</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Poly</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Basically sagemath&#39;s division_polynomial_0 but more clever memory management.</span>
+
+<span class="sd">    As sagemath says:</span>
+
+<span class="sd">        Return the `n^{th}` torsion (division) polynomial, without</span>
+<span class="sd">        the 2-torsion factor if `n` is even, as a polynomial in `x`.</span>
+
+<span class="sd">        These are the polynomials `g_n` defined in [MT1991]_, but with</span>
+<span class="sd">        the sign flipped for even `n`, so that the leading coefficient is</span>
+<span class="sd">        always positive.</span>
+
+<span class="sd">    :param curve: The elliptic curve.</span>
+<span class="sd">    :param ns: The values to compute the polynomial for.</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">xs</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+
+    <span class="n">K</span> <span class="o">=</span> <span class="n">FF</span><span class="p">(</span><span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">)</span>
+    <span class="n">Kx</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">Poly</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">K</span><span class="p">)</span>  <span class="c1"># noqa</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">Kx</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+
+    <span class="n">b2</span><span class="p">,</span> <span class="n">b4</span><span class="p">,</span> <span class="n">b6</span><span class="p">,</span> <span class="n">b8</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">b</span><span class="p">:</span> <span class="n">Kx</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">)),</span> <span class="n">b_invariants</span><span class="p">(</span><span class="n">curve</span><span class="p">))</span>
+    <span class="n">ls</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">dep_map</span><span class="p">(</span><span class="o">*</span><span class="n">ns</span><span class="p">)</span>
+
+    <span class="n">mem</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Poly</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">keep</span> <span class="ow">in</span> <span class="n">ls</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="o">-</span><span class="mi">2</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">mem</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">Kx</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="n">b2</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Kx</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">b4</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b6</span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">Kx</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;n must be a positive integer (or -1 or -2)&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">Kx</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">Kx</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">4</span> <span class="o">+</span> <span class="n">b2</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="n">Kx</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">b4</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Kx</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">b6</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b8</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="o">-</span><span class="n">mem</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">Kx</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">b2</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b4</span><span class="p">)</span> <span class="o">*</span> <span class="n">mem</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">mem</span><span class="p">[</span><span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">mem</span><span class="p">[</span><span class="n">m</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">mem</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">mem</span><span class="p">[</span><span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">mem</span><span class="p">[</span><span class="n">m</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="k">if</span> <span class="n">m</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="n">mem</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">mem</span><span class="p">[</span><span class="n">m</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">mem</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">-</span> <span class="n">mem</span><span class="p">[</span><span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">mem</span><span class="p">[</span><span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">3</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="n">mem</span><span class="p">[</span><span class="n">m</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">mem</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">-</span> <span class="n">mem</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">mem</span><span class="p">[</span><span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">mem</span><span class="p">[</span><span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">3</span>
+        <span class="k">for</span> <span class="n">dl</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">mem</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">keep</span><span class="p">)</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">ns</span><span class="p">):</span>
+            <span class="k">del</span> <span class="n">mem</span><span class="p">[</span><span class="n">dl</span><span class="p">]</span>
+        <span class="n">mem</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+
+    <span class="k">return</span> <span class="n">mem</span>
+
+
+<div class="viewcode-block" id="divpoly">
+<a class="viewcode-back" href="../../../api/pyecsca.ec.divpoly.html#pyecsca.ec.divpoly.divpoly">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">divpoly</span><span class="p">(</span><span class="n">curve</span><span class="p">:</span> <span class="n">EllipticCurve</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">two_torsion_multiplicity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Poly</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the n-th division polynomial.</span>
+
+<span class="sd">    :param curve: Curve to compute on.</span>
+<span class="sd">    :param n: Scalar.</span>
+<span class="sd">    :param two_torsion_multiplicity: Same as sagemath.</span>
+<span class="sd">    :return: The division polynomial.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">f</span><span class="p">:</span> <span class="n">Poly</span> <span class="o">=</span> <span class="n">divpoly0</span><span class="p">(</span><span class="n">curve</span><span class="p">,</span> <span class="n">n</span><span class="p">)[</span><span class="n">n</span><span class="p">]</span>
+    <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">a4</span><span class="p">,</span> <span class="n">a6</span> <span class="o">=</span> <span class="n">a_invariants</span><span class="p">(</span><span class="n">curve</span><span class="p">)</span>
+    <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;x y&quot;</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">Poly</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">domain</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">Poly</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">domain</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">two_torsion_multiplicity</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">f</span>
+    <span class="k">elif</span> <span class="n">two_torsion_multiplicity</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">Kxy</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">Poly</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">domain</span><span class="p">)</span>  <span class="c1"># noqa</span>
+            <span class="k">return</span> <span class="n">Kxy</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Kxy</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="n">Kxy</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">Kxy</span><span class="p">(</span><span class="n">a3</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">f</span>
+    <span class="k">elif</span> <span class="n">two_torsion_multiplicity</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">f</span> <span class="o">*</span> <span class="n">divpoly0</span><span class="p">(</span><span class="n">curve</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">f</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">mult_by_n_own</span><span class="p">(</span><span class="n">curve</span><span class="p">:</span> <span class="n">EllipticCurve</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Poly</span><span class="p">,</span> <span class="n">Poly</span><span class="p">]:</span>
+    <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;x y&quot;</span><span class="p">)</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="n">FF</span><span class="p">(</span><span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">Poly</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">K</span><span class="p">)</span>
+    <span class="n">Kxy</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">Poly</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">K</span><span class="p">)</span>  <span class="c1"># noqa</span>
+
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">Kxy</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">polys</span> <span class="o">=</span> <span class="n">divpoly0</span><span class="p">(</span><span class="n">curve</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="c1"># TODO: All of these fractions may benefit from using</span>
+    <span class="c1">#       sympy.cancel to get rid of common factors in the numerator and denominator.</span>
+    <span class="c1">#       Though for large polynomials that might be too much.</span>
+    <span class="n">mx_denom</span> <span class="o">=</span> <span class="n">polys</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">mx_num</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">polys</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">polys</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">polys</span><span class="p">[</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">polys</span><span class="p">[</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">mx_denom</span> <span class="o">*=</span> <span class="n">polys</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">mx_num</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">polys</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">polys</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">polys</span><span class="p">[</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">polys</span><span class="p">[</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># Alternative that makes the denominator monic by dividing the</span>
+    <span class="c1"># numerator by the leading coefficient. Sage does this</span>
+    <span class="c1"># simplification when asking for multiplication_by_m with the</span>
+    <span class="c1"># x-only=True, as then the poly is an univariate object.</span>
+    <span class="c1"># &gt;</span>
+    <span class="c1"># &gt; lc = K(mx_denom.LC())</span>
+    <span class="c1"># &gt; mx = (mx_num.quo(lc), mx_denom.monic())</span>
+    <span class="n">mx</span> <span class="o">=</span> <span class="p">(</span><span class="n">mx_num</span><span class="p">,</span> <span class="n">mx_denom</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">mx</span>
+
+
+<span class="k">if</span> <span class="n">has_pari</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">mult_by_n_pari</span><span class="p">(</span><span class="n">curve</span><span class="p">:</span> <span class="n">EllipticCurve</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">pari</span> <span class="o">=</span> <span class="n">cypari2</span><span class="o">.</span><span class="n">Pari</span><span class="p">()</span>
+        <span class="c1"># Magic heuristic, plus some constant term for very small polys</span>
+        <span class="n">stacksize</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">40</span> <span class="o">*</span> <span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="o">.</span><span class="n">bit_length</span><span class="p">()))</span> <span class="o">+</span> <span class="mi">1000000</span>
+        <span class="n">stacksizemax</span> <span class="o">=</span> <span class="mi">15</span> <span class="o">*</span> <span class="n">stacksize</span>
+
+        <span class="n">pari</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s2">&quot;debugmem&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># silence stack warnings</span>
+        <span class="n">pari</span><span class="o">.</span><span class="n">allocatemem</span><span class="p">(</span><span class="n">stacksize</span><span class="p">,</span> <span class="n">stacksizemax</span><span class="p">,</span> <span class="n">silent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">pari</span><span class="p">(</span><span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">)</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">pari</span><span class="o">.</span><span class="n">Mod</span><span class="p">(</span><span class="n">curve</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">],</span> <span class="n">p</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">pari</span><span class="o">.</span><span class="n">Mod</span><span class="p">(</span><span class="n">curve</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;b&quot;</span><span class="p">],</span> <span class="n">p</span><span class="p">)</span>
+        <span class="n">E</span> <span class="o">=</span> <span class="n">pari</span><span class="o">.</span><span class="n">ellinit</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">mx</span> <span class="o">=</span> <span class="n">pari</span><span class="o">.</span><span class="n">ellxn</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+                <span class="k">break</span>
+            <span class="k">except</span> <span class="n">cypari2</span><span class="o">.</span><span class="n">PariError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">errnum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">17</span><span class="p">:</span>  <span class="c1"># out of stack memory</span>
+                    <span class="n">pari</span><span class="o">.</span><span class="n">allocatemem</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">e</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="n">FF</span><span class="p">(</span><span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">)</span>
+        <span class="n">mx_num</span> <span class="o">=</span> <span class="n">Poly</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span> <span class="k">for</span> <span class="n">coeff</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">mx</span><span class="p">[</span><span class="mi">0</span><span class="p">])],</span> <span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">K</span><span class="p">)</span>
+        <span class="n">mx_denom</span> <span class="o">=</span> <span class="n">Poly</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span> <span class="k">for</span> <span class="n">coeff</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">mx</span><span class="p">[</span><span class="mi">1</span><span class="p">])],</span> <span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">K</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mx_num</span><span class="p">,</span> <span class="n">mx_denom</span>
+
+
+<div class="viewcode-block" id="mult_by_n">
+<a class="viewcode-back" href="../../../api/pyecsca.ec.divpoly.html#pyecsca.ec.divpoly.mult_by_n">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">mult_by_n</span><span class="p">(</span>
+    <span class="n">curve</span><span class="p">:</span> <span class="n">EllipticCurve</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">x_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">use_pari</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Poly</span><span class="p">,</span> <span class="n">Poly</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Poly</span><span class="p">,</span> <span class="n">Poly</span><span class="p">]]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the multiplication-by-n map on an elliptic curve.</span>
+
+<span class="sd">    :param curve: Curve to compute on.</span>
+<span class="sd">    :param n: Scalar.</span>
+<span class="sd">    :param x_only: Whether to skip the my computation.</span>
+<span class="sd">    :param use_pari: Whether to use the Pari version.</span>
+<span class="sd">    :return: A tuple (mx, my) where each is a tuple (numerator, denominator).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">use_pari</span> <span class="ow">and</span> <span class="n">has_pari</span><span class="p">:</span>
+        <span class="n">mx</span> <span class="o">=</span> <span class="n">mult_by_n_pari</span><span class="p">(</span><span class="n">curve</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">mx</span> <span class="o">=</span> <span class="n">mult_by_n_own</span><span class="p">(</span><span class="n">curve</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">x_only</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">mx</span><span class="p">,</span> <span class="kc">None</span>
+
+    <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;x y&quot;</span><span class="p">)</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="n">FF</span><span class="p">(</span><span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">Poly</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">K</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">Poly</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">K</span><span class="p">)</span>
+    <span class="n">Kxy</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">Poly</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">K</span><span class="p">)</span>  <span class="c1"># noqa</span>
+
+    <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">a4</span><span class="p">,</span> <span class="n">a6</span> <span class="o">=</span> <span class="n">a_invariants</span><span class="p">(</span><span class="n">curve</span><span class="p">)</span>
+
+    <span class="c1"># The following lines compute</span>
+    <span class="c1"># my = ((2*y+a1*x+a3)*mx.derivative(x)/m - a1*mx-a3)/2</span>
+    <span class="c1"># just as sage does, but using sympy and step-by-step</span>
+    <span class="c1"># tracking the numerator and denominator of the fraction.</span>
+
+    <span class="c1"># &gt; mx.derivative()</span>
+    <span class="n">mxd_num</span> <span class="o">=</span> <span class="n">mx</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">mx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span> <span class="o">-</span> <span class="n">mx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">mx</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
+    <span class="n">mxd_denom</span> <span class="o">=</span> <span class="n">mx</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span>
+
+    <span class="c1"># &gt; mx.derivative()/m</span>
+    <span class="n">mxd_dn_num</span> <span class="o">=</span> <span class="n">mxd_num</span>
+    <span class="n">mxd_dn_denom</span> <span class="o">=</span> <span class="n">mxd_denom</span> <span class="o">*</span> <span class="n">Kxy</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+    <span class="c1"># &gt; (2*y+a1*x+a3)*mx.derivative(x)/m</span>
+    <span class="n">mxd_full_num</span> <span class="o">=</span> <span class="n">mxd_dn_num</span> <span class="o">*</span> <span class="p">(</span><span class="n">Kxy</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="n">Kxy</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">Kxy</span><span class="p">(</span><span class="n">a3</span><span class="p">))</span>
+    <span class="n">mxd_full_denom</span> <span class="o">=</span> <span class="n">mxd_dn_denom</span>
+
+    <span class="c1"># &gt; a1*mx</span>
+    <span class="n">a1mx_num</span> <span class="o">=</span> <span class="n">Kxy</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span> <span class="o">*</span> <span class="n">mx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">a1mx_denom</span> <span class="o">=</span> <span class="n">mx</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># noqa</span>
+
+    <span class="c1"># &gt; a3</span>
+    <span class="n">a3_num</span> <span class="o">=</span> <span class="n">Kxy</span><span class="p">(</span><span class="n">a3</span><span class="p">)</span> <span class="o">*</span> <span class="n">mx</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">a3_denom</span> <span class="o">=</span> <span class="n">mx</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># noqa</span>
+
+    <span class="c1"># The mx.derivative part has a different denominator, basically mx[1]^2 * m</span>
+    <span class="c1"># so the rest needs to be multiplied by this factor when subtracting.</span>
+    <span class="n">mxd_fact</span> <span class="o">=</span> <span class="n">mx</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+
+    <span class="n">my_num</span> <span class="o">=</span> <span class="n">mxd_full_num</span> <span class="o">-</span> <span class="n">a1mx_num</span> <span class="o">*</span> <span class="n">mxd_fact</span> <span class="o">-</span> <span class="n">a3_num</span> <span class="o">*</span> <span class="n">mxd_fact</span>
+    <span class="n">my_denom</span> <span class="o">=</span> <span class="n">mxd_full_denom</span> <span class="o">*</span> <span class="n">Kxy</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">my</span> <span class="o">=</span> <span class="p">(</span><span class="n">my_num</span><span class="p">,</span> <span class="n">my_denom</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">mx</span><span class="p">,</span> <span class="n">my</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2018-2023, .
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

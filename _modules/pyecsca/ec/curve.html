@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pyecsca.ec.curve &#8212; pyecsca 0.2.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d10597a4" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=1ca41fbe" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx_paramlinks.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=c1177449" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphik.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <script src="../../../_static/documentation_options.js?v=938c9ccc"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="icon" href="../../../_static/logo_black.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/logo_black.png" alt="Logo" />
+    
+    <h1 class="logo logo-name">pyecsca</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/configuration_space.html">Configuration space</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/codegen.html">Code generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/emulator.html">Emulation and leakage simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/measurement.html">Measurement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/visualization.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/smartcards.html">Smartcards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/re/formulas.html">Exploration of formulas in open-source ECC libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/re/rpa.html">RPA-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/re/zvp.html">ZVP-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/re/epa.html">EPA-based reverse engineering</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/pyecsca.ec.html">pyecsca.ec package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/pyecsca.misc.html">pyecsca.misc package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/pyecsca.sca.html">pyecsca.sca package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/pyecsca.codegen.html">pyecsca.codegen package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../libraries.html">ECC in Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pyecsca.ec.curve</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Provides an elliptic curve class.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">ast</span> <span class="kn">import</span> <span class="n">Module</span>
+<span class="kn">from</span> <span class="nn">astunparse</span> <span class="kn">import</span> <span class="n">unparse</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">MutableMapping</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Set</span>
+
+<span class="kn">from</span> <span class="nn">public</span> <span class="kn">import</span> <span class="n">public</span>
+<span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">FF</span>
+<span class="kn">from</span> <span class="nn">..misc.cache</span> <span class="kn">import</span> <span class="n">sympify</span>
+
+<span class="kn">from</span> <span class="nn">.coordinates</span> <span class="kn">import</span> <span class="n">CoordinateModel</span><span class="p">,</span> <span class="n">AffineCoordinateModel</span>
+<span class="kn">from</span> <span class="nn">.error</span> <span class="kn">import</span> <span class="n">raise_unsatisified_assumption</span>
+<span class="kn">from</span> <span class="nn">.mod</span> <span class="kn">import</span> <span class="n">Mod</span>
+<span class="kn">from</span> <span class="nn">.model</span> <span class="kn">import</span> <span class="n">CurveModel</span>
+<span class="kn">from</span> <span class="nn">.point</span> <span class="kn">import</span> <span class="n">Point</span><span class="p">,</span> <span class="n">InfinityPoint</span>
+<span class="kn">from</span> <span class="nn">..misc.cfg</span> <span class="kn">import</span> <span class="n">getconfig</span>
+
+
+<div class="viewcode-block" id="EllipticCurve">
+<a class="viewcode-back" href="../../../api/pyecsca.ec.curve.html#pyecsca.ec.curve.EllipticCurve">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">class</span> <span class="nc">EllipticCurve</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Elliptic curve.&quot;&quot;&quot;</span>
+
+    <span class="n">model</span><span class="p">:</span> <span class="n">CurveModel</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The model of the curve.&quot;&quot;&quot;</span>
+    <span class="n">coordinate_model</span><span class="p">:</span> <span class="n">CoordinateModel</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The coordinate system of the curve.&quot;&quot;&quot;</span>
+    <span class="n">prime</span><span class="p">:</span> <span class="nb">int</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The prime specifying the base prime field of the curve.&quot;&quot;&quot;</span>
+    <span class="n">parameters</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Mod</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The values of the parameters defining the curve, these cover the curve model and coordinate system parameters.&quot;&quot;&quot;</span>
+    <span class="n">neutral</span><span class="p">:</span> <span class="n">Point</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The neutral point on the curve.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">model</span><span class="p">:</span> <span class="n">CurveModel</span><span class="p">,</span>
+            <span class="n">coordinate_model</span><span class="p">:</span> <span class="n">CoordinateModel</span><span class="p">,</span>
+            <span class="n">prime</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="n">neutral</span><span class="p">:</span> <span class="n">Point</span><span class="p">,</span>
+            <span class="n">parameters</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">Mod</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span>
+    <span class="p">):</span>
+        <span class="k">if</span> <span class="n">coordinate_model</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span>
+                <span class="n">coordinate_model</span><span class="p">,</span> <span class="n">AffineCoordinateModel</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="k">if</span> <span class="p">(</span>
+                <span class="nb">set</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameter_names</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">coordinate_model</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">symmetric_difference</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coordinate_model</span> <span class="o">=</span> <span class="n">coordinate_model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prime</span> <span class="o">=</span> <span class="n">prime</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Mod</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">n</span> <span class="o">!=</span> <span class="n">prime</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Parameter </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> has wrong modulus.&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">Mod</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">prime</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">neutral</span> <span class="o">=</span> <span class="n">neutral</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__validate_coord_assumptions</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__validate_coord_assumptions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">assumption</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinate_model</span><span class="o">.</span><span class="n">assumptions</span><span class="p">:</span>
+            <span class="c1"># Try to execute assumption, if it works, check with curve parameters</span>
+            <span class="c1"># if it doesn&#39;t work, move all over to rhs and construct a sympy polynomial of it</span>
+            <span class="c1"># then find roots and take first one for new value for new coordinate parameter.</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">alocals</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">Mod</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">compiled</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="n">assumption</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;exec&quot;</span><span class="p">)</span>
+                <span class="n">exec</span><span class="p">(</span><span class="n">compiled</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">alocals</span><span class="p">)</span>  <span class="c1"># exec is OK here, skipcq: PYL-W0122</span>
+                <span class="k">for</span> <span class="n">param</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">alocals</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">param</span><span class="p">]</span> <span class="o">!=</span> <span class="n">value</span><span class="p">:</span>
+                        <span class="n">raise_unsatisified_assumption</span><span class="p">(</span>
+                            <span class="n">getconfig</span><span class="p">()</span><span class="o">.</span><span class="n">ec</span><span class="o">.</span><span class="n">unsatisfied_coordinate_assumption_action</span><span class="p">,</span>
+                            <span class="sa">f</span><span class="s2">&quot;Coordinate model </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate_model</span><span class="si">}</span><span class="s2"> has an unsatisifed assumption on the </span><span class="si">{</span><span class="n">param</span><span class="si">}</span><span class="s2"> parameter (= </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">).&quot;</span><span class="p">,</span>
+                        <span class="p">)</span>
+            <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+                <span class="n">k</span> <span class="o">=</span> <span class="n">FF</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prime</span><span class="p">)</span>
+                <span class="n">assumption_string</span> <span class="o">=</span> <span class="n">unparse</span><span class="p">(</span><span class="n">assumption</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span> <span class="o">=</span> <span class="n">assumption_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; = &quot;</span><span class="p">)</span>
+                <span class="n">expr</span> <span class="o">=</span> <span class="n">sympify</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">rhs</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">lhs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">curve_param</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">expr</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">curve_param</span><span class="p">,</span> <span class="n">k</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">expr</span><span class="o">.</span><span class="n">free_symbols</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Missing necessary coordinate model parameter (</span><span class="si">{</span><span class="n">assumption_string</span><span class="si">}</span><span class="s2">).&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">if</span> <span class="n">k</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">raise_unsatisified_assumption</span><span class="p">(</span>
+                        <span class="n">getconfig</span><span class="p">()</span><span class="o">.</span><span class="n">ec</span><span class="o">.</span><span class="n">unsatisfied_coordinate_assumption_action</span><span class="p">,</span>
+                        <span class="sa">f</span><span class="s2">&quot;Coordinate model </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate_model</span><span class="si">}</span><span class="s2"> has an unsatisifed assumption on the </span><span class="si">{</span><span class="n">param</span><span class="si">}</span><span class="s2"> parameter (0 = </span><span class="si">{</span><span class="n">expr</span><span class="si">}</span><span class="s2">).&quot;</span>
+                    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_execute_base_formulas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">formulas</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Module</span><span class="p">],</span> <span class="o">*</span><span class="n">points</span><span class="p">:</span> <span class="n">Point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Point</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">points</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">coordinate_model</span><span class="p">,</span> <span class="n">AffineCoordinateModel</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Coordinate model of point is not affine.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">point</span><span class="o">.</span><span class="n">coordinate_model</span><span class="o">.</span><span class="n">curve_model</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Curve model of point does not match the curve.&quot;</span><span class="p">)</span>
+        <span class="n">locls</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">var</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span> <span class="n">point</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">var</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">point</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">point</span><span class="o">.</span><span class="n">coords</span>
+        <span class="p">}</span>
+        <span class="n">locls</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">formulas</span><span class="p">:</span>
+            <span class="n">exec</span><span class="p">(</span><span class="nb">compile</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;exec&quot;</span><span class="p">),</span> <span class="kc">None</span><span class="p">,</span> <span class="n">locls</span><span class="p">)</span>  <span class="c1"># exec is OK here, skipcq: PYL-W0122</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">locls</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">Mod</span><span class="p">):</span>
+            <span class="n">locls</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Mod</span><span class="p">(</span><span class="n">locls</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">prime</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">locls</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">],</span> <span class="n">Mod</span><span class="p">):</span>
+            <span class="n">locls</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Mod</span><span class="p">(</span><span class="n">locls</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">prime</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Point</span><span class="p">(</span><span class="n">AffineCoordinateModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">),</span> <span class="n">x</span><span class="o">=</span><span class="n">locls</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">locls</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span>
+
+<div class="viewcode-block" id="EllipticCurve.affine_add">
+<a class="viewcode-back" href="../../../api/pyecsca.ec.curve.html#pyecsca.ec.curve.EllipticCurve.affine_add">[docs]</a>
+    <span class="k">def</span> <span class="nf">affine_add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">one</span><span class="p">:</span> <span class="n">Point</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Point</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add two affine points using the affine addition formula.</span>
+
+<span class="sd">        Handles the case of point at infinity gracefully (short-circuits).</span>
+
+<span class="sd">        :param one: One point.</span>
+<span class="sd">        :param other: Another point.</span>
+<span class="sd">        :return: The addition of the two points.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">InfinityPoint</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">other</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">InfinityPoint</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">one</span>
+        <span class="k">if</span> <span class="n">one</span> <span class="o">==</span> <span class="n">other</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">affine_double</span><span class="p">(</span><span class="n">one</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_execute_base_formulas</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">base_addition</span><span class="p">,</span> <span class="n">one</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EllipticCurve.affine_double">
+<a class="viewcode-back" href="../../../api/pyecsca.ec.curve.html#pyecsca.ec.curve.EllipticCurve.affine_double">[docs]</a>
+    <span class="k">def</span> <span class="nf">affine_double</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">one</span><span class="p">:</span> <span class="n">Point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Point</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Double an affine point using the affine doubling formula.</span>
+
+<span class="sd">        Handles the case of point at infinity gracefully (short-circuits).</span>
+
+<span class="sd">        :param one: A point.</span>
+<span class="sd">        :return: The doubling of the point.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">InfinityPoint</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">one</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_execute_base_formulas</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">base_doubling</span><span class="p">,</span> <span class="n">one</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EllipticCurve.affine_negate">
+<a class="viewcode-back" href="../../../api/pyecsca.ec.curve.html#pyecsca.ec.curve.EllipticCurve.affine_negate">[docs]</a>
+    <span class="k">def</span> <span class="nf">affine_negate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">one</span><span class="p">:</span> <span class="n">Point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Point</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Negate an affine point using the affine negation formula.</span>
+
+<span class="sd">        Handles the case of point at infinity gracefully (short-circuits).</span>
+
+<span class="sd">        :param one: A point.</span>
+<span class="sd">        :return: The negation of the point.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">InfinityPoint</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">one</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_execute_base_formulas</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">base_negation</span><span class="p">,</span> <span class="n">one</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EllipticCurve.affine_multiply">
+<a class="viewcode-back" href="../../../api/pyecsca.ec.curve.html#pyecsca.ec.curve.EllipticCurve.affine_multiply">[docs]</a>
+    <span class="k">def</span> <span class="nf">affine_multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="n">Point</span><span class="p">,</span> <span class="n">scalar</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Point</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Multiply an affine point by a scalar using the affine doubling and addition formulas.</span>
+
+<span class="sd">        Handles the case of point at infinity gracefully (short-circuits).</span>
+
+<span class="sd">        :param point: The point to multiply.</span>
+<span class="sd">        :param scalar: The scalar to use.</span>
+<span class="sd">        :return: The scalar multiplication of `point`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">InfinityPoint</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">point</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">coordinate_model</span><span class="p">,</span> <span class="n">AffineCoordinateModel</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Coordinate model of point is not affine.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">point</span><span class="o">.</span><span class="n">coordinate_model</span><span class="o">.</span><span class="n">curve_model</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Curve model of point does not match the curve.&quot;</span><span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scalar</span><span class="o">.</span><span class="n">bit_length</span><span class="p">()</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">affine_double</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">scalar</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">affine_add</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">r</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">affine_neutral</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Point</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the neutral point in affine form, if it has one, otherwise ``None``.</span>
+
+<span class="sd">        :return: The affine neutral point or ``None``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">neutral_is_affine</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">locls</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">base_neutral</span><span class="p">:</span>
+            <span class="n">exec</span><span class="p">(</span><span class="nb">compile</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;exec&quot;</span><span class="p">),</span> <span class="kc">None</span><span class="p">,</span> <span class="n">locls</span><span class="p">)</span>  <span class="c1"># exec is OK here, skipcq: PYL-W0122</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">locls</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">Mod</span><span class="p">):</span>
+            <span class="n">locls</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Mod</span><span class="p">(</span><span class="n">locls</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">prime</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">locls</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">],</span> <span class="n">Mod</span><span class="p">):</span>
+            <span class="n">locls</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Mod</span><span class="p">(</span><span class="n">locls</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">prime</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Point</span><span class="p">(</span><span class="n">AffineCoordinateModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">),</span> <span class="n">x</span><span class="o">=</span><span class="n">locls</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">locls</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">neutral_is_affine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Whether the neutral point is an affine point.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">base_neutral</span><span class="p">)</span>
+
+<div class="viewcode-block" id="EllipticCurve.is_neutral">
+<a class="viewcode-back" href="../../../api/pyecsca.ec.curve.html#pyecsca.ec.curve.EllipticCurve.is_neutral">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_neutral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="n">Point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check whether the point is the neutral point.</span>
+
+<span class="sd">        :param point: The point to test.</span>
+<span class="sd">        :return: Whether it is the neutral point.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">neutral</span> <span class="o">==</span> <span class="n">point</span></div>
+
+
+<div class="viewcode-block" id="EllipticCurve.is_on_curve">
+<a class="viewcode-back" href="../../../api/pyecsca.ec.curve.html#pyecsca.ec.curve.EllipticCurve.is_on_curve">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_on_curve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="n">Point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check whether the point is on the curve.</span>
+
+<span class="sd">        :param point: The point to test.</span>
+<span class="sd">        :return: Whether it is on the curve.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">point</span><span class="o">.</span><span class="n">coordinate_model</span><span class="o">.</span><span class="n">curve_model</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_neutral</span><span class="p">(</span><span class="n">point</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">coordinate_model</span><span class="p">,</span> <span class="n">AffineCoordinateModel</span><span class="p">):</span>
+            <span class="n">loc</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="o">**</span><span class="n">point</span><span class="o">.</span><span class="n">coords</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">loc</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="o">**</span><span class="n">point</span><span class="o">.</span><span class="n">to_affine</span><span class="p">()</span><span class="o">.</span><span class="n">coords</span><span class="p">}</span>
+        <span class="k">return</span> <span class="nb">eval</span><span class="p">(</span><span class="nb">compile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">equation</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;eval&quot;</span><span class="p">),</span> <span class="n">loc</span><span class="p">)</span>  <span class="c1"># eval is OK here, skipcq: PYL-W0123</span></div>
+
+
+<div class="viewcode-block" id="EllipticCurve.to_coords">
+<a class="viewcode-back" href="../../../api/pyecsca.ec.curve.html#pyecsca.ec.curve.EllipticCurve.to_coords">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coordinate_model</span><span class="p">:</span> <span class="n">CoordinateModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;EllipticCurve&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert this curve into a different coordinate model, only possible if it is currently affine.</span>
+
+<span class="sd">        :param coordinate_model: The target coordinate model.</span>
+<span class="sd">        :return: The transformed elliptic curve.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate_model</span><span class="p">,</span> <span class="n">AffineCoordinateModel</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="k">return</span> <span class="n">EllipticCurve</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">coordinate_model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prime</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">neutral</span><span class="o">.</span><span class="n">to_model</span><span class="p">(</span><span class="n">coordinate_model</span><span class="p">,</span> <span class="bp">self</span><span class="p">),</span>
+                             <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>  <span class="c1"># type: ignore[arg-type]</span></div>
+
+
+<div class="viewcode-block" id="EllipticCurve.to_affine">
+<a class="viewcode-back" href="../../../api/pyecsca.ec.curve.html#pyecsca.ec.curve.EllipticCurve.to_affine">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_affine</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;EllipticCurve&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert this curve into the affine coordinate model, if possible.</span>
+
+<span class="sd">        :return: The transformed elliptic curve.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">coord_model</span> <span class="o">=</span> <span class="n">AffineCoordinateModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">EllipticCurve</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">coord_model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prime</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">neutral</span><span class="o">.</span><span class="n">to_affine</span><span class="p">(),</span>
+                             <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>  <span class="c1"># type: ignore[arg-type]</span></div>
+
+
+<div class="viewcode-block" id="EllipticCurve.decode_point">
+<a class="viewcode-back" href="../../../api/pyecsca.ec.curve.html#pyecsca.ec.curve.EllipticCurve.decode_point">[docs]</a>
+    <span class="k">def</span> <span class="nf">decode_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">encoded</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Point</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Decode a point encoded as a sequence of bytes (ANSI X9.62).</span>
+
+<span class="sd">        This decoding is the same as ANSI X9.63 for the affine coordinate system and for others it</span>
+<span class="sd">        only implements the uncompressed variant.</span>
+
+<span class="sd">        .. warning::</span>
+<span class="sd">            The point is not validated to be on the curve (if the uncompressed encoding is used).</span>
+
+<span class="sd">        :param encoded: The encoded representation of a point.</span>
+<span class="sd">        :return: The decoded point.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">encoded</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mh">0x00</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">encoded</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">InfinityPoint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate_model</span><span class="p">)</span>
+        <span class="n">coord_len</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prime</span><span class="o">.</span><span class="n">bit_length</span><span class="p">()</span> <span class="o">+</span> <span class="mi">7</span><span class="p">)</span> <span class="o">//</span> <span class="mi">8</span>
+        <span class="k">if</span> <span class="n">encoded</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="mh">0x04</span><span class="p">,</span> <span class="mh">0x06</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">encoded</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="n">coord_len</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate_model</span><span class="o">.</span><span class="n">variables</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Encoded point has bad length&quot;</span><span class="p">)</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate_model</span><span class="o">.</span><span class="n">variables</span><span class="p">):</span>
+                <span class="n">coords</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">Mod</span><span class="p">(</span><span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="n">coord_len</span><span class="p">],</span> <span class="s2">&quot;big&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">prime</span><span class="p">)</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">coord_len</span><span class="p">:]</span>
+            <span class="k">return</span> <span class="n">Point</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate_model</span><span class="p">,</span> <span class="o">**</span><span class="n">coords</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">encoded</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="mh">0x02</span><span class="p">,</span> <span class="mh">0x03</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate_model</span><span class="p">,</span> <span class="n">AffineCoordinateModel</span><span class="p">):</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">encoded</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="n">coord_len</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Encoded point has bad length&quot;</span><span class="p">)</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">Mod</span><span class="p">(</span><span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;big&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">prime</span><span class="p">)</span>
+                <span class="n">loc</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">}</span>
+                <span class="n">rhs</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="nb">compile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">ysquared</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;eval&quot;</span><span class="p">),</span> <span class="n">loc</span><span class="p">)</span>  <span class="c1"># eval is OK here, skipcq: PYL-W0123</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">rhs</span><span class="o">.</span><span class="n">is_residue</span><span class="p">():</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Point not on curve&quot;</span><span class="p">)</span>
+                <span class="n">sqrt</span> <span class="o">=</span> <span class="n">rhs</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()</span>
+                <span class="n">yp</span> <span class="o">=</span> <span class="n">encoded</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x01</span>
+                <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">sqrt</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x01</span> <span class="o">==</span> <span class="n">yp</span><span class="p">:</span>
+                    <span class="n">y</span> <span class="o">=</span> <span class="n">sqrt</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="n">sqrt</span>
+                <span class="k">return</span> <span class="n">Point</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate_model</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Wrong encoding type: </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">encoded</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2">, should be one of 0x04, 0x06, 0x02, 0x03 or 0x00&quot;</span>
+            <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EllipticCurve.affine_lift_x">
+<a class="viewcode-back" href="../../../api/pyecsca.ec.curve.html#pyecsca.ec.curve.EllipticCurve.affine_lift_x">[docs]</a>
+    <span class="k">def</span> <span class="nf">affine_lift_x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Mod</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="n">Point</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lift an x-coordinate to the curve.</span>
+
+<span class="sd">        :param x: The x-coordinate.</span>
+<span class="sd">        :return: Lifted (affine) points, if any.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">loc</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">}</span>
+        <span class="n">ysquared</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="nb">compile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">ysquared</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;eval&quot;</span><span class="p">),</span> <span class="n">loc</span><span class="p">)</span>  <span class="c1"># eval is OK here, skipcq: PYL-W0123</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ysquared</span><span class="o">.</span><span class="n">is_residue</span><span class="p">():</span>
+            <span class="k">return</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">ysquared</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">Point</span><span class="p">(</span><span class="n">AffineCoordinateModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">),</span> <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">),</span>
+                <span class="n">Point</span><span class="p">(</span><span class="n">AffineCoordinateModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">),</span> <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=-</span><span class="n">y</span><span class="p">)}</span></div>
+
+
+<div class="viewcode-block" id="EllipticCurve.affine_random">
+<a class="viewcode-back" href="../../../api/pyecsca.ec.curve.html#pyecsca.ec.curve.EllipticCurve.affine_random">[docs]</a>
+    <span class="k">def</span> <span class="nf">affine_random</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Point</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a random affine point on the curve.&quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">Mod</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prime</span><span class="p">)</span>
+            <span class="n">loc</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">}</span>
+            <span class="n">ysquared</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="nb">compile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">ysquared</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;eval&quot;</span><span class="p">),</span> <span class="n">loc</span><span class="p">)</span>  <span class="c1"># eval is OK here, skipcq: PYL-W0123</span>
+            <span class="k">if</span> <span class="n">ysquared</span><span class="o">.</span><span class="n">is_residue</span><span class="p">():</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">ysquared</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()</span>
+                <span class="n">b</span> <span class="o">=</span> <span class="n">Mod</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="n">y</span>
+                <span class="k">return</span> <span class="n">Point</span><span class="p">(</span><span class="n">AffineCoordinateModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">),</span> <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">EllipticCurve</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">model</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinate_model</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">coordinate_model</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">prime</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">prime</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">parameters</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinate_model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prime</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;EllipticCurve&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">([</span><span class="si">{</span><span class="n">params</span><span class="si">}</span><span class="s2">] p=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">prime</span><span class="si">}</span><span class="s2"> on </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate_model</span><span class="si">}</span><span class="s2">)&quot;</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2018-2023, .
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

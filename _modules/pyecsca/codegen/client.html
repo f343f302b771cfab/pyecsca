@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pyecsca.codegen.client &#8212; pyecsca 0.2.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d10597a4" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=1ca41fbe" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx_paramlinks.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=c1177449" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphik.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <script src="../../../_static/documentation_options.js?v=938c9ccc"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="icon" href="../../../_static/logo_black.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/logo_black.png" alt="Logo" />
+    
+    <h1 class="logo logo-name">pyecsca</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/configuration_space.html">Configuration space</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/codegen.html">Code generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/emulator.html">Emulation and leakage simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/measurement.html">Measurement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/visualization.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/smartcards.html">Smartcards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/re/formulas.html">Exploration of formulas in open-source ECC libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/re/rpa.html">RPA-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/re/zvp.html">ZVP-based reverse-engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebook/re/epa.html">EPA-based reverse engineering</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/pyecsca.ec.html">pyecsca.ec package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/pyecsca.misc.html">pyecsca.misc package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/pyecsca.sca.html">pyecsca.sca package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/pyecsca.codegen.html">pyecsca.codegen package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../libraries.html">ECC in Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pyecsca.codegen.client</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">bisect</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">binascii</span> <span class="kn">import</span> <span class="n">hexlify</span><span class="p">,</span> <span class="n">unhexlify</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">IntFlag</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">import</span> <span class="nn">chipwhisperer</span> <span class="k">as</span> <span class="nn">cw</span>
+<span class="kn">import</span> <span class="nn">click</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">chipwhisperer.capture.api.programmers</span> <span class="kn">import</span> <span class="n">STM32FProgrammer</span><span class="p">,</span> <span class="n">XMEGAProgrammer</span>
+<span class="kn">from</span> <span class="nn">chipwhisperer.capture.targets</span> <span class="kn">import</span> <span class="n">SimpleSerial</span>
+<span class="kn">from</span> <span class="nn">public</span> <span class="kn">import</span> <span class="n">public</span>
+<span class="kn">from</span> <span class="nn">pyecsca.ec.coordinates</span> <span class="kn">import</span> <span class="n">CoordinateModel</span><span class="p">,</span> <span class="n">AffineCoordinateModel</span>
+<span class="kn">from</span> <span class="nn">pyecsca.ec.mod</span> <span class="kn">import</span> <span class="n">Mod</span>
+<span class="kn">from</span> <span class="nn">pyecsca.ec.model</span> <span class="kn">import</span> <span class="n">CurveModel</span>
+<span class="kn">from</span> <span class="nn">pyecsca.ec.params</span> <span class="kn">import</span> <span class="n">DomainParameters</span><span class="p">,</span> <span class="n">get_params</span>
+<span class="kn">from</span> <span class="nn">pyecsca.ec.point</span> <span class="kn">import</span> <span class="n">Point</span><span class="p">,</span> <span class="n">InfinityPoint</span>
+<span class="kn">from</span> <span class="nn">pyecsca.sca.target</span> <span class="kn">import</span> <span class="p">(</span><span class="n">Target</span><span class="p">,</span> <span class="n">SimpleSerialTarget</span><span class="p">,</span> <span class="n">ChipWhispererTarget</span><span class="p">,</span> <span class="n">BinaryTarget</span><span class="p">,</span> <span class="n">Flashable</span><span class="p">,</span>
+                                <span class="n">SimpleSerialMessage</span> <span class="k">as</span> <span class="n">SMessage</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pyecsca.sca.trace</span> <span class="kn">import</span> <span class="n">Trace</span>
+
+<span class="kn">from</span> <span class="nn">.common</span> <span class="kn">import</span> <span class="n">wrap_enum</span><span class="p">,</span> <span class="n">Platform</span><span class="p">,</span> <span class="n">get_model</span><span class="p">,</span> <span class="n">get_coords</span>
+
+<span class="kn">from</span> <span class="nn">rainbow.devices</span> <span class="kn">import</span> <span class="n">rainbow_stm32f215</span>
+<span class="kn">from</span> <span class="nn">rainbow</span> <span class="kn">import</span> <span class="n">TraceConfig</span><span class="p">,</span> <span class="n">Print</span>
+
+
+
+<span class="k">class</span> <span class="nc">Triggers</span><span class="p">(</span><span class="n">IntFlag</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Actions that the implementation can trigger on.</span>
+
+<span class="sd">    Given that this is a bit-flag, multiple choices are</span>
+<span class="sd">    allowed, in which case the trigger signal will toggle</span>
+<span class="sd">    onn each action entry/exit.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">add</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span>
+    <span class="n">dadd</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>
+    <span class="n">dbl</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span>
+    <span class="n">ladd</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span>
+    <span class="n">neg</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span>
+    <span class="n">scl</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span>
+    <span class="n">tpl</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">6</span>
+    <span class="n">mult</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">7</span>
+    <span class="n">keygen</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span>
+    <span class="n">ecdh</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">9</span>
+    <span class="n">ecdsa_sign</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">10</span>
+    <span class="n">ecdsa_verify</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">11</span>
+    <span class="n">coord_map</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">12</span>
+    <span class="n">random_mod</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">13</span>
+
+
+<span class="k">def</span> <span class="nf">encode_scalar</span><span class="p">(</span><span class="n">val</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Mod</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Encode a scalar value (int or Mod) into bytes,</span>
+<span class="sd">    such that the implementation can load them.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">val</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">((</span><span class="n">val</span><span class="o">.</span><span class="n">bit_length</span><span class="p">()</span> <span class="o">+</span> <span class="mi">7</span><span class="p">)</span> <span class="o">//</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;big&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">Mod</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">encode_scalar</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">bytes</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">encode_point</span><span class="p">(</span><span class="n">point</span><span class="p">:</span> <span class="n">Point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Encode point coordinates.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">InfinityPoint</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">([</span><span class="mi">1</span><span class="p">])}</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">var</span><span class="p">:</span> <span class="n">encode_scalar</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">var</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">point</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+
+<span class="k">def</span> <span class="nf">encode_data</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">structure</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Mapping</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Encode `structure` into the format used by the implementation command</span>
+<span class="sd">    parsing (see &lt;docs/commands.rst&gt;) and give it a `name`.</span>
+
+<span class="sd">    The format uses a tree of name-length-value nodes that is serialized</span>
+<span class="sd">    one after another (and can be easily parsed out recursively). This function</span>
+<span class="sd">    expects the `structure` to be either:</span>
+<span class="sd">      - bytes, in which case this is a leaf node and the function will just</span>
+<span class="sd">      create the name-length-value entry encoding.</span>
+<span class="sd">      - Mapping, in which case this function will recursively encode the</span>
+<span class="sd">      entries in the mapping.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">structure</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">([</span><span class="nb">ord</span><span class="p">(</span><span class="n">name</span><span class="p">)])</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">structure</span><span class="p">)])</span>
+        <span class="k">return</span> <span class="n">header</span> <span class="o">+</span> <span class="n">structure</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">structure</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">data</span> <span class="o">+=</span> <span class="n">encode_data</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">bytes</span><span class="p">([</span><span class="nb">ord</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0x80</span><span class="p">])</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)])</span> <span class="o">+</span> <span class="n">data</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+
+<span class="k">def</span> <span class="nf">decode_data</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Decode the `data` in the format used by the implementation command</span>
+<span class="sd">    parsing.</span>
+
+<span class="sd">    The format uses a tree of name-length-value nodes, this tree is</span>
+<span class="sd">    deserialized and turned into a Mapping by this function. However,</span>
+<span class="sd">    as the format does not hold any information about the data type</span>
+<span class="sd">    (only its name, length and value) this function does not decode</span>
+<span class="sd">    the byte values (i.e. decoding an encoding of a scalar will</span>
+<span class="sd">    result in a Mapping with bytes on the output, not an int or a Mod).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">parsed</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">parsed</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">parsed</span><span class="p">]</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">parsed</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">&amp;</span> <span class="mh">0x80</span><span class="p">:</span>
+            <span class="n">sub</span> <span class="o">=</span> <span class="n">decode_data</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">parsed</span> <span class="o">+</span> <span class="mi">2</span><span class="p">:</span> <span class="n">parsed</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">length</span><span class="p">])</span>
+            <span class="n">result</span><span class="p">[</span><span class="nb">chr</span><span class="p">(</span><span class="n">name</span> <span class="o">&amp;</span> <span class="mh">0x7f</span><span class="p">)]</span> <span class="o">=</span> <span class="n">sub</span>
+            <span class="n">parsed</span> <span class="o">+=</span> <span class="n">length</span> <span class="o">+</span> <span class="mi">2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="nb">chr</span><span class="p">(</span><span class="n">name</span><span class="p">)]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">parsed</span> <span class="o">+</span> <span class="mi">2</span><span class="p">:</span> <span class="n">parsed</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">length</span><span class="p">]</span>
+            <span class="n">parsed</span> <span class="o">+=</span> <span class="n">length</span> <span class="o">+</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+
+<div class="viewcode-block" id="cmd_init_prng">
+<a class="viewcode-back" href="../../../api/pyecsca.codegen.client.html#pyecsca.codegen.client.cmd_init_prng">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">cmd_init_prng</span><span class="p">(</span><span class="n">seed</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s2">&quot;i&quot;</span> <span class="o">+</span> <span class="n">hexlify</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="cmd_set_params">
+<a class="viewcode-back" href="../../../api/pyecsca.codegen.client.html#pyecsca.codegen.client.cmd_set_params">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">cmd_set_params</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="n">DomainParameters</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="n">encode_scalar</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">),</span>
+        <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="n">encode_scalar</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">order</span><span class="p">),</span>
+        <span class="s2">&quot;h&quot;</span><span class="p">:</span> <span class="n">encode_scalar</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">cofactor</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="n">param</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">param</span><span class="p">]</span> <span class="o">=</span> <span class="n">encode_scalar</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;g&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">encode_point</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">generator</span><span class="o">.</span><span class="n">to_affine</span><span class="p">())</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">encode_point</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">neutral</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;c&quot;</span> <span class="o">+</span> <span class="n">hexlify</span><span class="p">(</span><span class="n">encode_data</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="cmd_generate">
+<a class="viewcode-back" href="../../../api/pyecsca.codegen.client.html#pyecsca.codegen.client.cmd_generate">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">cmd_generate</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s2">&quot;g&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="cmd_set_privkey">
+<a class="viewcode-back" href="../../../api/pyecsca.codegen.client.html#pyecsca.codegen.client.cmd_set_privkey">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">cmd_set_privkey</span><span class="p">(</span><span class="n">privkey</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s2">&quot;s&quot;</span> <span class="o">+</span> <span class="n">hexlify</span><span class="p">(</span><span class="n">encode_data</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="n">encode_scalar</span><span class="p">(</span><span class="n">privkey</span><span class="p">)}))</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="cmd_set_pubkey">
+<a class="viewcode-back" href="../../../api/pyecsca.codegen.client.html#pyecsca.codegen.client.cmd_set_pubkey">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">cmd_set_pubkey</span><span class="p">(</span><span class="n">pubkey</span><span class="p">:</span> <span class="n">Point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s2">&quot;w&quot;</span> <span class="o">+</span> <span class="n">hexlify</span><span class="p">(</span><span class="n">encode_data</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;w&quot;</span><span class="p">:</span> <span class="n">encode_point</span><span class="p">(</span><span class="n">pubkey</span><span class="o">.</span><span class="n">to_affine</span><span class="p">())}))</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="cmd_scalar_mult">
+<a class="viewcode-back" href="../../../api/pyecsca.codegen.client.html#pyecsca.codegen.client.cmd_scalar_mult">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">cmd_scalar_mult</span><span class="p">(</span><span class="n">scalar</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="n">Point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s2">&quot;m&quot;</span> <span class="o">+</span> <span class="n">hexlify</span><span class="p">(</span><span class="n">encode_data</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="n">encode_scalar</span><span class="p">(</span><span class="n">scalar</span><span class="p">),</span>
+                                            <span class="s2">&quot;w&quot;</span><span class="p">:</span> <span class="n">encode_point</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">to_affine</span><span class="p">())}))</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="cmd_ecdh">
+<a class="viewcode-back" href="../../../api/pyecsca.codegen.client.html#pyecsca.codegen.client.cmd_ecdh">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">cmd_ecdh</span><span class="p">(</span><span class="n">pubkey</span><span class="p">:</span> <span class="n">Point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s2">&quot;e&quot;</span> <span class="o">+</span> <span class="n">hexlify</span><span class="p">(</span><span class="n">encode_data</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;w&quot;</span><span class="p">:</span> <span class="n">encode_point</span><span class="p">(</span><span class="n">pubkey</span><span class="o">.</span><span class="n">to_affine</span><span class="p">())}))</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="cmd_ecdsa_sign">
+<a class="viewcode-back" href="../../../api/pyecsca.codegen.client.html#pyecsca.codegen.client.cmd_ecdsa_sign">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">cmd_ecdsa_sign</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s2">&quot;a&quot;</span> <span class="o">+</span> <span class="n">hexlify</span><span class="p">(</span><span class="n">encode_data</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">}))</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="cmd_ecdsa_verify">
+<a class="viewcode-back" href="../../../api/pyecsca.codegen.client.html#pyecsca.codegen.client.cmd_ecdsa_verify">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">cmd_ecdsa_verify</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">sig</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s2">&quot;r&quot;</span> <span class="o">+</span> <span class="n">hexlify</span><span class="p">(</span><span class="n">encode_data</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="n">sig</span><span class="p">}))</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="cmd_set_trigger">
+<a class="viewcode-back" href="../../../api/pyecsca.codegen.client.html#pyecsca.codegen.client.cmd_set_trigger">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">cmd_set_trigger</span><span class="p">(</span><span class="n">actions</span><span class="p">:</span> <span class="n">Triggers</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">vector_bytes</span> <span class="o">=</span> <span class="n">actions</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;little&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;t&quot;</span> <span class="o">+</span> <span class="n">hexlify</span><span class="p">(</span><span class="n">vector_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="cmd_debug">
+<a class="viewcode-back" href="../../../api/pyecsca.codegen.client.html#pyecsca.codegen.client.cmd_debug">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">cmd_debug</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s2">&quot;d&quot;</span></div>
+
+
+
+<span class="k">class</span> <span class="nc">EmulatorTarget</span><span class="p">(</span><span class="n">Target</span><span class="p">):</span>
+
+    <span class="n">emulator</span><span class="p">:</span> <span class="n">rainbow_stm32f215</span>
+    <span class="n">result</span><span class="p">:</span> <span class="nb">list</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">CurveModel</span>
+    <span class="n">coords</span><span class="p">:</span> <span class="n">CoordinateModel</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DomainParameters</span><span class="p">]</span>
+    <span class="n">privkey</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="n">pubkey</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Point</span><span class="p">]</span>
+    <span class="n">trace</span><span class="p">:</span> <span class="nb">list</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">CurveModel</span><span class="p">,</span> <span class="n">coords</span><span class="p">:</span> <span class="n">CoordinateModel</span><span class="p">,</span> <span class="n">print_config</span><span class="p">:</span> <span class="n">Print</span> <span class="o">=</span> <span class="n">Print</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+                 <span class="n">trace_config</span><span class="p">:</span> <span class="n">TraceConfig</span> <span class="o">=</span> <span class="n">TraceConfig</span><span class="p">(),</span> <span class="n">allow_breakpoints</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span> <span class="o">=</span> <span class="n">rainbow_stm32f215</span><span class="p">(</span><span class="n">print_config</span><span class="o">=</span><span class="n">print_config</span><span class="p">,</span> <span class="n">trace_config</span><span class="o">=</span><span class="n">trace_config</span><span class="p">,</span>
+                                            <span class="n">allow_stubs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">allow_breakpoints</span><span class="o">=</span><span class="n">allow_breakpoints</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coords</span> <span class="o">=</span> <span class="n">coords</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">privkey</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pubkey</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_funcs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_addrs</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">__emulate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">unhexlify</span><span class="p">(</span><span class="n">command</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">data_adress</span> <span class="o">=</span> <span class="mh">0xDEAD0000</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="p">[</span><span class="n">data_adress</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="p">[</span><span class="s1">&#39;r0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_adress</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="p">[</span><span class="s1">&#39;r1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">length</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="o">.</span><span class="n">functions</span><span class="p">[</span><span class="n">function</span><span class="p">]</span> <span class="o">|</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="o">.</span><span class="n">trace</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;binary&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="o">.</span><span class="n">functions</span><span class="p">[</span><span class="s1">&#39;init_implementation&#39;</span><span class="p">]</span> <span class="o">|</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="c1"># Compute the function map from the emulator.</span>
+        <span class="n">addr_map</span> <span class="o">=</span> <span class="p">[(</span><span class="n">addr</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">addr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="o">.</span><span class="n">functions</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+        <span class="n">addr_map</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_addrs</span> <span class="o">=</span> <span class="p">[</span><span class="n">addr</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">addr</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">addr_map</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_funcs</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">addr</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">addr_map</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">set_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">DomainParameters</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">cmd_set_params</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__emulate</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s1">&#39;cmd_set_params&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+
+    <span class="k">def</span> <span class="nf">__scalar_mult_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emulator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">point_length</span> <span class="o">=</span> <span class="n">emulator</span><span class="p">[</span><span class="s1">&#39;r1&#39;</span><span class="p">]</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+        <span class="n">res_adress</span> <span class="o">=</span> <span class="n">emulator</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="n">var</span><span class="p">:</span> <span class="n">Mod</span><span class="p">(</span><span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">emulator</span><span class="p">[</span><span class="n">res_adress</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">point_length</span><span class="p">:</span>
+                                                         <span class="n">res_adress</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">point_length</span><span class="p">],</span> <span class="s1">&#39;big&#39;</span><span class="p">),</span>
+                                                         <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">)</span>
+                  <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">var</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">variables</span><span class="p">)})</span>
+
+    <span class="k">def</span> <span class="nf">scalar_mult</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scalar</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="n">Point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Point</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="o">.</span><span class="n">hook_bypass</span><span class="p">(</span><span class="s2">&quot;simpleserial_put&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__scalar_mult_hook</span><span class="p">)</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">cmd_scalar_mult</span><span class="p">(</span><span class="n">scalar</span><span class="p">,</span> <span class="n">point</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__emulate</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s1">&#39;cmd_scalar_mult&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Point</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">init_prng</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">cmd_init_prng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__emulate</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s1">&#39;cmd_init_prng&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span>
+
+    <span class="k">def</span> <span class="nf">__generate_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emulator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">key_length</span> <span class="o">=</span> <span class="n">emulator</span><span class="p">[</span><span class="s1">&#39;r1&#39;</span><span class="p">]</span>
+        <span class="n">key_bytes</span> <span class="o">=</span> <span class="n">emulator</span><span class="p">[</span><span class="n">emulator</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">]:</span> <span class="n">emulator</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">key_length</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key_length</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key_bytes</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Point</span><span class="p">]:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="o">.</span><span class="n">hook_bypass</span><span class="p">(</span><span class="s2">&quot;simpleserial_put&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__generate_hook</span><span class="p">)</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">cmd_generate</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__emulate</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s1">&#39;cmd_generate&#39;</span><span class="p">)</span>
+        <span class="n">priv</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;big&#39;</span><span class="p">)</span>
+        <span class="n">pub_x</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;big&#39;</span><span class="p">)</span>
+        <span class="n">pub_y</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span> <span class="p">,</span><span class="s1">&#39;big&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">priv</span><span class="p">,</span> <span class="n">Point</span><span class="p">(</span><span class="n">AffineCoordinateModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">),</span> <span class="n">x</span> <span class="o">=</span> <span class="n">Mod</span><span class="p">(</span><span class="n">pub_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">),</span>
+                    <span class="n">y</span> <span class="o">=</span> <span class="n">Mod</span><span class="p">(</span><span class="n">pub_y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">set_privkey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">privkey</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">cmd_set_privkey</span><span class="p">(</span><span class="n">privkey</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__emulate</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s1">&#39;cmd_set_privkey&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">privkey</span> <span class="o">=</span> <span class="n">privkey</span>
+
+    <span class="k">def</span> <span class="nf">set_pubkey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pubkey</span><span class="p">:</span> <span class="n">Point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">cmd_set_pubkey</span><span class="p">(</span><span class="n">pubkey</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__emulate</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s1">&#39;cmd_set_pubkey&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pubkey</span> <span class="o">=</span> <span class="n">pubkey</span>
+
+    <span class="k">def</span> <span class="nf">__ec_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">simulator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">simulator</span><span class="p">[</span><span class="n">simulator</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">]:</span><span class="n">simulator</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">simulator</span><span class="p">[</span><span class="s1">&#39;r1&#39;</span><span class="p">]])</span>
+
+    <span class="k">def</span> <span class="nf">ecdh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other_pubkey</span><span class="p">:</span> <span class="n">Point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="o">.</span><span class="n">hook_bypass</span><span class="p">(</span><span class="s2">&quot;simpleserial_put&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ec_hook</span><span class="p">)</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">cmd_ecdh</span><span class="p">(</span><span class="n">other_pubkey</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__emulate</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s1">&#39;cmd_ecdh&#39;</span><span class="p">)</span>
+        <span class="n">shared_secret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">shared_secret</span>
+
+    <span class="k">def</span> <span class="nf">ecdsa_sign</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="o">.</span><span class="n">hook_bypass</span><span class="p">(</span><span class="s2">&quot;simpleserial_put&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ec_hook</span><span class="p">)</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">cmd_ecdsa_sign</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__emulate</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s1">&#39;cmd_ecdsa_sign&#39;</span><span class="p">)</span>
+        <span class="n">signature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">signature</span>
+
+    <span class="k">def</span> <span class="nf">ecdsa_verify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">signature</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="o">.</span><span class="n">hook_bypass</span><span class="p">(</span><span class="s2">&quot;simpleserial_put&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ec_hook</span><span class="p">)</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">cmd_ecdsa_verify</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">signature</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__emulate</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s1">&#39;cmd_ecdsa_verify&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;big&#39;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">transform_trace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_malloc</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">save_instructions</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Trace</span><span class="p">:</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">instructions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">inside_malloc</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="c1"># Get the trace but filter out known non-CT malloc functions.</span>
+        <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">:</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;register&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">instruction</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;instruction&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">instruction</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">filter_malloc</span><span class="p">:</span>
+                <span class="n">samples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="n">addr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">instruction</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_funcs</span><span class="p">[</span><span class="n">bisect</span><span class="o">.</span><span class="n">bisect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_addrs</span><span class="p">,</span> <span class="n">addr</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">func</span> <span class="o">==</span> <span class="s2">&quot;__malloc_lock&quot;</span><span class="p">:</span>
+                <span class="n">inside_malloc</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">func</span> <span class="o">==</span> <span class="s2">&quot;__malloc_unlock&quot;</span><span class="p">:</span>
+                <span class="n">inside_malloc</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">inside_malloc</span> <span class="ow">and</span> <span class="n">func</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;free&quot;</span><span class="p">,</span> <span class="s2">&quot;_free_r&quot;</span><span class="p">,</span>
+                                                  <span class="s2">&quot;calloc&quot;</span><span class="p">,</span> <span class="s2">&quot;_calloc_r&quot;</span><span class="p">,</span>
+                                                  <span class="s2">&quot;realloc&quot;</span><span class="p">,</span> <span class="s2">&quot;_realloc_r&quot;</span><span class="p">,</span>
+                                                  <span class="s2">&quot;malloc&quot;</span><span class="p">,</span> <span class="s2">&quot;_malloc_r&quot;</span><span class="p">,</span>
+                                                  <span class="s2">&quot;__malloc_lock&quot;</span><span class="p">,</span> <span class="s2">&quot;__malloc_unlock&quot;</span><span class="p">,</span>
+                                                  <span class="s2">&quot;_sbrk_r&quot;</span><span class="p">,</span> <span class="s2">&quot;_sbrk&quot;</span><span class="p">,</span>
+                                                  <span class="s2">&quot;__udivmoddi4&quot;</span><span class="p">,</span> <span class="s2">&quot;__aeabi_uldivmod&quot;</span><span class="p">):</span>
+                <span class="n">samples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">save_instructions</span><span class="p">:</span>
+                    <span class="n">instructions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">instruction</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Trace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">),</span> <span class="n">meta</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;instructions&quot;</span><span class="p">:</span> <span class="n">instructions</span><span class="p">})</span>
+
+    <span class="k">def</span> <span class="nf">set_trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">debug</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">shortname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="k">def</span> <span class="nf">quit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="o">.</span><span class="n">functions</span><span class="p">[</span><span class="s1">&#39;deinit&#39;</span><span class="p">]</span> <span class="o">|</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+
+
+<span class="k">class</span> <span class="nc">ImplTarget</span><span class="p">(</span><span class="n">SimpleSerialTarget</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A target that is based on an implementation built by pyecsca-codegen.</span>
+
+<span class="sd">    This is an abstract class that uses the send_cmd method on the SimpleSerialTarget</span>
+<span class="sd">    class to send commands to the target. That class in turn requires one to</span>
+<span class="sd">    implement the read/write/connect/disconnect methods that communicate with the</span>
+<span class="sd">    target somehow. See `DeviceTarget` that uses `ChipWhispererTarget` for thar purpose,</span>
+<span class="sd">    or `HostTarget` that uses `BinaryTarget`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">CurveModel</span>
+    <span class="n">coords</span><span class="p">:</span> <span class="n">CoordinateModel</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DomainParameters</span><span class="p">]</span>
+    <span class="n">privkey</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="n">pubkey</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Point</span><span class="p">]</span>
+    <span class="n">trigger</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Triggers</span><span class="p">]</span>
+    <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">CurveModel</span><span class="p">,</span> <span class="n">coords</span><span class="p">:</span> <span class="n">CoordinateModel</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;timeout&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;timeout&quot;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="mi">1000</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coords</span> <span class="o">=</span> <span class="n">coords</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">privkey</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pubkey</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trigger</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">init_prng</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_cmd</span><span class="p">(</span><span class="n">SMessage</span><span class="o">.</span><span class="n">from_raw</span><span class="p">(</span><span class="n">cmd_init_prng</span><span class="p">(</span><span class="n">seed</span><span class="p">)),</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span>
+
+    <span class="k">def</span> <span class="nf">set_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">DomainParameters</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_cmd</span><span class="p">(</span><span class="n">SMessage</span><span class="o">.</span><span class="n">from_raw</span><span class="p">(</span><span class="n">cmd_set_params</span><span class="p">(</span><span class="n">params</span><span class="p">)),</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+
+    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Point</span><span class="p">]:</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_cmd</span><span class="p">(</span><span class="n">SMessage</span><span class="o">.</span><span class="n">from_raw</span><span class="p">(</span><span class="n">cmd_generate</span><span class="p">()),</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="n">priv</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">pub</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">privkey</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">priv</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+        <span class="n">pub_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pub</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pub</span><span class="p">[:</span><span class="n">pub_len</span> <span class="o">//</span> <span class="mi">2</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pub</span><span class="p">[</span><span class="n">pub_len</span> <span class="o">//</span> <span class="mi">2</span><span class="p">:],</span> <span class="mi">16</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pubkey</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="n">AffineCoordinateModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">),</span> <span class="n">x</span><span class="o">=</span><span class="n">Mod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">),</span>
+                            <span class="n">y</span><span class="o">=</span><span class="n">Mod</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">privkey</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pubkey</span>
+
+    <span class="k">def</span> <span class="nf">set_privkey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">privkey</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_cmd</span><span class="p">(</span><span class="n">SMessage</span><span class="o">.</span><span class="n">from_raw</span><span class="p">(</span><span class="n">cmd_set_privkey</span><span class="p">(</span><span class="n">privkey</span><span class="p">)),</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">privkey</span> <span class="o">=</span> <span class="n">privkey</span>
+
+    <span class="k">def</span> <span class="nf">set_pubkey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pubkey</span><span class="p">:</span> <span class="n">Point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_cmd</span><span class="p">(</span><span class="n">SMessage</span><span class="o">.</span><span class="n">from_raw</span><span class="p">(</span><span class="n">cmd_set_pubkey</span><span class="p">(</span><span class="n">pubkey</span><span class="p">)),</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pubkey</span> <span class="o">=</span> <span class="n">pubkey</span>
+
+    <span class="k">def</span> <span class="nf">scalar_mult</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scalar</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="n">Point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Point</span><span class="p">:</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_cmd</span><span class="p">(</span><span class="n">SMessage</span><span class="o">.</span><span class="n">from_raw</span><span class="p">(</span><span class="n">cmd_scalar_mult</span><span class="p">(</span><span class="n">scalar</span><span class="p">,</span> <span class="n">point</span><span class="p">)),</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">]</span>
+        <span class="n">plen</span> <span class="o">=</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="o">.</span><span class="n">bit_length</span><span class="p">()</span> <span class="o">+</span> <span class="mi">7</span><span class="p">)</span> <span class="o">//</span> <span class="mi">8</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="n">var</span><span class="p">:</span> <span class="n">Mod</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">plen</span><span class="p">:(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">plen</span><span class="p">],</span> <span class="mi">16</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">)</span>
+                  <span class="k">for</span>
+                  <span class="n">i</span><span class="p">,</span> <span class="n">var</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">variables</span><span class="p">)}</span>
+        <span class="k">return</span> <span class="n">Point</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">ecdh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other_pubkey</span><span class="p">:</span> <span class="n">Point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_cmd</span><span class="p">(</span><span class="n">SMessage</span><span class="o">.</span><span class="n">from_raw</span><span class="p">(</span><span class="n">cmd_ecdh</span><span class="p">(</span><span class="n">other_pubkey</span><span class="p">)),</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s2">&quot;r&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">unhexlify</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">ecdsa_sign</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_cmd</span><span class="p">(</span><span class="n">SMessage</span><span class="o">.</span><span class="n">from_raw</span><span class="p">(</span><span class="n">cmd_ecdsa_sign</span><span class="p">(</span><span class="n">data</span><span class="p">)),</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="n">signature</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">unhexlify</span><span class="p">(</span><span class="n">signature</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">ecdsa_verify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">signature</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_cmd</span><span class="p">(</span><span class="n">SMessage</span><span class="o">.</span><span class="n">from_raw</span><span class="p">(</span><span class="n">cmd_ecdsa_verify</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">signature</span><span class="p">)),</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s2">&quot;v&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">unhexlify</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">debug</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_cmd</span><span class="p">(</span><span class="n">SMessage</span><span class="o">.</span><span class="n">from_raw</span><span class="p">(</span><span class="n">cmd_debug</span><span class="p">()),</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)[</span><span class="s2">&quot;d&quot;</span><span class="p">]</span>
+        <span class="n">model</span><span class="p">,</span> <span class="n">coords</span> <span class="o">=</span> <span class="n">unhexlify</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">model</span><span class="p">,</span> <span class="n">coords</span>
+
+    <span class="k">def</span> <span class="nf">set_trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actions</span><span class="p">:</span> <span class="n">Triggers</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_cmd</span><span class="p">(</span><span class="n">SMessage</span><span class="o">.</span><span class="n">from_raw</span><span class="p">(</span><span class="n">cmd_set_trigger</span><span class="p">(</span><span class="n">actions</span><span class="p">)),</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trigger</span> <span class="o">=</span> <span class="n">actions</span>
+
+    <span class="k">def</span> <span class="nf">quit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;x</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="DeviceTarget">
+<a class="viewcode-back" href="../../../api/pyecsca.codegen.client.html#pyecsca.codegen.client.DeviceTarget">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">class</span> <span class="nc">DeviceTarget</span><span class="p">(</span><span class="n">ImplTarget</span><span class="p">,</span> <span class="n">ChipWhispererTarget</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A ChipWhisperer-based device target.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">CurveModel</span><span class="p">,</span> <span class="n">coords</span><span class="p">:</span> <span class="n">CoordinateModel</span><span class="p">,</span> <span class="n">platform</span><span class="p">:</span> <span class="n">Platform</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">scope</span> <span class="o">=</span> <span class="n">cw</span><span class="o">.</span><span class="n">scope</span><span class="p">()</span>
+        <span class="n">scope</span><span class="o">.</span><span class="n">default_setup</span><span class="p">()</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">SimpleSerial</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">platform</span> <span class="ow">in</span> <span class="p">(</span><span class="n">Platform</span><span class="o">.</span><span class="n">STM32F0</span><span class="p">,</span> <span class="n">Platform</span><span class="o">.</span><span class="n">STM32F3</span><span class="p">):</span>
+            <span class="n">programmer</span> <span class="o">=</span> <span class="n">STM32FProgrammer</span>
+        <span class="k">elif</span> <span class="n">platform</span> <span class="o">==</span> <span class="n">Platform</span><span class="o">.</span><span class="n">XMEGA</span><span class="p">:</span>
+            <span class="n">programmer</span> <span class="o">=</span> <span class="n">XMEGAProgrammer</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="n">scope</span><span class="p">,</span> <span class="n">programmer</span><span class="o">=</span><span class="n">programmer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="HostTarget">
+<a class="viewcode-back" href="../../../api/pyecsca.codegen.client.html#pyecsca.codegen.client.HostTarget">[docs]</a>
+<span class="nd">@public</span>
+<span class="k">class</span> <span class="nc">HostTarget</span><span class="p">(</span><span class="n">ImplTarget</span><span class="p">,</span> <span class="n">BinaryTarget</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A host-based target, will just run the binary on your machine and communicate</span>
+<span class="sd">    with it via stdin/stdout.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">CurveModel</span><span class="p">,</span> <span class="n">coords</span><span class="p">:</span> <span class="n">CoordinateModel</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+
+<span class="nd">@click</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">context_settings</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;help_option_names&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;-h&quot;</span><span class="p">,</span> <span class="s2">&quot;--help&quot;</span><span class="p">]})</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;--platform&quot;</span><span class="p">,</span> <span class="n">envvar</span><span class="o">=</span><span class="s2">&quot;PLATFORM&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+              <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span><span class="n">Platform</span><span class="o">.</span><span class="n">names</span><span class="p">()),</span>
+              <span class="n">callback</span><span class="o">=</span><span class="n">wrap_enum</span><span class="p">(</span><span class="n">Platform</span><span class="p">),</span>
+              <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The target platform to use.&quot;</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;--fw&quot;</span><span class="p">,</span>
+              <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The firmware. Either a .hex file for a device platform or .elf for HOST platform.&quot;</span><span class="p">,</span>
+              <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;--timeout&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">15000</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s2">&quot;shortw&quot;</span><span class="p">,</span> <span class="s2">&quot;montgom&quot;</span><span class="p">,</span> <span class="s2">&quot;edwards&quot;</span><span class="p">,</span> <span class="s2">&quot;twisted&quot;</span><span class="p">]),</span>
+                <span class="n">callback</span><span class="o">=</span><span class="n">get_model</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s2">&quot;coords&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">callback</span><span class="o">=</span><span class="n">get_coords</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">version_option</span><span class="p">()</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">pass_context</span>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">platform</span><span class="p">,</span> <span class="n">fw</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A tool for communicating with built and flashed ECC implementations.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ctx</span><span class="o">.</span><span class="n">ensure_object</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">ctx</span><span class="o">.</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;fw&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fw</span>
+    <span class="k">if</span> <span class="n">platform</span> <span class="o">!=</span> <span class="n">Platform</span><span class="o">.</span><span class="n">HOST</span><span class="p">:</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DeviceTarget</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">platform</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">fw</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fw</span><span class="p">):</span>
+            <span class="n">click</span><span class="o">.</span><span class="n">secho</span><span class="p">(</span><span class="s2">&quot;Binary is required if the target is the host.&quot;</span><span class="p">,</span> <span class="n">fg</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">click</span><span class="o">.</span><span class="n">Abort</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">HostTarget</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">binary</span><span class="o">=</span><span class="n">fw</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_curve</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">click</span><span class="o">.</span><span class="n">Context</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">DomainParameters</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">ctx</span><span class="o">.</span><span class="n">ensure_object</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">category</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+    <span class="n">curve</span> <span class="o">=</span> <span class="n">get_params</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;coords&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">ctx</span><span class="o">.</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;params&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">curve</span>
+    <span class="k">return</span> <span class="n">curve</span>
+
+
+<span class="nd">@main</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s2">&quot;gen&quot;</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s2">&quot;curve&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">get_curve</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">pass_context</span>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">click</span><span class="o">.</span><span class="n">Context</span><span class="p">,</span> <span class="n">curve</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a keypair on a curve.&quot;&quot;&quot;</span>
+    <span class="n">ctx</span><span class="o">.</span><span class="n">ensure_object</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">target</span><span class="p">:</span> <span class="n">ImplTarget</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">Flashable</span><span class="p">):</span>
+        <span class="n">target</span><span class="o">.</span><span class="n">flash</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;fw&quot;</span><span class="p">])</span>
+    <span class="n">target</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+    <span class="n">target</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">curve</span><span class="p">)</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+    <span class="n">click</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">generate</span><span class="p">())</span>
+    <span class="n">click</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
+    <span class="n">target</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+    <span class="n">target</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">get_pubkey</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">click</span><span class="o">.</span><span class="n">Context</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Point</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">ctx</span><span class="o">.</span><span class="n">ensure_object</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">curve</span><span class="p">:</span> <span class="n">DomainParameters</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;params&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;^04([0-9a-fA-F]</span><span class="si">{2}</span><span class="s2">)+$&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+        <span class="n">plen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">[:</span><span class="n">plen</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="n">plen</span><span class="p">:],</span> <span class="mi">16</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;^[0-9]+,[0-9]+$&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">click</span><span class="o">.</span><span class="n">BadParameter</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t parse pubkey: </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">Mod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">curve</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">Mod</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">curve</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">prime</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Point</span><span class="p">(</span><span class="n">AffineCoordinateModel</span><span class="p">(</span><span class="n">curve</span><span class="o">.</span><span class="n">curve</span><span class="o">.</span><span class="n">model</span><span class="p">),</span> <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+
+
+<span class="nd">@main</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s2">&quot;ecdh&quot;</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s2">&quot;curve&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">get_curve</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s2">&quot;pubkey&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">get_pubkey</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">pass_context</span>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">ecdh</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">click</span><span class="o">.</span><span class="n">Context</span><span class="p">,</span> <span class="n">curve</span><span class="p">,</span> <span class="n">pubkey</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Perform ECDH with a given public key.&quot;&quot;&quot;</span>
+    <span class="n">ctx</span><span class="o">.</span><span class="n">ensure_object</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">target</span><span class="p">:</span> <span class="n">ImplTarget</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">Flashable</span><span class="p">):</span>
+        <span class="n">target</span><span class="o">.</span><span class="n">flash</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;fw&quot;</span><span class="p">])</span>
+    <span class="n">target</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+    <span class="n">target</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">curve</span><span class="p">)</span>
+    <span class="n">target</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>
+    <span class="n">click</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="n">hexlify</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">ecdh</span><span class="p">(</span><span class="n">pubkey</span><span class="p">)))</span>
+    <span class="n">target</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+    <span class="n">target</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+
+
+<span class="nd">@main</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s2">&quot;ecdsa-sign&quot;</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s2">&quot;curve&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">get_curve</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">pass_context</span>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">ecdsa_sign</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">click</span><span class="o">.</span><span class="n">Context</span><span class="p">,</span> <span class="n">curve</span><span class="p">):</span>
+    <span class="n">ctx</span><span class="o">.</span><span class="n">ensure_object</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="c1"># TODO</span>
+    <span class="n">click</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="s2">&quot;Not implemented.&quot;</span><span class="p">)</span>
+
+
+<span class="nd">@main</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s2">&quot;ecdsa-verify&quot;</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s2">&quot;curve&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">get_curve</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">pass_context</span>
+<span class="nd">@public</span>
+<span class="k">def</span> <span class="nf">ecdsa_verify</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">click</span><span class="o">.</span><span class="n">Context</span><span class="p">,</span> <span class="n">curve</span><span class="p">):</span>
+    <span class="n">ctx</span><span class="o">.</span><span class="n">ensure_object</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="c1"># TODO</span>
+    <span class="n">click</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="s2">&quot;Not implemented.&quot;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">(</span><span class="n">obj</span><span class="o">=</span><span class="p">{})</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2018-2023, .
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
